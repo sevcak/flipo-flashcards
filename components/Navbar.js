@@ -1,11 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import ProfileIconOutline from './ProfileIconOutline'
+import {ProfileIcon} from './FlipoIcons'
 
 const Navbar = () => {
   return (
     <View className="p-4">
-      <ProfileIconOutline />
+      <ProfileIcon type="outline"/>
     </View>
   )
 }
