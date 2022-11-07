@@ -4,8 +4,7 @@ import ProfileIconOutline from './ProfileIconOutline'
 
 const Navbar = () => {
   return (
-    <View>
-      <Text>Navbar</Text>
+    <View className="p-4">
       <ProfileIconOutline />
     </View>
   )
