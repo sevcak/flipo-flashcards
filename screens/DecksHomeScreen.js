@@ -1,24 +1,24 @@
-import { View, Text, Image, TextInput } from 'react-native';
+import { View, Text} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useLayoutEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-const HomeScreen = () => {
+const DecksHomeScreen = () => {
     const navigation = useNavigation(); 
 
     useLayoutEffect(() => {
       navigation.setOptions({
-          headerShown: false, 
+          headerShown: true, 
       })
     }, [])
 
     return (
       <SafeAreaView>
-          <View className="flex-rows items-center">
-            <Text>flipo flashcards</Text>
+          <View className="flex-rows items-center justify-center h-full">
+            <Text className="text-4xl">Decks</Text>
           </View>
       </SafeAreaView>
     );
 }
 
-export default HomeScreen;
+export default DecksHomeScreen;
