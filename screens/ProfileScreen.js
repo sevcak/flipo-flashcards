@@ -2,6 +2,7 @@ import { View, Text} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useLayoutEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import FlipoText from '../components/FlipoText';
 
 const ProfileScreen = () => {
     const navigation = useNavigation(); 
@@ -15,7 +16,7 @@ const ProfileScreen = () => {
     return (
       <SafeAreaView>
           <View className="flex-rows items-center justify-center h-full">
-            <Text className="text-4xl">Profile</Text>
+            <FlipoText className="text-4xl">profile</FlipoText>
           </View>
       </SafeAreaView>
     );

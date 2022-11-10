@@ -44,7 +44,7 @@ const Navbar = () => {
               iconName = 'gear';
           }
 
-          return <FlipoIcons name={iconName} type={iconType} color={color} size={size*1.8} />
+          return <FlipoIcons name={iconName} type={iconType} color={color} size={size*1.6} />
 
         },
         tabBarActiveTintColor: colorSchemes['light']['green'],
@@ -56,7 +56,10 @@ const Navbar = () => {
             padding: 0,
             height: 80
           },
-        ]
+        ],
+        headerTitleStyle: {
+          fontFamily: 'Montserrat-Bold',
+        }
 
       })}
       >

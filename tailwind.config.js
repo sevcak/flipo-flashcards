@@ -6,7 +6,9 @@ module.exports = {
     "./components/*.{js,jsx}",
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      'default': ['Montserrat', 'ui-sans-serif']
+    },
   },
   plugins: [],
 }
