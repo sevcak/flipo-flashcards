@@ -12,6 +12,7 @@ import colorSchemes from "./assets/colorSchemes";
 // Components
 import Navbar from './components/Navbar';
 import TestScreen from './screens/TestScreen';
+import FlipoIcons from './components/FlipoIcons';
 
 const Stack = createStackNavigator();
 
@@ -62,6 +63,9 @@ export default function App() {
           letterSpacing: 1.8,
         },
         headerTitleAlign: 'center',
+        headerBackImage: () => (
+          <FlipoIcons name='back-arrow' type='outline' color={colorScheme['ui']} size={35}/>
+        ),
       })}
       >
         <Stack.Screen name={homeName} component={Navbar}
