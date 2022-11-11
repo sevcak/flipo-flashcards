@@ -14,6 +14,7 @@ import FlipoIcons from './FlipoIcons';
 import DecksHomeScreen from '../screens/DecksHomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import FlipoText from './FlipoText';
 
 // Screen names
 const decksHomeName = 'Decks';
@@ -63,11 +64,16 @@ const Navbar = () => {
         ],
         headerStyle: {
           backgroundColor: colorScheme['main'],
+          borderBottomWidth: 4,
+          height: 100,
         },
         headerTitleStyle: {
           fontFamily: 'Montserrat-ExtraBold',
-          color: colorScheme['ui']
-        }
+          color: colorScheme['ui'],
+          letterSpacing: 1.8,
+        },
+        headerTitleAlign: 'center',
+
 
       })}
       >
