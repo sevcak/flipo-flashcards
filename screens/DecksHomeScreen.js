@@ -1,4 +1,4 @@
-import { useColorScheme, View } from 'react-native';
+import { Pressable, useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useLayoutEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -12,17 +12,13 @@ const DecksHomeScreen = () => {
     const navigation = useNavigation();
     let theme = useColorScheme();
 
-    useLayoutEffect(() => {
-      navigation.setOptions({
-          headerShown: true, 
-      })
-    }, [])
-
     return (
-      <SafeAreaView className={`bg-main-${theme}`}>
-          <View className="flex-rows items-center justify-center h-full">
+      <SafeAreaView className={`bg-primary-${theme}`}>
+          <Pressable
+            className="flex-rows items-center justify-center h-full"
+            onPress={() => navigation.navigate('TestScreen')}>
             <FlipoText className="text-4xl">decks</FlipoText>
-          </View>
+          </Pressable>
       </SafeAreaView>
     );
 }

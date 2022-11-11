@@ -9,15 +9,9 @@ import FlipoText from '../components/FlipoText';
 const TestScreen = () => {
     const navigation = useNavigation();
     let theme = useColorScheme();
-  
-    useLayoutEffect(() => {
-      navigation.setOptions({
-          headerShown: true, 
-      })
-    }, [])
 
     return (
-      <SafeAreaView className={`bg-main-${theme}`}>
+      <SafeAreaView className={`bg-primary-${theme}`} style={{backgoundColor: 'red'}}>
           <View className="flex-rows items-center justify-center h-full">
             <FlipoText className="text-4xl">Hello, flipo!</FlipoText>
             <FlipoText className="text-xl">This is a test screen.</FlipoText>

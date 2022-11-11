@@ -16,7 +16,7 @@ const SettingsScreen = () => {
       })
     }, [])
     return (
-      <SafeAreaView className={`bg-main-${theme}`}>
+      <SafeAreaView className={`bg-primary-${theme}`}>
           <View className="flex-rows items-center justify-center h-full">
             <FlipoText className="text-4xl">settings</FlipoText>
           </View>

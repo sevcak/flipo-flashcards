@@ -1,6 +1,4 @@
-import { View, Text } from 'react-native'
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useColorScheme } from "react-native";
 
@@ -26,7 +24,6 @@ const Navbar = () => {
   let colorScheme = colorSchemes[useColorScheme()];
 
   return (
-    <NavigationContainer>
       <Tab.Navigator
       initialRouteName={decksHomeName}
       screenOptions={({route}) => ({
@@ -59,13 +56,14 @@ const Navbar = () => {
             padding: 0,
             height: 80,
             backgroundColor: colorScheme['main'],
-            borderTopWidth: 4,
-
+            borderTopWidth: 3,
+            borderTopColor: colorScheme['ui'],
           },
         ],
         headerStyle: {
           backgroundColor: colorScheme['main'],
-          borderBottomWidth: 4,
+          borderBottomWidth: 3,
+          borderBottomColor: colorScheme['ui'],
           height: 100,
         },
         headerTitleStyle: {
@@ -80,7 +78,6 @@ const Navbar = () => {
         <Tab.Screen name={decksHomeName} component={DecksHomeScreen} />
         <Tab.Screen name={settingsName} component={SettingsScreen} />
       </Tab.Navigator >
-    </NavigationContainer>
   )
 }
 
