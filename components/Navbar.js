@@ -14,7 +14,6 @@ import FlipoIcons from './FlipoIcons';
 import DecksHomeScreen from '../screens/DecksHomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import FlipoText from './FlipoText';
 
 // Screen names
 const decksHomeName = 'Decks';
@@ -59,7 +58,9 @@ const Navbar = () => {
             display: "flex",
             padding: 0,
             height: 80,
-            backgroundColor: colorScheme['main']
+            backgroundColor: colorScheme['main'],
+            borderTopWidth: 4,
+
           },
         ],
         headerStyle: {
@@ -73,8 +74,6 @@ const Navbar = () => {
           letterSpacing: 1.8,
         },
         headerTitleAlign: 'center',
-
-
       })}
       >
         <Tab.Screen name={profileName} component={ProfileScreen} />
