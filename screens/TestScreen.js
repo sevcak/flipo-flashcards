@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useLayoutEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -7,20 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 import FlipoText from '../components/FlipoText';
 
 const TestScreen = () => {
-    const navigation = useNavigation(); 
-  
-    useLayoutEffect(() => {
-      navigation.setOptions({
-          headerShown: true, 
-      })
-    }, [])
+    const navigation = useNavigation();
+    let theme = useColorScheme();
 
     return (
-      <SafeAreaView>
+      <SafeAreaView className={`bg-primary-${theme}`} style={{backgoundColor: 'red'}}>
           <View className="flex-rows items-center justify-center h-full">
             <FlipoText className="text-4xl">Hello, flipo!</FlipoText>
             <FlipoText className="text-xl">This is a test screen.</FlipoText>
-
           </View>
       </SafeAreaView>
     );
