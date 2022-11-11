@@ -2,6 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useColorScheme } from "react-native";
 
 // Color schemes
 import colorSchemes from "../assets/colorSchemes";
@@ -22,6 +23,8 @@ const settingsName = 'Settings';
 const Tab = createBottomTabNavigator();
 
 const Navbar = () => {
+  let colorScheme = colorSchemes[useColorScheme()];
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -47,18 +50,23 @@ const Navbar = () => {
           return <FlipoIcons name={iconName} type={iconType} color={color} size={size*1.6} />
 
         },
-        tabBarActiveTintColor: colorSchemes['light']['green'],
-        tabBarInactiveTintColor: "grey",
+        tabBarActiveTintColor: colorScheme['green'],
+        tabBarInactiveTintColor: colorScheme['ui'],
         tabBarShowLabel: false,
         tabBarStyle: [
           {
             display: "flex",
             padding: 0,
-            height: 80
+            height: 80,
+            backgroundColor: colorScheme['main']
           },
         ],
+        headerStyle: {
+          backgroundColor: colorScheme['main'],
+        },
         headerTitleStyle: {
-          fontFamily: 'Montserrat-Bold',
+          fontFamily: 'Montserrat-ExtraBold',
+          color: colorScheme['ui']
         }
 
       })}

@@ -136,7 +136,7 @@ const GearIcon = ({ type, size, color }) => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <Path fill="#fff" d="M1 1h50v50H1z" />
+        <Path fill="none" d="M1 1h50v50H1z" />
         <Path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -154,7 +154,7 @@ const GearIcon = ({ type, size, color }) => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <Path fill="#fff" d="M1 1h50v50H1z" />
+        <Path fill="none" d="M1 1h50v50H1z" />
         <Mask id="a" fill="#fff">
           <Path
             fillRule="evenodd"
