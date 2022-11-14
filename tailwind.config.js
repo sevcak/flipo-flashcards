@@ -45,5 +45,23 @@ module.exports = {
       }
     }
   },
+  safelist: [
+    'bg-primary-light',
+    'bg-primary-dark',
+    'bg-green-light',
+    'bg-green-dark',
+    'bg-ui-light',
+    'bg-ui-dark',
+    'bg-card-light',
+    'bg-card-dark',
+    'text-primary-light',
+    'text-primary-dark',
+    'text-green-light',
+    'text-green-dark',
+    'text-ui-light',
+    'text-ui-dark',
+    'text-card-light',
+    'text-card-dark',
+  ],
   plugins: [],
 }

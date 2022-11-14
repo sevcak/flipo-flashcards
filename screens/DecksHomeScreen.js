@@ -3,22 +3,20 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useLayoutEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-
+// Example decks
+import exampleDecks from '../default_data/example-decks';
 
 // Components
 import FlipoText from '../components/FlipoText';
+import DeckCard from '../components/DeckCard';
 
 const DecksHomeScreen = () => {
     const navigation = useNavigation();
     let theme = useColorScheme();
 
     return (
-      <SafeAreaView className={`bg-primary-${theme}`}>
-          <Pressable
-            className="flex-rows items-center justify-center h-full"
-            onPress={() => navigation.navigate('TestScreen')}>
-            <FlipoText className="text-4xl">decks</FlipoText>
-          </Pressable>
+      <SafeAreaView className={`bg-primary-${theme} min-h-screen px-8`}>
+        <DeckCard label={true} title='Capitals of Countries' coverUrl={exampleDecks['Capitals of countries']['coverUrl']}/>
       </SafeAreaView>
     );
 }

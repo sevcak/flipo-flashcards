@@ -25,6 +25,10 @@ export class FlipoText extends Component {
             case 800:
                 fontFamily = 'Montserrat-Bold' + italicSuffix;
                 break;
+            case 'black':
+            case 900:
+                    fontFamily = 'Montserrat-Black' + italicSuffix;
+                    break;
             default:
                 fontFamily = 'Montserrat' + italicSuffix;
                 break;

@@ -1,4 +1,4 @@
-import { useColorScheme, View } from 'react-native';
+import { useColorScheme, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useLayoutEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -17,9 +17,11 @@ const SettingsScreen = () => {
     }, [])
     return (
       <SafeAreaView className={`bg-primary-${theme}`}>
-          <View className="flex-rows items-center justify-center h-full">
+          <Pressable
+            className="flex-rows items-center justify-center h-full"
+            onPress={() => navigation.navigate('TestScreen')}>
             <FlipoText className="text-4xl">settings</FlipoText>
-          </View>
+          </Pressable>
       </SafeAreaView>
     );
 }
