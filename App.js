@@ -66,6 +66,7 @@ export default function App() {
           fontFamily: 'Montserrat-ExtraBold',
           color: colorScheme['ui'],
           letterSpacing: 1.8,
+          fontSize: 12
         },
         headerTitleAlign: 'center',
         headerBackImage: () => (
@@ -79,7 +80,8 @@ export default function App() {
           }}
         />
         <Stack.Screen name="TestScreen" component={TestScreen}/>
-        <Stack.Screen name="DeckProfileScreen" component={DeckProfileScreen}/>
+        <Stack.Screen name="DeckProfileScreen" component={DeckProfileScreen}
+          options={({ route }) => ({ title: route.params.title })}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
