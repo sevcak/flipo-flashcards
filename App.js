@@ -11,8 +11,11 @@ import colorSchemes from "./assets/colorSchemes";
 
 // Components
 import Navbar from './components/Navbar';
-import TestScreen from './screens/TestScreen';
 import FlipoIcons from './components/FlipoIcons';
+
+// Screens
+import TestScreen from './screens/TestScreen';
+import DeckProfileScreen from './screens/decks/DeckProfileScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,12 +25,14 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     'Montserrat': require('./assets/fonts/Montserrat/static/Montserrat-Regular.ttf'),
     'Montserrat-Light': require('./assets/fonts/Montserrat/static/Montserrat-Thin.ttf'),
+    'Montserrat-SemiBold': require('./assets/fonts/Montserrat/static/Montserrat-SemiBold.ttf'),
     'Montserrat-Bold': require('./assets/fonts/Montserrat/static/Montserrat-Bold.ttf'),
     'Montserrat-ExtraBold': require('./assets/fonts/Montserrat/static/Montserrat-ExtraBold.ttf'),
     'Montserrat-Black': require('./assets/fonts/Montserrat/static/Montserrat-Black.ttf'),
     'Montserrat-Italic': require('./assets/fonts/Montserrat/static/Montserrat-Italic.ttf'),
     'Montserrat-Light-Italic': require('./assets/fonts/Montserrat/static/Montserrat-ThinItalic.ttf'),
     'Montserrat-Bold-Italic': require('./assets/fonts/Montserrat/static/Montserrat-BoldItalic.ttf'),
+    'Montserrat-SemiBold-Italic': require('./assets/fonts/Montserrat/static/Montserrat-SemiBoldItalic.ttf'),
     'Montserrat-ExtraBold-Italic': require('./assets/fonts/Montserrat/static/Montserrat-ExtraBoldItalic.ttf'),
     'Montserrat-Black-Italic': require('./assets/fonts/Montserrat/static/Montserrat-BlackItalic.ttf'),
   });
@@ -74,6 +79,7 @@ export default function App() {
           }}
         />
         <Stack.Screen name="TestScreen" component={TestScreen}/>
+        <Stack.Screen name="DeckProfileScreen" component={DeckProfileScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

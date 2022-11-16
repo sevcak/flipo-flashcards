@@ -4,7 +4,7 @@ import React, { useLayoutEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 // Components
-import FlipoText from '../components/FlipoText';
+import FlipoText from '../../components/FlipoText';
 
 const SettingsScreen = () => {
     const navigation = useNavigation();
@@ -20,7 +20,7 @@ const SettingsScreen = () => {
           <Pressable
             className="flex-rows items-center justify-center h-full"
             onPress={() => navigation.navigate('TestScreen')}>
-            <FlipoText className="text-4xl">settings</FlipoText>
+              <FlipoText className="text-4xl">settings</FlipoText>
           </Pressable>
       </SafeAreaView>
     );
