@@ -2,10 +2,10 @@ import { useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useLayoutEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import FlipoText from '../components/FlipoText';
+import FlipoText from '../../components/FlipoText';
 
 // Color schemes
-import colorSchemes from "../assets/colorSchemes";
+import colorSchemes from "../../assets/colorSchemes";
 
 const ProfileScreen = () => {
     const navigation = useNavigation();

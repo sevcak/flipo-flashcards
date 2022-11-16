@@ -3,7 +3,9 @@ module.exports = {
   content: [
     "./App.{js,jsx}",
     "./screens/*.{js,jsx}",
+    "./screens/**/*.{js,jsx}",
     "./components/*.{js,jsx}",
+    "./components/**/*.{js,jsx}",
   ],
   theme: {
     fontFamily: {
@@ -29,6 +31,11 @@ module.exports = {
           DEFAULT: '#b4b4b4',
           'dark': '#656565',
         },
+        'card': {
+          'light': '#ebebeb',
+          DEFAULT: '#ebebeb',
+          'dark': '#2f2f2f',
+        },
         'strong': {
           'light': '#3b3b3b',
           DEFAULT: '#3b3b3b',
@@ -45,5 +52,23 @@ module.exports = {
       }
     }
   },
+  safelist: [
+    'bg-primary-light',
+    'bg-primary-dark',
+    'bg-green-light',
+    'bg-green-dark',
+    'bg-ui-light',
+    'bg-ui-dark',
+    'bg-card-light',
+    'bg-card-dark',
+    'text-primary-light',
+    'text-primary-dark',
+    'text-green-light',
+    'text-green-dark',
+    'text-ui-light',
+    'text-ui-dark',
+    'text-card-light',
+    'text-card-dark',
+  ],
   plugins: [],
 }

@@ -9,9 +9,9 @@ import colorSchemes from "../assets/colorSchemes";
 import FlipoIcons from './FlipoIcons';
 
 // Screens
-import DecksHomeScreen from '../screens/DecksHomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import DecksHomeScreen from '../screens/decks/DecksHomeScreen';
+import ProfileScreen from '../screens/profile/ProfileScreen';
+import SettingsScreen from '../screens/settings/SettingsScreen';
 
 // Screen names
 const decksHomeName = 'Decks';
