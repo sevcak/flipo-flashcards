@@ -41,7 +41,7 @@ export default [
                 'back': {
                     'title': 'Vienna',
                     'content': undefined,
-                    'image': undefined,
+                    'image': require('../assets/example-decks/capitals-of-countries/cards/vienna.jpg'),
                 }
             },
         ]
