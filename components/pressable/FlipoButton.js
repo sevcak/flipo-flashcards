@@ -2,7 +2,7 @@ import { View, useColorScheme } from 'react-native'
 import React from 'react'
 
 // Components
-import FlipoText from './FlipoText'
+import FlipoText from '../FlipoText'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const FlipoButton = ( props ) => {
@@ -16,7 +16,7 @@ const FlipoButton = ( props ) => {
       style={props.style}>
         <FlipoText weight='black' className={`text-3xl text-primary-${theme} tracking-wider`}>{props.children}</FlipoText>
     </TouchableOpacity>
-  )
+  );
 }
 
-export default FlipoButton
+export default FlipoButton;

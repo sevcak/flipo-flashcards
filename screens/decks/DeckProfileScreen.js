@@ -6,7 +6,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 // Components
 import FlipoText from "../../components/FlipoText";
 import DeckCard from "../../components/decks/DeckCard";
-import FlipoButton from "../../components/FlipoButton";
+import FlipoButton from "../../components/pressable/FlipoButton";
 
 // Color schemes
 import colorSchemes from "../../assets/colorSchemes";

@@ -34,7 +34,7 @@ const Flashcard = ({ card, flipped }) => {
     return () => {
       setElevationLevel(30);
     }
-  }, [flipped])
+  }, [flipped]);
   
   const front = (
       <Animated.View

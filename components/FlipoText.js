@@ -44,8 +44,8 @@ export class FlipoText extends Component {
             <Text style={{ fontFamily: fontFamily }}>{this.props.children}</Text>
         </Text>
       </View>
-    )
+    );
   }
 }
 
-export default FlipoText
+export default FlipoText;
