@@ -48,6 +48,13 @@ module.exports = {
         },
         'alert': {
           DEFAULT: '#d60000',
+        },
+        'rate': {
+          '1': '#ff4e4d',
+          '2': '#ff714b',
+          '3': '#ffba50',
+          '4': '#f3de6f',
+          '5': '#acdc7c',
         }
       }
     }
@@ -69,6 +76,11 @@ module.exports = {
     'text-ui-dark',
     'text-card-light',
     'text-card-dark',
+    'bg-rate-1',
+    'bg-rate-2',
+    'bg-rate-3',
+    'bg-rate-4',
+    'bg-rate-5',
   ],
   plugins: [],
 }

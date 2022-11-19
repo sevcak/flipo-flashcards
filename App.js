@@ -16,6 +16,7 @@ import FlipoIcons from './components/FlipoIcons';
 // Screens
 import TestScreen from './screens/TestScreen';
 import DeckProfileScreen from './screens/decks/DeckProfileScreen';
+import DeckPlayScreen from './screens/decks/DeckPlayScreen';
 
 const Stack = createStackNavigator();
 
@@ -66,7 +67,7 @@ export default function App() {
           fontFamily: 'Montserrat-ExtraBold',
           color: colorScheme['ui'],
           letterSpacing: 1.8,
-          fontSize: 12
+          // fontSize: 20,
         },
         headerTitleAlign: 'center',
         headerBackImage: () => (
@@ -79,9 +80,9 @@ export default function App() {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="TestScreen" component={TestScreen}/>
-        <Stack.Screen name="DeckProfileScreen" component={DeckProfileScreen}
-          options={({ route }) => ({ title: route.params.title })}/>
+        <Stack.Screen name='TestScreen' component={TestScreen}/>
+        <Stack.Screen name='DeckProfileScreen' component={DeckProfileScreen}/>
+        <Stack.Screen name='DeckPlayScreen' component={DeckPlayScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

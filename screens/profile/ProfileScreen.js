@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import FlipoText from '../../components/FlipoText';
 
 // Color schemes
-import colorSchemes from "../../assets/colorSchemes";
+// import colorSchemes from "../../assets/colorSchemes";
 
 const ProfileScreen = () => {
     const navigation = useNavigation();
