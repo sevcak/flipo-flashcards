@@ -17,6 +17,7 @@ import FlipoIcons from './components/FlipoIcons';
 import TestScreen from './screens/TestScreen';
 import DeckProfileScreen from './screens/decks/DeckProfileScreen';
 import DeckPlayScreen from './screens/decks/DeckPlayScreen';
+import DeckNewScreen from './screens/decks/DeckNewScreen';
 
 const Stack = createStackNavigator();
 
@@ -37,8 +38,6 @@ export default function App() {
     'Montserrat-ExtraBold-Italic': require('./assets/fonts/Montserrat/static/Montserrat-ExtraBoldItalic.ttf'),
     'Montserrat-Black-Italic': require('./assets/fonts/Montserrat/static/Montserrat-BlackItalic.ttf'),
   });
-
-  const homeName = 'Home';
 
   useEffect(() => {
     async function prepare() {
@@ -67,7 +66,6 @@ export default function App() {
           fontFamily: 'Montserrat-ExtraBold',
           color: colorScheme['ui'],
           letterSpacing: 1.8,
-          // fontSize: 20,
         },
         headerTitleAlign: 'center',
         headerBackImage: () => (
@@ -75,7 +73,7 @@ export default function App() {
         ),
       })}
       >
-        <Stack.Screen name={homeName} component={Navbar}
+        <Stack.Screen name='DecksHomeScreen' component={Navbar}
           options={{
             headerShown: false,
           }}
@@ -83,6 +81,11 @@ export default function App() {
         <Stack.Screen name='TestScreen' component={TestScreen}/>
         <Stack.Screen name='DeckProfileScreen' component={DeckProfileScreen}/>
         <Stack.Screen name='DeckPlayScreen' component={DeckPlayScreen}/>
+        <Stack.Screen name='DeckNewScreen' component={DeckNewScreen}
+          options={{
+            title: 'New Deck',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

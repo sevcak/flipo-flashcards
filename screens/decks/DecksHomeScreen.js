@@ -46,17 +46,23 @@ const DecksHomeScreen = () => {
             </View>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} overScrollMode='never' className='w-screen'>
               <View className='flex flex-row space-x-10 px-14'>
+              {/*New dec card (always apears at the end)*/}
               <TouchableOpacity
                 activeOpacity={0.8}
+                onPress={() => navigation.navigate('DeckNewScreen')}
               >
-                  <DeckCard labelUnder title='New Deck' className='w-52'/>
+                  <DeckCard 
+                   labelUnder title='Create new deck'
+                   className='w-52'
+                   coverUrl={require('../../assets/decks/new-deck.png')}
+                  />
               </TouchableOpacity>
               </View>
             </ScrollView>
           </View>
           
           {/* Example decks */}
-          <View className='flex flex-col space-y-6 mb-40'>
+          <View className='flex flex-col space-y-6 mb-48'>
             <View className='px-8'>
               <FlipoText weight='extra-bold' className={`text-4xl text-secondary-${theme}`}>Example decks</FlipoText>
               <FlipoText 

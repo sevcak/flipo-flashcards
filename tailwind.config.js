@@ -62,6 +62,9 @@ module.exports = {
   safelist: [
     'bg-primary-light',
     'bg-primary-dark',
+    'bg-secondary-light',
+    'bg-secondary-light/50',
+    'bg-secondary-dark',
     'bg-green-light',
     'bg-green-dark',
     'bg-ui-light',
@@ -81,6 +84,8 @@ module.exports = {
     'bg-rate-3',
     'bg-rate-4',
     'bg-rate-5',
+    'border-primary-light',
+    'border-primary-dark',
   ],
   plugins: [],
 }
