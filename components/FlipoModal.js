@@ -1,6 +1,7 @@
 import { View, Modal, useColorScheme, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import FlipoText from "./FlipoText";
+import { BlurView } from "expo-blur";
 
 const FlipoModal = (props) => {
   let theme = useColorScheme();
@@ -8,10 +9,24 @@ const FlipoModal = (props) => {
   const [open, setOpen] = useState(props.visible);
   
   return (
-    <Modal className="justify-center items-center" transparent visible={open}>
-      <View className="align-center justify-center h-screen w-screen">
-        <View className={`bg-secondary-${theme}/50 m-8 rounded-xl`}>
-          {/*Modal header*/}
+    <Modal 
+     className='justify-center items-center'
+     transparent
+     visible={open}
+     animationType='fade'
+    >
+      <BlurView 
+       className='align-center justify-center h-screen w-screen'
+       intensity={100}
+       tint={theme}
+      >
+        {/* Modal container */}
+        <BlurView
+         className={`bg-secondary-${theme}/50 m-8 rounded-xl`}
+         intensity={80}
+         tint={theme == 'light' ? 'dark' : 'light'}
+        >
+          {/* Modal header */}
           <View className={`border-b-2 border-primary-${theme}`}>
             <FlipoText 
              className={`text-primary-${theme} text-center text-lg p-4`}
@@ -20,11 +35,11 @@ const FlipoModal = (props) => {
               {props.title}
             </FlipoText>
           </View>
-          {/*Modal content*/}
+          {/* Modal content */}
           <View className='p-8'>
             {props.children}
           </View>
-          {/*Modal main button*/}
+          {/* Modal main button */}
           <TouchableOpacity className={`border-t-2 border-primary-${theme}`}
            onPress={props.onButtonPress ? props.onButtonPress : () => setOpen(false)}
           >
@@ -49,8 +64,8 @@ const FlipoModal = (props) => {
               </TouchableOpacity>)
             : (<></>)
           }
-        </View>
-      </View>
+        </BlurView>
+      </BlurView>
     </Modal>
   );
 };
