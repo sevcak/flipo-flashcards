@@ -28,23 +28,55 @@ const DecksHomeScreen = () => {
     ))
 
     return (
-      <SafeAreaView className={`bg-primary-${theme} min-h-screen px-8`}>
-        {/* Example decks */}
-        <View className='flex flex-col space-y-6'>
-          <View>
-            <FlipoText weight='extra-bold' className={`text-4xl text-secondary-${theme}`}>Example decks</FlipoText>
-            <FlipoText 
-              weight='semi-bold'
-              className={`text-base text-${theme == 'light' ? 'ui-dark' : 'primary-light'}`}>
-                Play pre-created decks
-            </FlipoText>
-          </View>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} overScrollMode='never' className='w-screen -ml-8'>
-            <View className='flex flex-row space-x-10 px-14'>
-              {exampleDecks}
+      <SafeAreaView className={`bg-primary-${theme} min-h-screen`}>
+        <ScrollView
+         className='space-y-8 -mt-9 pt-8 h-screen'
+         showsVerticalScrollIndicator={false}
+         overScrollMode='never'
+        >
+          {/* User decks */}
+          <View className='flex flex-col space-y-6'>
+            <View className='px-8'>
+              <FlipoText weight='extra-bold' className={`text-4xl text-secondary-${theme}`}>Your decks</FlipoText>
+              <FlipoText 
+                weight='semi-bold'
+                className={`text-base text-${theme == 'light' ? 'ui-dark' : 'primary-light'}`}>
+                  Play your created decks
+              </FlipoText>
             </View>
-          </ScrollView>
-        </View>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} overScrollMode='never' className='w-screen'>
+              <View className='flex flex-row space-x-10 px-14'>
+              <TouchableOpacity
+                activeOpacity={0.8}
+              >
+                  <DeckCard labelUnder title='New Deck' className='w-52'/>
+              </TouchableOpacity>
+              </View>
+            </ScrollView>
+          </View>
+          
+          {/* Example decks */}
+          <View className='flex flex-col space-y-6 mb-40'>
+            <View className='px-8'>
+              <FlipoText weight='extra-bold' className={`text-4xl text-secondary-${theme}`}>Example decks</FlipoText>
+              <FlipoText 
+                weight='semi-bold'
+                className={`text-base text-${theme == 'light' ? 'ui-dark' : 'primary-light'}`}>
+                  Play pre-created decks
+              </FlipoText>
+            </View>
+            <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            overScrollMode='never'
+            className='w-screen'
+            >
+              <View className='flex flex-row space-x-10 px-14'>
+                {exampleDecks}
+              </View>
+            </ScrollView>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
 }

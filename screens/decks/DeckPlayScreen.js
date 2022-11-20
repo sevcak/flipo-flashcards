@@ -87,7 +87,7 @@ const DeckPlayScreen = () => {
               <View className={'flex-row w-full justify-center'}>
                 {
                   rateButons.map((button) => (
-                    <RateButton onPress={() => nextCard(deck.cards, flashcard)}>{button}</RateButton>)
+                    <RateButton key={button} onPress={() => nextCard(deck.cards, flashcard)}>{button}</RateButton>)
                   )
                 }
               </View>
