@@ -26,12 +26,14 @@ export default function App() {
   
   const [fontsLoaded] = useFonts({
     'Montserrat': require('./assets/fonts/Montserrat/static/Montserrat-Regular.ttf'),
+    'Montserrat-Medium': require('./assets/fonts/Montserrat/static/Montserrat-Medium.ttf'),
     'Montserrat-Light': require('./assets/fonts/Montserrat/static/Montserrat-Thin.ttf'),
     'Montserrat-SemiBold': require('./assets/fonts/Montserrat/static/Montserrat-SemiBold.ttf'),
     'Montserrat-Bold': require('./assets/fonts/Montserrat/static/Montserrat-Bold.ttf'),
     'Montserrat-ExtraBold': require('./assets/fonts/Montserrat/static/Montserrat-ExtraBold.ttf'),
     'Montserrat-Black': require('./assets/fonts/Montserrat/static/Montserrat-Black.ttf'),
     'Montserrat-Italic': require('./assets/fonts/Montserrat/static/Montserrat-Italic.ttf'),
+    'Montserrat-Medium-Italic': require('./assets/fonts/Montserrat/static/Montserrat-MediumItalic.ttf'),
     'Montserrat-Light-Italic': require('./assets/fonts/Montserrat/static/Montserrat-ThinItalic.ttf'),
     'Montserrat-Bold-Italic': require('./assets/fonts/Montserrat/static/Montserrat-BoldItalic.ttf'),
     'Montserrat-SemiBold-Italic': require('./assets/fonts/Montserrat/static/Montserrat-SemiBoldItalic.ttf'),

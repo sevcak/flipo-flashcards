@@ -15,6 +15,10 @@ const FlipoText = (props) => {
       case 300:
           fontFamily = 'Montserrat-Light' + italicSuffix;
           break;
+      case 'medium':
+      case 500:
+          fontFamily = 'Montserrat-Medium' + italicSuffix;
+          break;
       case 'semi-bold':
       case 600:
           fontFamily = 'Montserrat-SemiBold' + italicSuffix;

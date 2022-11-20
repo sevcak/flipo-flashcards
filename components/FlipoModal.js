@@ -29,7 +29,7 @@ const FlipoModal = (props) => {
           {/* Modal header */}
           <View className={`border-b-2 border-primary-${theme}`}>
             <FlipoText 
-             className={`text-primary-${theme} text-center text-lg p-4`}
+             className={`text-primary-${theme} text-center text-xl p-4`}
              weight='bold'
             >
               {props.title}
@@ -44,7 +44,7 @@ const FlipoModal = (props) => {
            onPress={props.onButtonPress ? props.onButtonPress : () => setOpen(false)}
           >
             <FlipoText 
-             className={`text-green-${theme} text-center text-lg p-4`}
+             className={`text-green-${theme} text-center text-xl p-4`}
              weight='bold'
             >
               {props.buttonText ? props.buttonText : 'OK'}
@@ -56,7 +56,7 @@ const FlipoModal = (props) => {
                 onPress={props.onCancelPress ? props.onCancelPress : () => setOpen(false)}
               >
                 <FlipoText 
-                  className={`text-alert text-center text-lg p-4`}
+                  className={`text-alert text-center text-xl p-4`}
                   weight='bold'
                 >
                   {props.buttonText ? props.buttonText : 'Cancel'}
