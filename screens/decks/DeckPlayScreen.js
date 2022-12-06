@@ -10,7 +10,7 @@ import FlipoButton from '../../components/pressable/FlipoButton';
 // Color schemes
 import colorSchemes from "../../assets/colorSchemes";
 import Flashcard from '../../components/decks/Flashcard';
-import RateButton from '../../components/RateButton';
+import RateButton from '../../components/pressable/RateButton';
 
 const DeckPlayScreen = () => {
     const navigation = useNavigation();
