@@ -1,4 +1,4 @@
-import { View, useColorScheme, SafeAreaView, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import { View, useColorScheme, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Modal, Pressable } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,25 +12,70 @@ import FlipoButton from "../../components/pressable/FlipoButton";
 // Color schemes
 import colorSchemes from "../../assets/colorSchemes";
 import CardCell from "../../components/decks/CardCell";
+import EditCardModal from "../../components/decks/EditCardModal";
 
 const DeckNewScreen = () => {
   const navigation = useNavigation();
   
-  let theme = useColorScheme();
-  let colorScheme = colorSchemes[theme];
+  const theme = useColorScheme();
+  const colorScheme = colorSchemes[theme];
 
   let newId = undefined;
   const [title, setTitle] = useState('New deck');
+  const [cards, setCards] = useState([]);
+  const [cardElements, setCardElements] = useState(cards);
 
   const [alert, setAlert] = useState('');
 
-  let newDeck = {
+  // new deck boilerplate
+  newDeck = {
     id: newId,
     custom: true,
     title: title,
     coverUrl: undefined,
-    cards: [],
+    cards: cards,
   };
+
+  const [newCard, setNewCard] = useState(false);
+
+  // adds or changes a card in the deck
+  const editCard = (card) => {
+    let cardsUpdate = newDeck['cards']
+
+
+    if (card['id'] >= newDeck['cards'].length) {
+      cardsUpdate.push(card);
+    }
+    else {
+      cardsUpdate[card['id']] = card;
+    }
+
+    setCards(cardsUpdate);
+    
+    setCardElements(newDeck['cards'].map(card => (
+      <View key={card['id']}>
+        <CardCell card={card}></CardCell>
+      </View>
+    )));
+    setNewCard(false);
+  }
+
+  // creates a boilerplate for the new card in the new deck
+  const createCard = () => {
+    setNewCard({
+      'id': newDeck['cards'].length,
+      'front': {
+          'title': '',
+          'content': '',
+          'image': undefined,
+      }, 
+      'back': {
+          'title': '',
+          'content': '',
+          'image': undefined,
+      }
+    });
+  }
 
   // loads custom deck data
   const getDecks = async () => {
@@ -68,46 +113,52 @@ const DeckNewScreen = () => {
     }
   }
 
+  // resulting component
   return (
     <View>
       <SafeAreaView className={`bg-primary-${theme}`}>
-        <ScrollView className="flex-rows h-full space-y-10">
+        <ScrollView
+         className="flex-rows h-full space-y-10"
+         overScrollMode='never'
+         keyboardShouldPersistTaps='always'
+        >
           {/* Hero */}
           <View className='items-center space-y-10 px-12'>
             {alert}
+            {/*Edit card menu modal*/}
+            <EditCardModal card={newCard} editCard={editCard}></EditCardModal>
+            {/*Enter name modal, shows first on deck creation*/}
             <FlipoModal 
-            title='Create a new deck'
-            className='space-y-4'
+             title='Create a new deck'
+             className='space-y-4'
             >
               <FlipoText weight='medium' className={`text-center text-xl text-primary-${theme}`}>
                 Enter new deck name:
               </FlipoText>
               <TextInput 
-              cursorColor={colorScheme['green']}
-              maxLength={30}
-              defaultValue='New Deck'
-              className={`text-primary-${theme} text-xl text-center border-b border-primary-${theme} pb-1`}
-              autoFocus
-              autoComplete='off'
-              autoCorrect={false}
-              spellCheck={false}
-              style={{fontFamily: 'Montserrat-SemiBold'}}
-              onChangeText={(val) => setTitle(val)}
+               cursorColor={colorScheme['green']}
+               maxLength={30}
+               defaultValue='New Deck'
+               className={`text-primary-${theme} text-xl text-center border-b border-primary-${theme} pb-1`}
+               autoFocus
+               autoComplete='off'
+               autoCorrect={false}
+               spellCheck={false}
+               style={{fontFamily: 'Montserrat-SemiBold'}}
+               onChangeText={(val) => setTitle(val)}
               />
             </FlipoModal>
             <DeckCard title={newDeck.title} className='w-60'/>
             <FlipoButton onPress={() => createDeck()}>Create Deck</FlipoButton>
           </View>
           {/* Section for adding cards  */}
-          <View className='px-12 space-y-4'>
+          <View className='px-12 space-y-4 pb-10'>
             <FlipoText weight='extra-bold' className='text-3xl'>Add cards</FlipoText>
             {/* New card touchable */}
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => createCard()}>
               <CardCell></CardCell>
             </TouchableOpacity>
-            <View>
-              <CardCell card={{id: 4, front: {title: 'kid named Deak'}}}></CardCell>
-            </View>
+            {cardElements}
           </View>
         </ScrollView>
       </SafeAreaView>
