@@ -1,6 +1,6 @@
 import { TouchableOpacity, useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 // Example decks
 import exampleDecksData from '../../default_data/example-decks';
@@ -18,7 +18,7 @@ const DecksHomeScreen = () => {
   const navigation = useNavigation();
   let theme = useColorScheme();
 
-  // Custom decks
+  // Custom deck states
   const [customDecks, setCustomDecks] = useState([]);
   const [customDeckElements, setCustomDeckElements] = useState([]);
 
@@ -41,6 +41,7 @@ const DecksHomeScreen = () => {
       console.error('There was an error with loading the decks.')
     }
   }
+
   // stores custom deck data
   const storeDecks = async (data) => {
     try {
@@ -81,7 +82,11 @@ const DecksHomeScreen = () => {
           deck,
         })}
         >
-          <DeckCard labelUnder title={deck['title']} coverUrl={deck['coverUrl']} className='w-52'/>
+          <DeckCard 
+            labelUnder
+            title={deck['title']}
+            coverUrl={deck['coverUrl']}
+            className='w-52'/>
       </TouchableOpacity>
     ))
 
@@ -102,7 +107,12 @@ const DecksHomeScreen = () => {
                   Play your created decks
               </FlipoText>
             </View>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} overScrollMode='never' className='w-screen'>
+            <ScrollView 
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              overScrollMode='never'
+              className='w-screen'
+            >
               <View className='flex flex-row space-x-10 px-14'>
               {/*New dec card (always apears at the end)*/}
               <TouchableOpacity
@@ -126,11 +136,17 @@ const DecksHomeScreen = () => {
           {/* Example decks */}
           <View className='flex flex-col space-y-6 mb-48'>
             <View className='px-8'>
-              <FlipoText weight='extra-bold' className={`text-4xl text-secondary-${theme}`}>Example decks</FlipoText>
+              <FlipoText
+                weight='extra-bold'
+                className={`text-4xl text-secondary-${theme}`}
+              >
+                Example decks
+              </FlipoText>
               <FlipoText 
                 weight='semi-bold'
-                className={`text-base text-${theme == 'light' ? 'ui-dark' : 'primary-light'}`}>
-                  Play pre-created decks
+                className={`text-base text-${theme == 'light' ? 'ui-dark' : 'primary-light'}`}
+              >
+                Play pre-created decks
               </FlipoText>
             </View>
             <ScrollView

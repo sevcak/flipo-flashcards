@@ -73,11 +73,10 @@ const DeckNewScreen = ({ route }) => {
   const editCard = (card) => {
     let cardsUpdate = newDeck['cards']
 
-
+    // If a new card is being created
     if (card['id'] >= newDeck['cards'].length) {
       cardsUpdate.push(card);
-    }
-    else {
+    } else { // if an existing card is being edited
       cardsUpdate[card['id']] = card;
     }
 
