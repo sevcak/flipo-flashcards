@@ -1,6 +1,6 @@
 import { TouchableOpacity, useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 // Example decks
 import exampleDecksData from '../../default_data/example-decks';
@@ -10,11 +10,69 @@ import FlipoText from '../../components/FlipoText';
 import DeckCard from '../../components/decks/DeckCard';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const DecksHomeScreen = () => {
-    const navigation = useNavigation();
-    let theme = useColorScheme();
+// Functions
+import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-    {/* Example decks variable */}
+const DecksHomeScreen = () => {
+  const navigation = useNavigation();
+  let theme = useColorScheme();
+
+  // Custom decks
+  const [customDecks, setCustomDecks] = useState([]);
+  const [customDeckElements, setCustomDeckElements] = useState([]);
+
+  // loads custom deck data
+  const getDecks = async () => {
+    try {
+      let data = await AsyncStorage.getItem('customDecks');
+      data = JSON.parse(data);
+
+      // checks if the custom decks have updated, if they have, sets new state
+      // has to convert object to string so it works if the objects are the same
+      if (data != null && JSON.stringify(data.decks) != JSON.stringify(customDecks)) {
+        console.log('new changes')
+        setCustomDecks(data.decks);
+      } else if (data == null) {
+        setCustomDecks([]);
+      }
+
+    } catch (e) {
+      console.error('There was an error with loading the decks.')
+    }
+  }
+  // stores custom deck data
+  const storeDecks = async (data) => {
+    try {
+      await AsyncStorage.setItem('customDecks', JSON.stringify(data));
+    } catch (e) {
+      console.error('There was an error with saving the decks.')
+    }
+  };
+
+    // Updates the custom decks list on re-render
+    useEffect(() => {
+      console.log('useEffect refresh')
+      getDecks();
+      updateCustomDeckElements();
+      //console.log(customDecks);
+    }, [customDecks]);
+
+    const updateCustomDeckElements = () => {
+      console.log('refresh custom decks');
+      setCustomDeckElements(customDecks.map(deck => (
+        <TouchableOpacity key={deck.id}>
+          <DeckCard
+          labelUnder
+          title={deck.title}
+          className='w-52'
+          coverUrl={deck.coverUrl}
+          />
+        </TouchableOpacity>
+      )));
+    }
+
+    // Example decks variable
     const exampleDecks = exampleDecksData.map(deck => (
       <TouchableOpacity
         key={deck['id']}
@@ -49,7 +107,9 @@ const DecksHomeScreen = () => {
               {/*New dec card (always apears at the end)*/}
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('DeckNewScreen')}
+                onPress={() => navigation.navigate('DeckNewScreen', {
+                  getDecks,
+                })}
               >
                   <DeckCard 
                    labelUnder title='Create new deck'
@@ -57,6 +117,8 @@ const DecksHomeScreen = () => {
                    coverUrl={require('../../assets/decks/new-deck.png')}
                   />
               </TouchableOpacity>
+              {/* Custom Decks */}
+              {customDeckElements}
               </View>
             </ScrollView>
           </View>
@@ -72,10 +134,10 @@ const DecksHomeScreen = () => {
               </FlipoText>
             </View>
             <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            overScrollMode='never'
-            className='w-screen'
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              overScrollMode='never'
+              className='w-screen'
             >
               <View className='flex flex-row space-x-10 px-14'>
                 {exampleDecks}

@@ -8,3 +8,5 @@ function reorderObjectArrayId(array) {
 
   return array;
 }
+
+export {reorderObjectArrayId};

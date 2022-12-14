@@ -1,5 +1,5 @@
 import { View, useColorScheme, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Modal, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -14,22 +14,53 @@ import colorSchemes from "../../assets/colorSchemes";
 import CardCell from "../../components/decks/CardCell";
 import EditCardModal from "../../components/decks/EditCardModal";
 
-const DeckNewScreen = () => {
+const DeckNewScreen = ({ route }) => {
   const navigation = useNavigation();
+  const updateDecks = route.params.getDecks;
+  //console.log(route.params.getDecks);
   
   const theme = useColorScheme();
   const colorScheme = colorSchemes[theme];
+  
+  const [customDecks, setCustomDecks] = useState({decks: []});
+  
+  // loads custom deck data
+  const getDecks = async () => {
+    try {
+      const data = await AsyncStorage.getItem('customDecks');
+      if (data != null) {
+        setCustomDecks(JSON.parse(data));
+      } else {
+        setCustomDecks({decks: []});
+      }
+    } catch (e) {
+      console.error('There was an error with loading the decks.')
+    }
+  }
+  // stores custom deck data
+  const storeDecks = async (data) => {
+    try {
+      await AsyncStorage.setItem('customDecks', JSON.stringify(data));
+    } catch (e) {
+      console.error('There was an error with saving the decks.')
+    }
+  };
+  
+  // Updates the custom decks list on data change
+  useEffect(() => {
+    getDecks();
+    setCardElements();
+  }, []);
 
-  let newId = undefined;
   const [title, setTitle] = useState('New deck');
   const [cards, setCards] = useState([]);
   const [cardElements, setCardElements] = useState(cards);
-
+  
   const [alert, setAlert] = useState('');
 
   // new deck boilerplate
-  newDeck = {
-    id: newId,
+  let newDeck = {
+    id: customDecks['decks'].length,
     custom: true,
     title: title,
     coverUrl: undefined,
@@ -77,28 +108,13 @@ const DeckNewScreen = () => {
     });
   }
 
-  // loads custom deck data
-  const getDecks = async () => {
-    try {
-      return await JSON.parse(AsyncStorage.getItem('customDecks'));
-    } catch (e) {
-      console.error('There was an error with loading the decks.')
-    }
-  }
-
-  // stores custom deck data
-  const storeDecks = async (data) => {
-    try {
-      await AsyncStorage.setItem('customDecks', JSON.stringify(data));
-    } catch (e) {
-      console.error('There was an error with saving the decks.')
-    }
-  };
-
-  // creates the new deck
   const createDeck = () => {
+    // gets custom decks list to append the new deck to
+    getDecks();
+
     // checks if the conditions for deck creation are met
     if (newDeck['cards'].length < 2) {
+      // throws an alert informing the user about deck creation conditions
       setAlert(
         <FlipoModal
          title="Can't create deck"
@@ -110,6 +126,14 @@ const DeckNewScreen = () => {
           </FlipoText>
         </FlipoModal>
       )
+    } else {
+      // creates the deck and returns to the previous menu
+      customDecks['decks'].push(newDeck);
+      
+      storeDecks(customDecks);
+
+      updateDecks();
+      navigation.goBack();
     }
   }
 
