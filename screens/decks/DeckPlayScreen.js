@@ -28,11 +28,13 @@ const DeckPlayScreen = () => {
     navigation.setOptions({
       title: deck.title,
       headerTitleStyle: {
-        fontFamily: 'Montserrat-ExtraBold',
-            color: colorScheme['ui'],
-            letterSpacing: 1.8,
-            fontSize: 380 / deck.title.length,
-      }
+        fontFamily: "Montserrat-ExtraBold",
+        color: colorScheme["ui"],
+        letterSpacing: 1.8,
+        fontSize: deck.title.length < 20
+          ? 20
+          : Dimensions.get("window").width / deck.title.length,
+      },
     });
 
     // States and variable data

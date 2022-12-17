@@ -17,7 +17,7 @@ import FlipoIcons from './components/FlipoIcons';
 import TestScreen from './screens/TestScreen';
 import DeckProfileScreen from './screens/decks/DeckProfileScreen';
 import DeckPlayScreen from './screens/decks/DeckPlayScreen';
-import DeckNewScreen from './screens/decks/DeckNewScreen';
+import DeckEditScreen from './screens/decks/DeckEditScreen';
 
 const Stack = createStackNavigator();
 
@@ -83,7 +83,7 @@ export default function App() {
         <Stack.Screen name='TestScreen' component={TestScreen}/>
         <Stack.Screen name='DeckProfileScreen' component={DeckProfileScreen}/>
         <Stack.Screen name='DeckPlayScreen' component={DeckPlayScreen}/>
-        <Stack.Screen name='DeckNewScreen' component={DeckNewScreen}
+        <Stack.Screen name='DeckEditScreen' component={DeckEditScreen}
           options={{
             title: 'New Deck',
           }}

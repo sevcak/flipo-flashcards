@@ -1,4 +1,4 @@
-import { useColorScheme, View } from "react-native";
+import { Dimensions, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useLayoutEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -11,15 +11,16 @@ import FlipoButton from "../../components/pressable/FlipoButton";
 // Color schemes
 import colorSchemes from "../../assets/colorSchemes";
 
-const DeckProfileScreen = () => {
-  const navigation = useNavigation();
+const DeckProfileScreen = ({ navigation, route }) => {
+  //const navigation = useNavigation();
   let theme = useColorScheme();
   let colorScheme = colorSchemes[useColorScheme()];
 
   // unpacks deck passed from parameters
-  const {
-    params: { deck },
-  } = useRoute();
+  const deckParam = route.params.deck;
+  const [deck, setDeck] = useState(deckParam);
+
+  const [headerTitle, setHeaderTitle] = useState(deck.title);
 
   navigation.setOptions({
     title: deck.title,
@@ -27,7 +28,9 @@ const DeckProfileScreen = () => {
       fontFamily: "Montserrat-ExtraBold",
       color: colorScheme["ui"],
       letterSpacing: 1.8,
-      fontSize: 380 / deck.title.length,
+      fontSize: deck.title.length < 20
+        ? 20
+        : Dimensions.get("window").width / deck.title.length,
     },
   });
 

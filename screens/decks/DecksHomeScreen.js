@@ -31,7 +31,7 @@ const DecksHomeScreen = () => {
       // checks if the custom decks have updated, if they have, sets new state
       // has to convert object to string so it works if the objects are the same
       if (data != null && JSON.stringify(data.decks) != JSON.stringify(customDecks)) {
-        console.log('new changes')
+        console.log('Found new custom deck changes')
         setCustomDecks(data.decks);
       } else if (data == null) {
         setCustomDecks([]);
@@ -62,7 +62,12 @@ const DecksHomeScreen = () => {
     const updateCustomDeckElements = () => {
       console.log('refresh custom decks');
       setCustomDeckElements(customDecks.map(deck => (
-        <TouchableOpacity key={deck.id}>
+        <TouchableOpacity 
+          key={deck.id}
+          onPress={() => navigation.navigate('DeckProfileScreen', {
+            deck,
+          })}
+        >
           <DeckCard
           labelUnder
           title={deck.title}
@@ -117,7 +122,7 @@ const DecksHomeScreen = () => {
               {/*New dec card (always apears at the end)*/}
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('DeckNewScreen', {
+                onPress={() => navigation.navigate('DeckEditScreen', {
                   getDecks,
                 })}
               >
