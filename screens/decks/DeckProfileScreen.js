@@ -1,12 +1,12 @@
-import { Dimensions, useColorScheme, View } from "react-native";
+import { Dimensions, Touchable, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useLayoutEffect, useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 
 // Components
 import FlipoText from "../../components/FlipoText";
 import DeckCard from "../../components/decks/DeckCard";
 import FlipoButton from "../../components/pressable/FlipoButton";
+import TextButton from "../../components/pressable/TextButton";
 
 // Color schemes
 import colorSchemes from "../../assets/colorSchemes";
@@ -17,11 +17,12 @@ const DeckProfileScreen = ({ navigation, route }) => {
   let colorScheme = colorSchemes[useColorScheme()];
 
   // unpacks deck passed from parameters
-  const deckParam = route.params.deck;
-  const [deck, setDeck] = useState(deckParam);
+  const [deck, setDeck] = useState(route.params.deck);
 
-  const [headerTitle, setHeaderTitle] = useState(deck.title);
+  // function for updating the custom decks state in the homepage
+  const getDecks = route.params.getDecks;
 
+  // header title setup
   navigation.setOptions({
     title: deck.title,
     headerTitleStyle: {
@@ -34,6 +35,11 @@ const DeckProfileScreen = ({ navigation, route }) => {
     },
   });
 
+  useEffect(() => {
+    console.log('useEffect')
+    setDeck(route.params.deck);
+  }, [route.params.deck]);
+
   return (
     <SafeAreaView className={`bg-primary-${theme} p-10`}>
       <View className="flex-rows items-center h-full">
@@ -45,21 +51,37 @@ const DeckProfileScreen = ({ navigation, route }) => {
           cardCount={deck.cards.length}
           style={{ elevation: 5 }}
         ></DeckCard>
-        <FlipoButton
-          className="my-10"
-          onPress={() =>
-            navigation.navigate("DeckPlayScreen", {
-              deck,
-            })
+        <View className='flex-row m-10 space-x-4'>
+          {/* only custom decks can be edited */}
+          {
+            deck.custom &&
+              <TextButton
+                onPress={() => {
+                  navigation.navigate("DeckEditScreen", {
+                    setDeck,
+                    getDecks,
+                    deck,
+                  })
+                }}
+              >
+                Edit deck
+              </TextButton>
           }
-        >
-          <FlipoText
-            weight="black"
-            className={`text-2xl text-primary-${theme} tracking-wide`}
+          <FlipoButton
+            onPress={() =>
+              navigation.navigate("DeckPlayScreen", {
+                deck,
+              })
+            }
           >
-            Play Deck
-          </FlipoText>
-        </FlipoButton>
+            <FlipoText
+              weight="black"
+              className={`text-2xl text-primary-${theme} tracking-wide`}
+            >
+              Play Deck
+            </FlipoText>
+          </FlipoButton>
+        </View>
       </View>
     </SafeAreaView>
   );

@@ -65,6 +65,7 @@ const DecksHomeScreen = () => {
         <TouchableOpacity 
           key={deck.id}
           onPress={() => navigation.navigate('DeckProfileScreen', {
+            getDecks,
             deck,
           })}
         >
