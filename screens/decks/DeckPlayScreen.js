@@ -1,4 +1,4 @@
-import { Pressable, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { Dimensions, Pressable, TouchableOpacity, useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useLayoutEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
