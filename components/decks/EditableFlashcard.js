@@ -66,7 +66,6 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
                 spellCheck={false}
                 style={{fontFamily: 'Montserrat-SemiBold',}}
                 onChangeText={(val) => updateCard('front', 'title', val)}
-                //ref={inputRefFront}
               />
             <View>
               <TextInput
@@ -80,7 +79,7 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
                 autoCorrect={false}
                 spellCheck={false}
                 style={{fontFamily: 'Montserrat-SemiBold'}}
-                //onChangeText={(val) => updateCard('front', 'content', val)}
+                onChangeText={(val) => updateCard('front', 'content', val)}
               />
             </View>
           </View>
@@ -111,8 +110,7 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
                 autoCorrect={false}
                 spellCheck={false}
                 style={{fontFamily: 'Montserrat-SemiBold'}}
-                //onChangeText={(val) => updateCard('front', 'title', val)}
-                //ref={inputRefBack}
+                onChangeText={(val) => updateCard('back', 'title', val)}
               />
             <View>
               <TextInput
@@ -126,7 +124,7 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
                 autoCorrect={false}
                 spellCheck={false}
                 style={{fontFamily: 'Montserrat-SemiBold'}}
-                //onChangeText={(val) => updateCard('front', 'content', val)}
+                onChangeText={(val) => updateCard('back', 'content', val)}
               />
             </View>
           </View>

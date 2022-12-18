@@ -33,7 +33,7 @@ const DecksHomeScreen = () => {
       if (data != null && JSON.stringify(data.decks) != JSON.stringify(customDecks)) {
         console.log('Found new custom deck changes')
         setCustomDecks(data.decks);
-      } else if (data == null) {
+      } else if (data == null && customDecks != []) {
         setCustomDecks([]);
       }
 

@@ -1,4 +1,4 @@
-import { Dimensions, Touchable, useColorScheme, View } from "react-native";
+import { Dimensions, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 
