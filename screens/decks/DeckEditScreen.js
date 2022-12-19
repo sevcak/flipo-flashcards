@@ -1,4 +1,4 @@
-import { View, useColorScheme, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Modal, Pressable } from "react-native";
+import { View, useColorScheme, SafeAreaView, TextInput, TouchableOpacity, ScrollView} from "react-native";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -12,6 +12,7 @@ import FlipoButton from "../../components/pressable/FlipoButton";
 import colorSchemes from "../../assets/colorSchemes";
 import CardCell from "../../components/decks/CardCell";
 import EditCardModal from "../../components/decks/EditCardModal";
+import { reorderObjectArrayId } from "../../utils/organisationUtils";
 
 const DeckEditScreen = ({ route, navigation }) => {
   const theme = useColorScheme();
@@ -95,6 +96,21 @@ const DeckEditScreen = ({ route, navigation }) => {
     setNewCard(false);
   }
 
+  // removes a card from the deck
+  const removeCard = (index) => {
+    let cardsUpdate = newDeck['cards'];
+
+    try {
+      cardsUpdate.splice(index, 1);
+      cardsUpdate = reorderObjectArrayId(cardsUpdate);
+      
+      setCards(cardsUpdate);
+      refreshCardElements();
+    } catch (e) {
+      console.error('Could not remove card. Most likely, card with specified id was not found.');
+    }
+  }
+
   // creates a boilerplate for the new card in the new deck
   const createCard = () => {
     setNewCard({
@@ -129,7 +145,7 @@ const DeckEditScreen = ({ route, navigation }) => {
             To create a deck it has to have at least two cards.
           </FlipoText>
         </FlipoModal>
-      )
+      );
     } else {
       // edits or creates the deck and returns to the previous menu
       if (existing) {
@@ -146,15 +162,50 @@ const DeckEditScreen = ({ route, navigation }) => {
     }
   }
 
+  // function that refreshes the card elements
+  const refreshCardElements = () => {
+    setCardElements(newDeck['cards'].map(card => (
+      <View key={card['id']}>
+        <View className='flex-row items-center'>
+          <TouchableOpacity className='grow' onPress={() => setNewCard(card)}>
+            <CardCell card={card}></CardCell>
+          </TouchableOpacity>
+          {/* <View className='grow'></View> */}
+          <TouchableOpacity onPress={() => removeCard(card['id'])}>
+            <FlipoText weight='bold' className='text-lg text-alert pl-6'>X</FlipoText>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )));
+  }
+
   // Updates the custom decks list on data change
   useEffect(() => {
     getDecks();
-    setCardElements(newDeck['cards'].map(card => (
-      <TouchableOpacity key={card['id']} onPress={() => setNewCard(card)}>
-        <CardCell card={card}></CardCell>
-      </TouchableOpacity>
-    )));
-  }, [newCard]);
+    refreshCardElements();
+
+    // deck conditions check before leaving the screen
+    navigation.addListener('beforeRemove', (e) => {
+      if (newDeck['cards'].length >= 2) {
+        // if deck creation/edit conditons are met, proceed
+        return;
+      } else {
+        // prevent default behavior of leaving the screen
+        e.preventDefault();
+        setAlert(
+          <FlipoModal
+            title="Can't create deck"
+            visible={true}
+            onButtonPress={() => {setAlert('')}}
+          >
+            <FlipoText weight='medium' className={`text-center text-lg text-primary-${theme}`}>
+              To create a deck it has to have at least two cards.
+            </FlipoText>
+          </FlipoModal>
+        );
+      }
+    });
+  }, [newCard, cards]);
 
   // resulting component
   return (

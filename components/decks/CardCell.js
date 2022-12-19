@@ -19,7 +19,7 @@ const CardCell = ({ card }) => {
       </View>
       {/* Text*/}
       <View className='justify-center'>
-        <FlipoText weight='semi-bold' className='text-lg'>{label}</FlipoText>
+          <FlipoText weight='semi-bold' className='text-lg'>{label}</FlipoText>
       </View>
     </View>
   );

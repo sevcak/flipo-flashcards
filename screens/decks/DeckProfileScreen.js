@@ -12,7 +12,6 @@ import TextButton from "../../components/pressable/TextButton";
 import colorSchemes from "../../assets/colorSchemes";
 
 const DeckProfileScreen = ({ navigation, route }) => {
-  //const navigation = useNavigation();
   let theme = useColorScheme();
   let colorScheme = colorSchemes[useColorScheme()];
 
@@ -36,7 +35,6 @@ const DeckProfileScreen = ({ navigation, route }) => {
   });
 
   useEffect(() => {
-    console.log('useEffect')
     setDeck(route.params.deck);
   }, [route.params.deck]);
 
