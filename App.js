@@ -83,11 +83,7 @@ export default function App() {
         <Stack.Screen name='TestScreen' component={TestScreen}/>
         <Stack.Screen name='DeckProfileScreen' component={DeckProfileScreen}/>
         <Stack.Screen name='DeckPlayScreen' component={DeckPlayScreen}/>
-        <Stack.Screen name='DeckEditScreen' component={DeckEditScreen}
-          options={{
-            title: 'New Deck',
-          }}
-        />
+        <Stack.Screen name='DeckEditScreen' component={DeckEditScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

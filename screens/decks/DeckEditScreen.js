@@ -13,6 +13,7 @@ import colorSchemes from "../../assets/colorSchemes";
 import CardCell from "../../components/decks/CardCell";
 import EditCardModal from "../../components/decks/EditCardModal";
 import { reorderObjectArrayId } from "../../utils/organisationUtils";
+import TextButton from "../../components/pressable/TextButton";
 
 const DeckEditScreen = ({ route, navigation }) => {
   const theme = useColorScheme();
@@ -25,6 +26,17 @@ const DeckEditScreen = ({ route, navigation }) => {
   const existing = (route.params.deck != undefined);
   
   const [customDecks, setCustomDecks] = useState({decks: []});
+
+  // header title setup
+  navigation.setOptions({
+    title: existing ? 'Edit deck' : 'New deck',
+    headerTitleStyle: {
+      fontFamily: "Montserrat-ExtraBold",
+      color: colorScheme["ui"],
+      letterSpacing: 1.8,
+      fontSize: 20,
+    },
+  });
   
   // loads custom deck data
   const getDecks = async () => {
@@ -128,6 +140,7 @@ const DeckEditScreen = ({ route, navigation }) => {
     });
   } 
 
+  // saves the deck to storage
   const createDeck = () => {
     // gets custom decks list to append the new deck to
     getDecks();
@@ -162,6 +175,23 @@ const DeckEditScreen = ({ route, navigation }) => {
     }
   }
 
+  // removes the deck from storage and goes back
+  const deleteDeck = () => {
+    // gets custom decks list to append the new deck to
+    getDecks();
+
+    let newCustomDecks = customDecks
+    //console.log(newCustomDecks);
+    newCustomDecks['decks'].splice(route.params.deck['id'], 1);
+    newCustomDecks['decks'] = reorderObjectArrayId(newCustomDecks['decks']);
+
+    setCustomDecks(newCustomDecks);
+    storeDecks(customDecks);
+
+    updateDecks();
+    navigation.pop(2);
+  }
+
   // function that refreshes the card elements
   const refreshCardElements = () => {
     setCardElements(newDeck['cards'].map(card => (
@@ -186,7 +216,7 @@ const DeckEditScreen = ({ route, navigation }) => {
 
     // deck conditions check before leaving the screen
     navigation.addListener('beforeRemove', (e) => {
-      if (newDeck['cards'].length >= 2) {
+      if (newDeck['cards'].length >= 2 || !existing) {
         // if deck creation/edit conditons are met, proceed
         return;
       } else {
@@ -240,7 +270,10 @@ const DeckEditScreen = ({ route, navigation }) => {
                 onChangeText={(val) => setTitle(val)}
               />
             </View>
-            <FlipoButton onPress={() => createDeck()}>{existing ? 'Done' : 'Create Deck'}</FlipoButton>
+            <View className='flex-row mx-10 space-x-4'>
+              {existing && <TextButton onPress={() => deleteDeck()} className='text-alert'>Delete deck</TextButton>}
+              <FlipoButton onPress={() => createDeck()}>{existing ? 'Done' : 'Create'}</FlipoButton>
+            </View>
           </View>
           {/* Section for adding cards  */}
           <View className='px-12 space-y-4 pb-10'>

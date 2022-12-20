@@ -1,6 +1,7 @@
 import { TouchableOpacity, useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Example decks
 import exampleDecksData from '../../default_data/example-decks';
@@ -12,7 +13,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 // Functions
 import { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DecksHomeScreen = () => {
   const navigation = useNavigation();
@@ -33,7 +33,7 @@ const DecksHomeScreen = () => {
       if (data != null && JSON.stringify(data.decks) != JSON.stringify(customDecks)) {
         console.log('Found new custom deck changes')
         setCustomDecks(data.decks);
-      } else if (data == null && customDecks != []) {
+      } else if (data == null && JSON.stringify(customDecks) != '[]') {
         setCustomDecks([]);
       }
 
