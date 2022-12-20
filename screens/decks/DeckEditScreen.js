@@ -48,7 +48,7 @@ const DeckEditScreen = ({ route, navigation }) => {
         setCustomDecks({decks: []});
       }
     } catch (e) {
-      console.error('There was an error with loading the decks.')
+      console.error('There was an error with loading the decks.');
     }
   }
 
@@ -144,6 +144,7 @@ const DeckEditScreen = ({ route, navigation }) => {
   const createDeck = () => {
     // gets custom decks list to append the new deck to
     getDecks();
+    let newCustomDecks = customDecks;
 
     // checks if the conditions for deck creation are met
     if (newDeck['cards'].length < 2) {
@@ -162,12 +163,13 @@ const DeckEditScreen = ({ route, navigation }) => {
     } else {
       // edits or creates the deck and returns to the previous menu
       if (existing) {
-        customDecks['decks'][newDeck['id']] = newDeck;
+        newCustomDecks['decks'][newDeck['id']] = newDeck;
         updateDeckProfile(newDeck);
       } else {
-        customDecks['decks'].push(newDeck);
+        newCustomDecks['decks'].push(newDeck);
       }
       
+      setCustomDecks(newCustomDecks);
       storeDecks(customDecks);
 
       updateDecks();

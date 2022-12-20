@@ -53,14 +53,13 @@ const DecksHomeScreen = () => {
 
     // Updates the custom decks list on re-render
     useEffect(() => {
-      console.log('useEffect refresh')
+      console.log('useEffect called.')
       getDecks();
       updateCustomDeckElements();
-      //console.log(customDecks);
     }, [customDecks]);
 
     const updateCustomDeckElements = () => {
-      console.log('refresh custom decks');
+      console.log('Refreshed custom decks.');
       setCustomDeckElements(customDecks.map(deck => (
         <TouchableOpacity 
           key={deck.id}

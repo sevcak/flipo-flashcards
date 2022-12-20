@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { useColorScheme } from "react-native";
+import { LogBox, useColorScheme } from "react-native";
 
 // Color schemes
 import colorSchemes from "./assets/colorSchemes";
@@ -22,6 +22,10 @@ import DeckEditScreen from './screens/decks/DeckEditScreen';
 const Stack = createStackNavigator();
 
 export default function App() {
+  // Ignores all logs and warnings in Expo Go.
+  // Serves for testing and preview recording purposes.
+  // LogBox.ignoreAllLogs();
+
   let colorScheme = colorSchemes[useColorScheme()];
   
   const [fontsLoaded] = useFonts({
