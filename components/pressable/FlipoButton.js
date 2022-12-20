@@ -14,7 +14,7 @@ const FlipoButton = ( props ) => {
       activeOpacity={0.5}
       className={`bg-green-dark px-6 py-2 rounded-lg`}
       style={props.style}>
-        <FlipoText weight='black' className={`text-3xl text-primary-${theme} tracking-wider`}>{props.children}</FlipoText>
+        <FlipoText weight='black' className={`${props.textSize ? props.textSize : 'text-3xl'} text-primary-${theme} tracking-wider text-center`}>{props.children}</FlipoText>
     </TouchableOpacity>
   );
 }

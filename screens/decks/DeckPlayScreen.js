@@ -1,4 +1,4 @@
-import { Pressable, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { Dimensions, Pressable, TouchableOpacity, useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useLayoutEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -10,7 +10,7 @@ import FlipoButton from '../../components/pressable/FlipoButton';
 // Color schemes
 import colorSchemes from "../../assets/colorSchemes";
 import Flashcard from '../../components/decks/Flashcard';
-import RateButton from '../../components/RateButton';
+import RateButton from '../../components/pressable/RateButton';
 
 const DeckPlayScreen = () => {
     const navigation = useNavigation();
@@ -28,11 +28,13 @@ const DeckPlayScreen = () => {
     navigation.setOptions({
       title: deck.title,
       headerTitleStyle: {
-        fontFamily: 'Montserrat-ExtraBold',
-            color: colorScheme['ui'],
-            letterSpacing: 1.8,
-            fontSize: 380 / deck.title.length,
-      }
+        fontFamily: "Montserrat-ExtraBold",
+        color: colorScheme["ui"],
+        letterSpacing: 1.8,
+        fontSize: deck.title.length < 20
+          ? 20
+          : Dimensions.get("window").width / deck.title.length,
+      },
     });
 
     // States and variable data
@@ -87,7 +89,7 @@ const DeckPlayScreen = () => {
               <View className={'flex-row w-full justify-center'}>
                 {
                   rateButons.map((button) => (
-                    <RateButton onPress={() => nextCard(deck.cards, flashcard)}>{button}</RateButton>)
+                    <RateButton key={button} onPress={() => nextCard(deck.cards, flashcard)}>{button}</RateButton>)
                   )
                 }
               </View>

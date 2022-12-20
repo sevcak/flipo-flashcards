@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { useColorScheme } from "react-native";
+import { LogBox, useColorScheme } from "react-native";
 
 // Color schemes
 import colorSchemes from "./assets/colorSchemes";
@@ -17,28 +17,33 @@ import FlipoIcons from './components/FlipoIcons';
 import TestScreen from './screens/TestScreen';
 import DeckProfileScreen from './screens/decks/DeckProfileScreen';
 import DeckPlayScreen from './screens/decks/DeckPlayScreen';
+import DeckEditScreen from './screens/decks/DeckEditScreen';
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  // Ignores all logs and warnings in Expo Go.
+  // Serves for testing and preview recording purposes.
+  // LogBox.ignoreAllLogs();
+
   let colorScheme = colorSchemes[useColorScheme()];
   
   const [fontsLoaded] = useFonts({
     'Montserrat': require('./assets/fonts/Montserrat/static/Montserrat-Regular.ttf'),
+    'Montserrat-Medium': require('./assets/fonts/Montserrat/static/Montserrat-Medium.ttf'),
     'Montserrat-Light': require('./assets/fonts/Montserrat/static/Montserrat-Thin.ttf'),
     'Montserrat-SemiBold': require('./assets/fonts/Montserrat/static/Montserrat-SemiBold.ttf'),
     'Montserrat-Bold': require('./assets/fonts/Montserrat/static/Montserrat-Bold.ttf'),
     'Montserrat-ExtraBold': require('./assets/fonts/Montserrat/static/Montserrat-ExtraBold.ttf'),
     'Montserrat-Black': require('./assets/fonts/Montserrat/static/Montserrat-Black.ttf'),
     'Montserrat-Italic': require('./assets/fonts/Montserrat/static/Montserrat-Italic.ttf'),
+    'Montserrat-Medium-Italic': require('./assets/fonts/Montserrat/static/Montserrat-MediumItalic.ttf'),
     'Montserrat-Light-Italic': require('./assets/fonts/Montserrat/static/Montserrat-ThinItalic.ttf'),
     'Montserrat-Bold-Italic': require('./assets/fonts/Montserrat/static/Montserrat-BoldItalic.ttf'),
     'Montserrat-SemiBold-Italic': require('./assets/fonts/Montserrat/static/Montserrat-SemiBoldItalic.ttf'),
     'Montserrat-ExtraBold-Italic': require('./assets/fonts/Montserrat/static/Montserrat-ExtraBoldItalic.ttf'),
     'Montserrat-Black-Italic': require('./assets/fonts/Montserrat/static/Montserrat-BlackItalic.ttf'),
   });
-
-  const homeName = 'Home';
 
   useEffect(() => {
     async function prepare() {
@@ -67,7 +72,6 @@ export default function App() {
           fontFamily: 'Montserrat-ExtraBold',
           color: colorScheme['ui'],
           letterSpacing: 1.8,
-          // fontSize: 20,
         },
         headerTitleAlign: 'center',
         headerBackImage: () => (
@@ -75,7 +79,7 @@ export default function App() {
         ),
       })}
       >
-        <Stack.Screen name={homeName} component={Navbar}
+        <Stack.Screen name='DecksHomeScreen' component={Navbar}
           options={{
             headerShown: false,
           }}
@@ -83,6 +87,7 @@ export default function App() {
         <Stack.Screen name='TestScreen' component={TestScreen}/>
         <Stack.Screen name='DeckProfileScreen' component={DeckProfileScreen}/>
         <Stack.Screen name='DeckPlayScreen' component={DeckPlayScreen}/>
+        <Stack.Screen name='DeckEditScreen' component={DeckEditScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

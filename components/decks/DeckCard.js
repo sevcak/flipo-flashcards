@@ -1,4 +1,4 @@
-import { View, Text, Image, useColorScheme, ImageBackground } from 'react-native'
+import { View, useColorScheme, ImageBackground } from 'react-native'
 import React from 'react'
 import FlipoText from '../FlipoText';
 
@@ -6,7 +6,7 @@ const DeckCard = ( { title, coverUrl, labelUnder, labelCover, style, customDeck,
     let theme = useColorScheme();
 
     
-    title = title ? title : 'Sample Deck';
+    title = title ? title : 'Untitled deck';
     
     labelCover = labelCover
       ? (<View className={`bg-card-${theme} rounded-b-lg p-4 w-full`}>
@@ -24,7 +24,11 @@ const DeckCard = ( { title, coverUrl, labelUnder, labelCover, style, customDeck,
       ? (<FlipoText weight='extra-bold' className={`text-center py-4 text-lg text-secondary-${theme}`}>{ title }</FlipoText>)
       : (<></>);
     let card = coverUrl
-      ? (<ImageBackground source={coverUrl} resizeMode='cover' imageStyle={{borderRadius: 10}} className='rounded-lg w-full h-full justify-end'>
+      ? (<ImageBackground 
+          source={coverUrl}
+          resizeMode='cover'
+          imageStyle={{borderRadius: 10}}
+          className={`rounded-xl w-full h-full justify-end ${theme == 'light' ? 'bg-gray-400' : 'bg-gray-700'}`}>
             {labelCover}
           </ImageBackground>)
       : (<View className={`${theme == 'light' ? 'bg-gray-400' : 'bg-gray-700'} rounded-xl w-full h-full`}>

@@ -1,8 +1,8 @@
 export default [
     {
         'id': 0,
-        'title': 'Capitals of countries',
         'custom': false,
+        'title': 'Capitals of countries',
         'coverUrl': require('../assets/example-decks/capitals-of-countries/cover.jpg'),
         'cards': [
             {
@@ -48,8 +48,8 @@ export default [
     },
     {
         'id': 1,
-        'title': 'Continents of countries',
         'custom': false,
+        'title': 'Continents of countries',
         'coverUrl': require('../assets/example-decks/continents-of-countries/cover.jpg'),
         'cards': [
             {
