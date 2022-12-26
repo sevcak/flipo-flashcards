@@ -7,7 +7,7 @@ export default [
         'cards': [
             {
                 'id': 0,
-                'ars': 0,
+                'ars': 1,
                 'front': {
                     'title': 'Germany',
                     'content': 'What is the capital of Germany?',
@@ -21,7 +21,7 @@ export default [
             },
             {
                 'id': 1,
-                'ars': 0,
+                'ars': 1,
                 'front': {
                     'title': 'Czech Republic',
                     'content': 'What is the capital of Czech Republic?',
@@ -35,7 +35,7 @@ export default [
             },
             {
                 'id': 2,
-                'ars': 0,
+                'ars': 1,
                 'front': {
                     'title': 'Austria',
                     'content': 'What is the capital of Austria?',
@@ -57,7 +57,7 @@ export default [
         'cards': [
             {
                 'id': 0,
-                'ars': 0,
+                'ars': 1,
                 'front': {
                     'title': 'Germany',
                     'content': 'On which continent is Germany located?',
@@ -71,7 +71,7 @@ export default [
             },
             {
                 'id': 1,
-                'ars': 0,
+                'ars': 1,
                 'front': {
                     'title': 'Czech Republic',
                     'content': 'On which continent is Czech Republic located?',

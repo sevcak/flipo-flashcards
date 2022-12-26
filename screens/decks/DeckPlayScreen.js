@@ -1,7 +1,6 @@
-import { Dimensions, Pressable, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { Dimensions, Pressable, useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import React, { useLayoutEffect, useState } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useState } from 'react';
 
 // Components
 import FlipoText from '../../components/FlipoText';
@@ -11,6 +10,7 @@ import FlipoButton from '../../components/pressable/FlipoButton';
 import colorSchemes from "../../assets/colorSchemes";
 import Flashcard from '../../components/decks/Flashcard';
 import RateButton from '../../components/pressable/RateButton';
+import { weightedRandom } from '../../utils/deckStatUtils';
 
 const DeckPlayScreen = ({route, navigation}) => {
     let theme = useColorScheme();
@@ -44,25 +44,12 @@ const DeckPlayScreen = ({route, navigation}) => {
 
     // picks and returns the next card to give the user
     function getNextCard(cards) {
-      let lowestRecallCards = [];
       const arsList = cards.map(card => card['ars']);
-      minArs = Math.min(...arsList);
       
-      for (let i = 0; i < cards.length; i += 1) {
-        if (cards[i]['ars'] == minArs) {
-          lowestRecallCards.push(cards[i]);
-        }
-      }
-      console.log(lowestRecallCards);
+      // calculates a weighted random based on ARSw
+      const weightList = arsList.map(ars => 5.1 - ars)
 
-      // if more cards have the lowest ARS, picks randomly between them
-      if (lowestRecallCards.length > 1) {
-        const nextCardIndex = Math.floor(Math.random() * lowestRecallCards.length);
-        
-        return lowestRecallCards[nextCardIndex];
-      } else {
-        return lowestRecallCards[0];
-      }
+      return weightedRandom(cards, weightList);
     }
     
     // updates deck stats based on recall rating
@@ -83,6 +70,7 @@ const DeckPlayScreen = ({route, navigation}) => {
       newDeck['cards'][card['id']] = card;
       setDeck(newDeck);
       updateDeck(deck);
+      getDecks();
 
       nextCard(deck.cards, card);
     }
@@ -97,7 +85,6 @@ const DeckPlayScreen = ({route, navigation}) => {
     // deals the next card
     function nextCard(cards, prevCard) {
       const nextCard = getNextCard(cards.slice(0,prevCard['id']).concat(cards.slice(prevCard['id'] + 1)));
-      console.log(nextCard);
 
       flipCard();
       setTimeout(() => {
@@ -111,13 +98,13 @@ const DeckPlayScreen = ({route, navigation}) => {
             <Pressable className='h-96 w-full px-10 my-10' onPress={() => flipCard()}>
               <Flashcard card={flashcard} flipped={flipped}/>
             </Pressable>
-            {/*Card flip Button*/}
+            {/* Card flip button */}
             <FlipoButton 
               className={`my-10 px-16 ${flipButton ? '' : 'hidden'}`}
               onPress={() => flipCard()}>
                 <FlipoText weight='black' className={`text-2xl text-primary-${theme} tracking-wide`}>Flip</FlipoText>
             </FlipoButton>
-            {/*Recall rating button bar*/}
+            {/* Recall rating button bar */}
             <View className={`w-full grow justify-end ${rateButtons ? '' : 'hidden'}`}>
               <FlipoText weight='bold' className='px-10 mb-6 text-lg text-center'>
                 How well did you recall this card?
