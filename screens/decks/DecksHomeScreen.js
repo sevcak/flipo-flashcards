@@ -95,6 +95,7 @@ const DecksHomeScreen = () => {
       getExampleDecks();
       updateCustomDeckElements();
       updateExampleDeckElements();
+      //AsyncStorage.clear();
     }, [customDecks, exampleDecks]);
 
     const updateCustomDeckElements = () => {
@@ -166,7 +167,7 @@ const DecksHomeScreen = () => {
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.navigate('DeckEditScreen', {
-                  getDecks,
+                  getDecks: getCustomDecks,
                 })}
               >
                   <DeckCard 

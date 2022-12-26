@@ -8,7 +8,7 @@ const TextButton = ( props ) => {
 
   return (
     <TouchableOpacity onPress={props.onPress}>
-      <FlipoText weight='bold' className={`text-lg text-strong-${theme}`} text- style={props.style}>{`${props.children} >`}</FlipoText>
+      <FlipoText weight='bold' className={`text-lg text-strong-${theme}`} style={props.style}>{`${props.children} >`}</FlipoText>
     </TouchableOpacity>
   );
 }

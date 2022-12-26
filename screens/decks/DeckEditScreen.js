@@ -275,7 +275,9 @@ const DeckEditScreen = ({ route, navigation }) => {
             </View>
             <View className='flex-row mx-10 space-x-4'>
               {existing && <TextButton onPress={() => deleteDeck()} className='text-alert'>Delete deck</TextButton>}
-              <FlipoButton onPress={() => createDeck()}>{existing ? 'Done' : 'Create'}</FlipoButton>
+              <TouchableOpacity onPress={() => createDeck()}>
+                <FlipoButton>{existing ? 'Done' : 'Create'}</FlipoButton>
+              </TouchableOpacity>
             </View>
           </View>
           {/* Section for adding cards  */}

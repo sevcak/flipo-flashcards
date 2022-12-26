@@ -11,6 +11,7 @@ import colorSchemes from "../../assets/colorSchemes";
 import Flashcard from '../../components/decks/Flashcard';
 import RateButton from '../../components/pressable/RateButton';
 import { weightedRandom } from '../../utils/deckStatUtils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DeckPlayScreen = ({route, navigation}) => {
     let theme = useColorScheme();
@@ -18,8 +19,29 @@ const DeckPlayScreen = ({route, navigation}) => {
 
     // unpacks deck passed from parameters and creates state for it
     const [deck, setDeck] = useState(route.params.deck);
-    const updateDeck = route.params.updateDeck;
+    const updateDeckProfile = route.params.updateDeckProfile;
     const getDecks = route.params.getDecks;
+
+    // stores custom deck data
+    const storeDeck = async (deck) => {
+      let data = [];
+      const storageKey = deck['custom'] ? 'customDecks' : 'exampleDecks';
+
+      try {
+        data = await AsyncStorage.getItem(storageKey);
+        data = JSON.parse(data);
+
+        data['decks'][deck['id']]['cards'] = deck['cards'];
+      } catch (e) {
+        console.error('There was an error with loading deck data.');
+      }
+
+      try {
+        await AsyncStorage.setItem(storageKey, JSON.stringify(data));
+      } catch (e) {
+        console.error('There was an error with saving deck data.')
+      }
+    };
 
     // header setup
     navigation.setOptions({
@@ -69,9 +91,10 @@ const DeckPlayScreen = ({route, navigation}) => {
 
       newDeck['cards'][card['id']] = card;
       setDeck(newDeck);
-      updateDeck(deck);
+      storeDeck(deck);
+      updateDeckProfile(deck);
       getDecks();
-
+      
       nextCard(deck.cards, card);
     }
 

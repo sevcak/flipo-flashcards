@@ -1,9 +1,9 @@
 import { View, useColorScheme } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import React from 'react'
 
 // Components
 import FlipoText from '../FlipoText'
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const FlipoButton = ( props ) => {
   const theme = useColorScheme();

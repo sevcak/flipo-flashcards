@@ -23,4 +23,11 @@ function weightedRandom (items, weights) {
     }
 }
 
-export { weightedRandom };
+function getDeckArs (deck) {
+    const arsList = deck['cards'].map(card => card['ars']);
+    const deckARS = arsList.reduce((a, b) => a + b, 0) / arsList.length;
+
+    return deckARS;
+}
+
+export { weightedRandom, getDeckArs };
