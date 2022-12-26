@@ -12,17 +12,14 @@ import colorSchemes from "../../assets/colorSchemes";
 import Flashcard from '../../components/decks/Flashcard';
 import RateButton from '../../components/pressable/RateButton';
 
-const DeckPlayScreen = () => {
-    const navigation = useNavigation();
+const DeckPlayScreen = ({route, navigation}) => {
     let theme = useColorScheme();
     let colorScheme = colorSchemes[useColorScheme()];
 
-    // unpacks deck passed from parameters
-    const {
-      params: {
-        deck
-      }
-    } = useRoute();
+    // unpacks deck passed from parameters and creates state for it
+    const [deck, setDeck] = useState(route.params.deck);
+    const updateDeck = route.params.updateDeck;
+    const getDecks = route.params.getDecks;
 
     // header setup
     navigation.setOptions({
@@ -47,9 +44,49 @@ const DeckPlayScreen = () => {
 
     // picks and returns the next card to give the user
     function getNextCard(cards) {
-      const cardIndex = Math.floor(Math.random() * cards.length);
-      return cards[cardIndex];
+      let lowestRecallCards = [];
+      const arsList = cards.map(card => card['ars']);
+      minArs = Math.min(...arsList);
+      
+      for (let i = 0; i < cards.length; i += 1) {
+        if (cards[i]['ars'] == minArs) {
+          lowestRecallCards.push(cards[i]);
+        }
+      }
+      console.log(lowestRecallCards);
+
+      // if more cards have the lowest ARS, picks randomly between them
+      if (lowestRecallCards.length > 1) {
+        const nextCardIndex = Math.floor(Math.random() * lowestRecallCards.length);
+        
+        return lowestRecallCards[nextCardIndex];
+      } else {
+        return lowestRecallCards[0];
+      }
     }
+    
+    // updates deck stats based on recall rating
+    const rateRecall = (card, rating) => {
+      let newDeck = deck;
+
+      // updates the history of recalls
+      if (card['recentRecalls'] == undefined) {
+        card['recentRecalls'] = [];
+      } else if (card['recentRecalls'].length == 5) {
+        card['recentRecalls'].shift();
+      }
+      card['recentRecalls'].push(rating);
+      
+      // calculates new ARS (Average Recall Score)
+      card['ars'] = card['recentRecalls'].reduce((a, b) => a + b, 0) / card['recentRecalls'].length;
+
+      newDeck['cards'][card['id']] = card;
+      setDeck(newDeck);
+      updateDeck(deck);
+
+      nextCard(deck.cards, card);
+    }
+
     // flips the current card
     function flipCard() {
       setFlipButton(prevFlipButton => (!prevFlipButton));
@@ -59,10 +96,9 @@ const DeckPlayScreen = () => {
 
     // deals the next card
     function nextCard(cards, prevCard) {
-      let nextCard;
-      do {
-        nextCard = getNextCard(cards)
-      } while (prevCard.id == nextCard.id);
+      const nextCard = getNextCard(cards.slice(0,prevCard['id']).concat(cards.slice(prevCard['id'] + 1)));
+      console.log(nextCard);
+
       flipCard();
       setTimeout(() => {
         setFlashcard(nextCard);
@@ -75,7 +111,7 @@ const DeckPlayScreen = () => {
             <Pressable className='h-96 w-full px-10 my-10' onPress={() => flipCard()}>
               <Flashcard card={flashcard} flipped={flipped}/>
             </Pressable>
-            {/*Flip Button*/}
+            {/*Card flip Button*/}
             <FlipoButton 
               className={`my-10 px-16 ${flipButton ? '' : 'hidden'}`}
               onPress={() => flipCard()}>
@@ -89,7 +125,7 @@ const DeckPlayScreen = () => {
               <View className={'flex-row w-full justify-center'}>
                 {
                   rateButons.map((button) => (
-                    <RateButton key={button} onPress={() => nextCard(deck.cards, flashcard)}>{button}</RateButton>)
+                    <RateButton key={button} onPress={() => rateRecall(flashcard, button)}>{button}</RateButton>)
                   )
                 }
               </View>

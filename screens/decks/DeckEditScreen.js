@@ -127,6 +127,7 @@ const DeckEditScreen = ({ route, navigation }) => {
   const createCard = () => {
     setNewCard({
       'id': newDeck['cards'].length,
+      'ars': 0,
       'front': {
           'title': '',
           'content': '',

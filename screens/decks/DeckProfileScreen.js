@@ -18,7 +18,7 @@ const DeckProfileScreen = ({ navigation, route }) => {
   // unpacks deck passed from parameters
   const [deck, setDeck] = useState(route.params.deck);
 
-  // function for updating the custom decks state in the homepage
+  // function for updating the decks state in the homepage
   const getDecks = route.params.getDecks;
 
   // header title setup
@@ -68,7 +68,9 @@ const DeckProfileScreen = ({ navigation, route }) => {
           <FlipoButton
             onPress={() =>
               navigation.navigate("DeckPlayScreen", {
-                deck,
+                deck: deck,
+                updateDeck: setDeck,
+                getDecks: getDecks,
               })
             }
           >
