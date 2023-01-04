@@ -86,6 +86,8 @@ module.exports = {
     'bg-rate-5',
     'border-primary-light',
     'border-primary-dark',
+    'border-ui-light',
+    'border-ui-dark',
   ],
   plugins: [],
 }

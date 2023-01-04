@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a632102f-7e7b-44dd-a7c8-1ecdcc15d0b2"
+      }
+    },
+    "owner": "sevcak"
   }
 }
