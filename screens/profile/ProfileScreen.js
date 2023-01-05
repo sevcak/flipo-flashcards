@@ -65,6 +65,15 @@ const ProfileScreen = () => {
     }
   }
 
+  // stores custom deck data
+  const storeCustomDecks = async (data) => {
+    try {
+      await AsyncStorage.setItem('customDecks', JSON.stringify(data));
+    } catch (e) {
+      console.error('There was an error with saving the decks.');
+    }
+  };
+
   const [accessToken, setAccessToken] = useState(null);
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: '1065386564540-6ubve5q36b79drp6fraa1ml3hs17p27p.apps.googleusercontent.com',
@@ -126,6 +135,7 @@ const ProfileScreen = () => {
     console.log(await response.json());
   }
 
+  // imports custom deck data from the user's Google Drive to local storage
   const importDecksGDrive = async () => {
     const fileName = 'flipo_customDecks.json';
 
@@ -154,7 +164,10 @@ const ProfileScreen = () => {
       });
 
       let fileContent = await downloadResponse.text();
-      console.log(fileContent);
+      fileContent = JSON.parse(fileContent);
+
+      console.log(JSON.stringify(fileContent));
+      storeCustomDecks(fileContent);
     } else {
       throw new Error(`No custom decks were not found on your Google Drive.`);
     }

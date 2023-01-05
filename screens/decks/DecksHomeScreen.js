@@ -69,15 +69,14 @@ const DecksHomeScreen = () => {
     }
   }
 
-
-  // stores custom deck data
-  const storeCustomDecks = async (data) => {
-    try {
-      await AsyncStorage.setItem('customDecks', JSON.stringify(data));
-    } catch (e) {
-      console.error('There was an error with saving the decks.')
-    }
-  };
+  // // stores custom deck data
+  // const storeCustomDecks = async (data) => {
+  //   try {
+  //     await AsyncStorage.setItem('customDecks', JSON.stringify(data));
+  //   } catch (e) {
+  //     console.error('There was an error with saving the decks.')
+  //   }
+  // };
 
   // stores example deck data
   const storeExampleDecks = async (data) => {
@@ -90,7 +89,7 @@ const DecksHomeScreen = () => {
 
     // Updates the custom decks list on re-render
     useEffect(() => {
-      console.log('useEffect called.')
+      console.log('Rerendering deck elements.')
       getCustomDecks();
       getExampleDecks();
       updateCustomDeckElements();
