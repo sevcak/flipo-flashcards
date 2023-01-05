@@ -1,12 +1,11 @@
-import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import { LogBox, useColorScheme } from "react-native";
+import { useEffect, useState } from 'react';
 
 // Color schemes
+import { useColorScheme } from "react-native";
 import colorSchemes from "./assets/colorSchemes";
 
 // Components
@@ -51,6 +50,7 @@ export default function App() {
     }
     prepare();
   })
+
 
   if (!fontsLoaded) {
     return undefined;

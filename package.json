@@ -31,7 +31,8 @@
     "expo-modules-core": "~0.11.10",
     "expo-application": "~4.2.2",
     "expo-auth-session": "~3.7.4",
-    "expo-random": "~12.3.0"
+    "expo-random": "~12.3.0",
+    "expo-updates": "~0.14.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

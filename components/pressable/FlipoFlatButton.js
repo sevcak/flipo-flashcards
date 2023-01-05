@@ -29,11 +29,16 @@ const FlipoFlatButton = ( props ) => {
       </View>
     )
   } else if (props.type == 'action' || props.type == 'action-red') {
-    buttonContent = (
-      <FlipoText
-        className={`text-lg uppercase text-center text-${props.type == 'action-red' ? 'alert' : 'strong'}-${theme}`}
-        weight='medium' >{props.children}
-      </FlipoText>
+    buttonContent = ( props.content
+      ? (
+        <FlipoText
+          className={`text-lg uppercase text-center text-${props.type == 'action-red' ? 'alert' : 'strong'}-${theme}`}
+          weight='medium'
+        >
+            {props.content}
+        </FlipoText>
+      )
+      : (props.children)
     );
   } else if (props.type == 'custom') {
     buttonContent = (
@@ -43,13 +48,13 @@ const FlipoFlatButton = ( props ) => {
 
   return (props.onPress == undefined
     ? (
-        <View className={`border-ui-${theme} border-b-2 p-4 h-20 justify-center`}>
+        <View className={`border-ui-${theme} border-b-2 p-4 min-h-[10vh] justify-center`}>
           {buttonContent}
         </View>
       )
     : (
-        <TouchableOpacity onPress={props.onPress} className={`border-ui-${theme} border-b-2 p-4 h-20 justify-center`}>
-          <FlipoText>{props.children}</FlipoText>
+        <TouchableOpacity onPress={props.onPress} className={`border-ui-${theme} border-b-2 p-4 min-h-[10vh] justify-center`}>
+          {buttonContent}
         </TouchableOpacity>
       )
   );
