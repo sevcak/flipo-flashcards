@@ -29,16 +29,13 @@ const FlipoFlatButton = ( props ) => {
       </View>
     )
   } else if (props.type == 'action' || props.type == 'action-red') {
-    buttonContent = ( props.content
-      ? (
-        <FlipoText
-          className={`text-lg uppercase text-center text-${props.type == 'action-red' ? 'alert' : 'strong'}-${theme}`}
-          weight='medium'
-        >
-            {props.content}
-        </FlipoText>
-      )
-      : (props.children)
+    buttonContent = (
+      <FlipoText
+        className={`text-lg uppercase text-center text-${props.type == 'action-red' ? 'alert' : 'strong'}-${theme}`}
+        weight='medium'
+      >
+          {props.children}
+      </FlipoText>
     );
   } else if (props.type == 'custom') {
     buttonContent = (
