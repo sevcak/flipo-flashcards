@@ -110,31 +110,6 @@ const ProfileScreen = () => {
     return ipartRequestBody;
   }
 
-  const exportDecksGDrive = async () => {
-    const data = {
-      name: 'flipo_customDecks.json',
-      mimeType: 'application/json',
-      metadata: {
-        name: 'flipo_customDecks.json',
-        //parents: ['appDataFolder'],
-      },
-      content: await getCustomDecks(),
-    }
-    let url = `https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart`;
-
-    let response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'multipart/related; boundary=request_body_boundary',
-        'Content-Transfer-Encoding': 'utf-8',
-      },
-      body: generateMultipartBody(data),
-    });
-
-    console.log(await response.json());
-  }
-
   // imports custom deck data from the user's Google Drive to local storage
   const importDecksGDrive = async () => {
     const fileName = 'flipo_customDecks.json';
@@ -172,7 +147,66 @@ const ProfileScreen = () => {
       throw new Error(`No custom decks were not found on your Google Drive.`);
     }
   }
-  
+
+  const deleteDecksGDrive = async () => {
+    const fileName = 'flipo_customDecks.json';
+
+    let query = `name='${fileName}' and mimeType='application/json'`;
+    let url = `https://www.googleapis.com/drive/v3/files?q=${query}`;
+
+    let response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    let files = await response.json();
+    let file = files.files[0];
+    
+    // if a custom decks file exists, delete it
+    if (file) {
+      console.log('file found, deleting it...')
+      
+      const fileId = file.id;
+      url = `https://www.googleapis.com/drive/v3/files/${fileId}`;
+
+      response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    }
+  }
+
+  // exports custom deck data to the user's Google Drive  
+  const exportDecksGDrive = async () => {
+    await deleteDecksGDrive();
+    
+    const data = {
+      name: 'flipo_customDecks.json',
+      mimeType: 'application/json',
+      metadata: {
+        name: 'flipo_customDecks.json',
+        //parents: ['appDataFolder'],
+      },
+      content: await getCustomDecks(),
+    }
+    let url = `https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart`;
+
+    let response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'multipart/related; boundary=request_body_boundary',
+        'Content-Transfer-Encoding': 'utf-8',
+      },
+      body: generateMultipartBody(data),
+    });
+
+    console.log(await response.json());
+  }
   
   useEffect(() => {
     if (response?.type === 'success') {
