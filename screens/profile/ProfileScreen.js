@@ -114,8 +114,8 @@ const ProfileScreen = () => {
   const importDecksGDrive = async () => {
     const fileName = 'flipo_customDecks.json';
 
-    let query = `name='${fileName}' and mimeType='application/json'`;
-    let url = `https://www.googleapis.com/drive/v3/files?q=${query}`;
+    let query = `name='${fileName}' and mimeType='application/json and trashed = false`;
+    let url = `https://www.googleapis.com/drive/v3/files?${query}&spaces=appDataFolder`;
 
     let response = await fetch(url, {
       method: 'GET',
@@ -125,9 +125,10 @@ const ProfileScreen = () => {
     });
 
     let files = await response.json();
-    let file = files.files[0];
+    files = files.files;
 
-    if (file) {
+    if (files.length > 0) {
+      let file = files[0];
       let fileId = file.id;
       let downloadUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
 
@@ -141,7 +142,6 @@ const ProfileScreen = () => {
       let fileContent = await downloadResponse.text();
       fileContent = JSON.parse(fileContent);
 
-      console.log(JSON.stringify(fileContent));
       storeCustomDecks(fileContent);
     } else {
       throw new Error(`No custom decks were not found on your Google Drive.`);
@@ -151,8 +151,8 @@ const ProfileScreen = () => {
   const deleteDecksGDrive = async () => {
     const fileName = 'flipo_customDecks.json';
 
-    let query = `name='${fileName}' and mimeType='application/json'`;
-    let url = `https://www.googleapis.com/drive/v3/files?q=${query}`;
+    let query = `name='${fileName}' and mimeType='application/json and trashed=false`;
+    let url = `https://www.googleapis.com/drive/v3/files?${query}&spaces=appDataFolder`;
 
     let response = await fetch(url, {
       method: 'GET',
@@ -162,12 +162,13 @@ const ProfileScreen = () => {
     });
 
     let files = await response.json();
-    let file = files.files[0];
-    
+    files = files.files;
+
     // if a custom decks file exists, delete it
-    if (file) {
+    if (files.length > 0) {
       console.log('file found, deleting it...')
-      
+      let file = files[0];
+
       const fileId = file.id;
       url = `https://www.googleapis.com/drive/v3/files/${fileId}`;
 
@@ -189,7 +190,7 @@ const ProfileScreen = () => {
       mimeType: 'application/json',
       metadata: {
         name: 'flipo_customDecks.json',
-        //parents: ['appDataFolder'],
+        parents: ['appDataFolder'],
       },
       content: await getCustomDecks(),
     }
