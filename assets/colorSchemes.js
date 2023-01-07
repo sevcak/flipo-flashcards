@@ -7,7 +7,7 @@ export default {
         "card": "#ebebeb",
         "green": "#4ef4b9",
         "green-dark": "#28b8af",
-        "alert": "#d60000",
+        "alert": "#ef0000",
         "green-gradient": "linear-gradient(190deg, #4EF4A4 9.63%, #49FFDE 88.11%)",
         "green-gradient-dark": "linear-gradient(190deg, #28B8AF 9.63%, #266F7E 88.11%)",
     },
@@ -19,7 +19,7 @@ export default {
         "card": "#2f2f2f",
         "green": "#28b8af",
         "green-dark": "#28b8af",
-        "alert": "#d60000",
+        "alert": "#ef0000",
         "green-gradient": "linear-gradient(190deg, #28B8AF 9.63%, #266F7E 88.11%)",
         "green-gradient-dark": "linear-gradient(190deg, #28B8AF 9.63%, #266F7E 88.11%)",
     }

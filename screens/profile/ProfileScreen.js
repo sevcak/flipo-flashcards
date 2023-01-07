@@ -11,12 +11,16 @@ import FlipoText from '../../components/FlipoText';
 import FlipoIcons from '../../components/FlipoIcons';
 import colorSchemes from '../../assets/colorSchemes';
 import FlipoFlatButton from '../../components/pressable/FlipoFlatButton';
+import FlipoModal from '../../components/FlipoModal';
 
 WebBrowser.maybeCompleteAuthSession();
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
   let theme = useColorScheme();
+
+  // alert modal state
+  const [alert, setAlert] = useState(null);
   
   // user data
   const [user, setUser] = useState(null);
@@ -110,11 +114,10 @@ const ProfileScreen = () => {
     return ipartRequestBody;
   }
 
-  // imports custom deck data from the user's Google Drive to local storage
-  const importDecksGDrive = async () => {
+  const getDecksGDrive = async () => {
     const fileName = 'flipo_customDecks.json';
 
-    let query = `name='${fileName}' and mimeType='application/json and trashed = false`;
+    let query = `name='${fileName}' and mimeType='application/json and trashed=false`;
     let url = `https://www.googleapis.com/drive/v3/files?${query}&spaces=appDataFolder`;
 
     let response = await fetch(url, {
@@ -125,7 +128,25 @@ const ProfileScreen = () => {
     });
 
     let files = await response.json();
-    files = files.files;
+    return files.files;
+  }
+
+  // imports custom deck data from the user's Google Drive to local storage
+  const importDecksGDrive = async () => {
+    // displays a modal so the user has to wait until done
+    setAlert(
+      <FlipoModal 
+          title="Please wait"
+          visible={true}
+          noDefaultButton
+        >
+          <FlipoText weight='medium' className={`text-center text-lg text-primary-${theme}`}>
+            Importing data from your Google Drive...
+          </FlipoText>
+        </FlipoModal>
+    );
+    
+    const files = await getDecksGDrive();
 
     if (files.length > 0) {
       let file = files[0];
@@ -143,26 +164,27 @@ const ProfileScreen = () => {
       fileContent = JSON.parse(fileContent);
 
       storeCustomDecks(fileContent);
+
+      // removes modal
+      setAlert(null);
     } else {
-      throw new Error(`No custom decks were not found on your Google Drive.`);
+      setAlert(
+        <FlipoModal 
+          title="Can't import decks"
+          visible={true}
+          onButtonPress={() => {setAlert(null)}}
+        >
+          <FlipoText weight='medium' className={`text-center text-lg text-primary-${theme}`}>
+            No custom decks were found on your Google Drive.
+          </FlipoText>
+        </FlipoModal>
+      );
     }
   }
 
+  // deletes the custom decks file from the user's Google Drive, if it exists
   const deleteDecksGDrive = async () => {
-    const fileName = 'flipo_customDecks.json';
-
-    let query = `name='${fileName}' and mimeType='application/json and trashed=false`;
-    let url = `https://www.googleapis.com/drive/v3/files?${query}&spaces=appDataFolder`;
-
-    let response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    let files = await response.json();
-    files = files.files;
+    const files = await getDecksGDrive();
 
     // if a custom decks file exists, delete it
     if (files.length > 0) {
@@ -170,9 +192,9 @@ const ProfileScreen = () => {
       let file = files[0];
 
       const fileId = file.id;
-      url = `https://www.googleapis.com/drive/v3/files/${fileId}`;
+      const url = `https://www.googleapis.com/drive/v3/files/${fileId}`;
 
-      response = await fetch(url, {
+      let response = await fetch(url, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -183,6 +205,19 @@ const ProfileScreen = () => {
 
   // exports custom deck data to the user's Google Drive  
   const exportDecksGDrive = async () => {
+    // displays a modal so the user has to wait until done
+    setAlert(
+      <FlipoModal 
+          title="Please wait"
+          visible={true}
+          noDefaultButton
+        >
+          <FlipoText weight='medium' className={`text-center text-lg text-primary-${theme}`}>
+            Exporting data to your Google Drive...
+          </FlipoText>
+        </FlipoModal>
+    );
+    
     await deleteDecksGDrive();
     
     const data = {
@@ -194,7 +229,8 @@ const ProfileScreen = () => {
       },
       content: await getCustomDecks(),
     }
-    let url = `https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart`;
+    
+    const url = `https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart`;
 
     let response = await fetch(url, {
       method: 'POST',
@@ -207,6 +243,7 @@ const ProfileScreen = () => {
     });
 
     console.log(await response.json());
+    setAlert(null);
   }
   
   useEffect(() => {
@@ -220,6 +257,7 @@ const ProfileScreen = () => {
     getUserData()
   }, []);
 
+  // updates the user info states from their Google account info
   const fetchUserInfo = async () => {
     let response = await fetch('https://www.googleapis.com/userinfo/v2/me', {
       headers: {
@@ -233,40 +271,110 @@ const ProfileScreen = () => {
     storeUserData({name: userInfo.given_name});
   }
 
+  // Modal to double-check the user's decision
+  // to import decks from Google Drive 
+  const importGDriveModal = (
+    <FlipoModal
+      title="Warning"
+      visible={true}
+      onButtonPress={() => {
+        setAlert(null);
+        importDecksGDrive();
+      }}
+      buttonText='Proceed'
+      cancelButton
+      onCancelPress={() => {
+        setAlert(null);
+      }}
+    >
+      <View className='space-y-4'>
+        <FlipoText
+          weight='medium'
+          className={`text-center text-lg text-primary-${theme}`}
+        >
+          Importing decks from your Google Drive will overwrite your local decks.
+        </FlipoText>
+        <FlipoText
+          weight='medium'
+          className={`text-center text-lg text-primary-${theme}`}
+        >
+          Do you want to proceed?
+        </FlipoText>
+      </View>
+    </FlipoModal>
+  );
+
+  // Modal to double-check the user's decision
+  // to export decks to Google Drive
+  const exportGDriveModal = (
+    <FlipoModal
+      title="Warning"
+      visible={true}
+      onButtonPress={() => {
+        setAlert(null);
+        exportDecksGDrive();
+      }}
+      buttonText='Proceed'
+      cancelButton
+      onCancelPress={() => {
+        setAlert('');
+      }}
+    >
+      <View className='space-y-4'>
+        <FlipoText
+          weight='medium'
+          className={`text-center text-lg text-primary-${theme}`}
+        >
+          Exporting your local decks to your Google Drive 
+          will overwrite the decks currently stored there.
+        </FlipoText>
+        <FlipoText
+          weight='medium'
+          className={`text-center text-lg text-primary-${theme}`}
+        >
+          Do you want to proceed?
+        </FlipoText>
+      </View>
+    </FlipoModal>
+  );
+  
+
   const loggedInOptions = user
     ? (
       <View>
-        <FlipoFlatButton type='action' onPress={() => exportDecksGDrive()}>
+        <FlipoFlatButton type='action' onPress={() => setAlert(exportGDriveModal)}>
           Export decks to Google Drive
         </FlipoFlatButton>
-        <FlipoFlatButton type='action' onPress={() => importDecksGDrive()}>
+        <FlipoFlatButton type='action' onPress={() => setAlert(importGDriveModal)}>
           Import decks from Google Drive
         </FlipoFlatButton>
       </View>
     )
     : (<FlipoFlatButton type='action' onPress={() => promptAsync({useProxy: true, showInRecents: true})}>Sign in with Google</FlipoFlatButton>);
 
+  // Profile Screen Component
   return (
     <SafeAreaView className={`bg-primary-${theme}`}>
-        <ScrollView
-          className='-mt-9'
-          showsVerticalScrollIndicator={false}
-          overScrollMode='never'
+      {alert}
+      <ScrollView
+        className='-mt-9'
+        showsVerticalScrollIndicator={false}
+        overScrollMode='never'
         >
-          <View className='h-screen'>
-            <View className="items-center justify-center p-10 space-y-6 w-full aspect-square">
-              <View>
-                <FlipoIcons name='profile' size='128' color={colorSchemes['dark'].green}/>
-              </View>
-              <FlipoText weight='bold' className="text-4xl">{userName}</FlipoText>
+        <View className='h-screen'>
+          <View className="items-center justify-center p-10 space-y-6 w-full aspect-square">
+            <View>
+              <FlipoIcons name='profile' size='128' color={colorSchemes['dark'].green}/>
             </View>
-            {/* Buttons */}
-            <View className={`border-t-2 border-ui-${theme}`}>
-              <FlipoFlatButton type='setting' setting={{title: 'Name', value: userName}} />
-              {loggedInOptions}
-            </View>
+            <FlipoText weight='bold' className="text-4xl">{userName}</FlipoText>
           </View>
-        </ScrollView>
+          {/* Buttons */}
+          <View className={`border-t-2 border-ui-${theme}`}>
+            <FlipoFlatButton type='setting' setting={{title: 'Name', value: userName}} />
+            {loggedInOptions}
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
