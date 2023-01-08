@@ -81,7 +81,7 @@ const DecksHomeScreen = () => {
   // Updates the deck data states if local data has changed outside this screen
   useFocusEffect(
     useCallback(() => {
-      console.log('Updating deck data.');
+      console.log('DecksHomeScreen: Updating deck data.');
       getCustomDecks();
       getExampleDecks();
     }, [])
@@ -89,13 +89,13 @@ const DecksHomeScreen = () => {
 
   // Updates the deck elements on data change
   useEffect(() => {
-    console.log('Rerendering deck elements.')
+    console.log('DecksHomeScreen: Updating deck elements.')
     updateCustomDeckElements();
     updateExampleDeckElements();
   }, [customDecks, exampleDecks]);
 
   const updateCustomDeckElements = () => {
-    console.log('Refreshed custom decks.');
+    console.log('DeckHomeScreen: Refreshed custom decks.');
     setCustomDeckElements(customDecks.map(deck => (
       <TouchableOpacity 
         key={deck.id}
@@ -115,7 +115,7 @@ const DecksHomeScreen = () => {
   }
 
   const updateExampleDeckElements = () => {
-    console.log('Refreshed example decks.');
+    console.log('DeckHomeScreen: Refreshed example decks.');
     setExampleDeckElements(exampleDecks.map(deck => (
       <TouchableOpacity
         key={deck['id']}

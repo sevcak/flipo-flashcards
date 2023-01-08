@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, useColorScheme, View } from 'react-native';
+import { Dimensions, Image, ScrollView, useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,20 +22,21 @@ const ProfileScreen = () => {
   // alert modal state
   const [alert, setAlert] = useState(null);
   
-  // user data
-  const [user, setUser] = useState(null);
-  const [userName, setUserName] = useState(user ? user.given_name : 'Guest');
+  // user data states
+  const [googleAuth, setGoogleAuth] = useState(false);
+  const [userName, setUserName] = useState('Guest');
+  const [userPicture, setUserPicture] = useState(null);
   
-  // stores user data
+  // stores user data to the local storage
   const storeUserData = async (data) => {
     try {
       await AsyncStorage.setItem('userData', JSON.stringify(data));
     } catch (e) {
-      console.error('There was an error with saving the the user data.')
+      console.error('ProfileScreen: There was an error with saving the the user data.')
     }
   };
 
-  // loads the user data
+  // loads the user data from local storage
   const getUserData = async () => {
     try {
       let data = await AsyncStorage.getItem('userData');
@@ -43,16 +44,14 @@ const ProfileScreen = () => {
 
       if (data != null) {
         setUserName(data.name);
-
-      } else {
-        setUserName('Guest');
+        setUserPicture(data.picture)
       }
     } catch (e) {
       console.error('There was an error with loading the user data.')
     }
   }
 
-  // returns custom deck data
+  // returns custom deck data from local storage
   const getCustomDecks = async () => {
     try {
       let data = await AsyncStorage.getItem('customDecks');
@@ -65,16 +64,16 @@ const ProfileScreen = () => {
       }
 
     } catch (e) {
-      console.error('There was an error with loading the decks.')
+      console.error('ProfileScreen: There was an error with loading the decks.')
     }
   }
 
-  // stores custom deck data
+  // stores custom deck data to the local storage
   const storeCustomDecks = async (data) => {
     try {
       await AsyncStorage.setItem('customDecks', JSON.stringify(data));
     } catch (e) {
-      console.error('There was an error with saving the decks.');
+      console.error('ProfileScreen: There was an error with saving the decks.');
     }
   };
 
@@ -86,8 +85,6 @@ const ProfileScreen = () => {
     scopes: [
       'openid',
       'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/userinfo.email',
-      'https://www.googleapis.com/auth/drive.file',
       'https://www.googleapis.com/auth/drive.appdata',
     ]
   });
@@ -114,6 +111,18 @@ const ProfileScreen = () => {
     return ipartRequestBody;
   }
 
+  // Checks, if the access token is valid
+  const isGoogleTokenValid = async () => {
+    const url = `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
+
+    let response = await fetch(url, {
+      method: 'GET',
+    });
+
+    return (response.status == '200') ? true : false;
+  }
+
+  // returns a list of files from Google Drive with specified name
   const getDecksGDrive = async () => {
     const fileName = 'flipo_customDecks.json';
 
@@ -188,7 +197,7 @@ const ProfileScreen = () => {
 
     // if a custom decks file exists, delete it
     if (files.length > 0) {
-      console.log('file found, deleting it...')
+      console.log('ProfileScreen: Decks file found on Google Drive, deleting it...')
       let file = files[0];
 
       const fileId = file.id;
@@ -242,20 +251,8 @@ const ProfileScreen = () => {
       body: generateMultipartBody(data),
     });
 
-    console.log(await response.json());
     setAlert(null);
   }
-  
-  useEffect(() => {
-    if (response?.type === 'success') {
-      setAccessToken(response.authentication.accessToken);
-      accessToken && fetchUserInfo();
-    }
-  }, [response, accessToken]);
-
-  useEffect(() => {
-    getUserData()
-  }, []);
 
   // updates the user info states from their Google account info
   const fetchUserInfo = async () => {
@@ -264,11 +261,19 @@ const ProfileScreen = () => {
         Authorization: `Bearer ${accessToken}`
       }
     });
+    
     const userInfo = await response.json();
-    setUser(userInfo);
 
     setUserName(userInfo.given_name);
-    storeUserData({name: userInfo.given_name});
+    
+    let picture = userInfo.picture;
+    picture = picture.slice(0, picture.lastIndexOf('='))
+    setUserPicture(picture);
+    
+    storeUserData({
+      name: userInfo.given_name,
+      picture: picture,
+    });
   }
 
   // Modal to double-check the user's decision
@@ -338,8 +343,15 @@ const ProfileScreen = () => {
     </FlipoModal>
   );
   
+  // If a profile picture is loaded, it has to get a background,
+  // so the default profile icon doesn't clip from underneath.
+  //
+  // This is done instead of hiding the default icon so that in the case
+  // the picture can't be loaded, the profile icon isn't blank.
+  const [pictureBackground, setPictureBackground] = useState('');
 
-  const loggedInOptions = user
+  // Google login determinant buttons
+  const loggedInOptions = ( googleAuth
     ? (
       <View>
         <FlipoFlatButton type='action' onPress={() => setAlert(exportGDriveModal)}>
@@ -350,21 +362,59 @@ const ProfileScreen = () => {
         </FlipoFlatButton>
       </View>
     )
-    : (<FlipoFlatButton type='action' onPress={() => promptAsync({useProxy: true, showInRecents: true})}>Sign in with Google</FlipoFlatButton>);
+    : (<FlipoFlatButton type='action' onPress={() => promptAsync({useProxy: true, showInRecents: true})}>Sign in with Google</FlipoFlatButton>)
+  );
+  
+  // Size of the profile picture/icon
+  const pfpSize = (Dimensions.get('window').width * 0.5);
+
+  // on successful Google auth
+  useEffect(() => {
+    if (response?.type === 'success') {
+      setAccessToken(response.authentication.accessToken);
+      accessToken && fetchUserInfo();
+      setGoogleAuth(true);
+    }
+  }, [response, accessToken]);
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  // logs the user out if the access token has expired
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (accessToken) {
+        console.log('ProfileScreen: Checking if access key is valid');
+        if (!isGoogleTokenValid()) {
+          setGoogleAuth(false);
+        }
+      }
+    },  600000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Profile Screen Component
   return (
     <SafeAreaView className={`bg-primary-${theme}`}>
       {alert}
       <ScrollView
-        className='-mt-9'
+        className='-mt-9 relative'
         showsVerticalScrollIndicator={false}
         overScrollMode='never'
-        >
-        <View className='h-screen'>
+      >
+        <View className='h-fit'>
           <View className="items-center justify-center p-10 space-y-6 w-full aspect-square">
-            <View>
-              <FlipoIcons name='profile' size='128' color={colorSchemes['dark'].green}/>
+            <View className='relative'>
+              <View className={`absolute bottom-0 left-0 z-10 ${pictureBackground}`}>
+                <Image
+                  source={{uri: `${userPicture}=s${pfpSize}-c`}}
+                  className='rounded-full'
+                  style={{height: pfpSize, width: pfpSize}}
+                  onLoad={() => setPictureBackground('bg-primary')}
+                />
+              </View>
+              <FlipoIcons name='profile' size={pfpSize} color={colorSchemes['dark'].green}/>
             </View>
             <FlipoText weight='bold' className="text-4xl">{userName}</FlipoText>
           </View>
@@ -375,6 +425,7 @@ const ProfileScreen = () => {
           </View>
         </View>
       </ScrollView>
+      <View className='h-screen'></View>
     </SafeAreaView>
   );
 }
