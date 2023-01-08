@@ -17,7 +17,7 @@ const FlipoModal = (props) => {
     >
       <BlurView 
        className='align-center justify-center h-screen w-screen'
-       intensity={100}
+       intensity={120}
        tint={theme}
       >
         {/* Modal container */}
@@ -41,29 +41,31 @@ const FlipoModal = (props) => {
               {props.children}
             </View>
             {/* Modal main button */}
-            <TouchableOpacity className={`border-t-2 border-primary-${theme}`}
-            onPress={props.onButtonPress ? props.onButtonPress : () => setOpen(false)}
-            >
-              <FlipoText 
-              className={`text-green-${theme} text-center text-xl p-4`}
-              weight='bold'
+            { !props.noDefaultButton && (
+              <TouchableOpacity className={`border-t-2 border-primary-${theme}`}
+              onPress={props.onButtonPress ? props.onButtonPress : () => setOpen(false)}
               >
-                {props.buttonText ? props.buttonText : 'OK'}
-              </FlipoText>
-            </TouchableOpacity>
-            {// Cancel button, if
-              props.cancelButton
-              ? (<TouchableOpacity className={`border-t-2 border-primary-${theme}`}
+                <FlipoText 
+                className={`text-green-${theme} text-center text-xl p-4`}
+                weight='semi-bold'
+                >
+                  {props.buttonText ? props.buttonText : 'OK'}
+                </FlipoText>
+              </TouchableOpacity>
+            )}
+            {// Cancel button
+              props.cancelButton && (
+                <TouchableOpacity className={`border-t-2 border-primary-${theme}`}
                   onPress={props.onCancelPress ? props.onCancelPress : () => setOpen(false)}
                 >
                   <FlipoText 
                     className={`text-alert text-center text-xl p-4`}
-                    weight='bold'
+                    weight='semi-bold'
                   >
-                    {props.buttonText ? props.buttonText : 'Cancel'}
+                    {props.cancelButtonText ? props.cancelButtonText : 'Cancel'}
                   </FlipoText>
-                </TouchableOpacity>)
-              : (<></>)
+                </TouchableOpacity>
+              )
             }
           </BlurView>
         </KeyboardAvoidingView>

@@ -47,7 +47,7 @@ module.exports = {
           'dark': '#28b8af',
         },
         'alert': {
-          DEFAULT: '#d60000',
+          DEFAULT: '#ef0000',
         },
         'rate': {
           '1': '#ff4e4d',
@@ -86,6 +86,8 @@ module.exports = {
     'bg-rate-5',
     'border-primary-light',
     'border-primary-dark',
+    'border-ui-light',
+    'border-ui-dark',
   ],
   plugins: [],
 }
