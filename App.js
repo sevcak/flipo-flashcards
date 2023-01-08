@@ -66,7 +66,7 @@ export default function App() {
           backgroundColor: colorScheme['main'],
           borderBottomWidth: 3,
           borderBottomColor: colorScheme['ui'],
-          height: 100,
+          height: 80,
         },
         headerTitleStyle: {
           fontFamily: 'Montserrat-ExtraBold',
