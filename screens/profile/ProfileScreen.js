@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, ScrollView, useColorScheme, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 
+// Color schemes
+import colorSchemes from '../../assets/colorSchemes';
+
 // Custom components
 import FlipoText from '../../components/FlipoText';
 import FlipoIcons from '../../components/FlipoIcons';
-import colorSchemes from '../../assets/colorSchemes';
 import FlipoFlatButton from '../../components/pressable/FlipoFlatButton';
 import FlipoModal from '../../components/FlipoModal';
 
@@ -18,6 +19,17 @@ WebBrowser.maybeCompleteAuthSession();
 const ProfileScreen = () => {
   const navigation = useNavigation();
   let theme = useColorScheme();
+  let colorScheme = colorSchemes[useColorScheme()];
+
+  // header title setup
+  navigation.setOptions({
+    headerStyle: {
+      backgroundColor: colorScheme['main'],
+      borderBottomWidth: 3,
+      borderBottomColor: colorScheme['ui'],
+      height: 80,
+    },
+  });
 
   // alert modal state
   const [alert, setAlert] = useState(null);
@@ -362,7 +374,7 @@ const ProfileScreen = () => {
         </FlipoFlatButton>
       </View>
     )
-    : (<FlipoFlatButton type='action' onPress={() => promptAsync({useProxy: true, showInRecents: true})}>Sign in with Google</FlipoFlatButton>)
+    : (<FlipoFlatButton type='action' onPress={() => promptAsync({/*useProxy: true, */showInRecents: true})}>Sign in with Google</FlipoFlatButton>)
   );
   
   // Size of the profile picture/icon
@@ -396,7 +408,7 @@ const ProfileScreen = () => {
 
   // Profile Screen Component
   return (
-    <SafeAreaView className={`bg-primary-${theme}`}>
+    <View className={`bg-primary-${theme}`}>
       {alert}
       <ScrollView
         className='-mt-9 relative'
@@ -426,7 +438,7 @@ const ProfileScreen = () => {
         </View>
       </ScrollView>
       <View className='h-screen'></View>
-    </SafeAreaView>
+    </View>
   );
 }
 

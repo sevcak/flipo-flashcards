@@ -1,4 +1,4 @@
-import { View, useColorScheme, SafeAreaView, TextInput, TouchableOpacity, ScrollView} from "react-native";
+import { View, useColorScheme, TextInput, TouchableOpacity, ScrollView} from "react-native";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -21,7 +21,7 @@ const DeckEditScreen = ({ route, navigation }) => {
 
   // functions for updating the deck states in previous screens
   const updateDecks = route.params.getDecks;
-  const updateDeckProfile = route.params.setDeck;
+  const updateDeckProfile = route.params.updateDeckProfile;
 
   const existing = (route.params.deck != undefined);
   
@@ -165,7 +165,6 @@ const DeckEditScreen = ({ route, navigation }) => {
       // edits or creates the deck and returns to the previous menu
       if (existing) {
         newCustomDecks['decks'][newDeck['id']] = newDeck;
-        updateDeckProfile(newDeck);
       } else {
         newCustomDecks['decks'].push(newDeck);
       }
@@ -221,6 +220,7 @@ const DeckEditScreen = ({ route, navigation }) => {
     navigation.addListener('beforeRemove', (e) => {
       if (newDeck['cards'].length >= 2 || !existing) {
         // if deck creation/edit conditons are met, proceed
+        updateDeckProfile(newDeck);
         return;
       } else {
         // prevent default behavior of leaving the screen
@@ -243,7 +243,7 @@ const DeckEditScreen = ({ route, navigation }) => {
   // resulting component
   return (
     <View>
-      <SafeAreaView className={`bg-primary-${theme}`}>
+      <View className={`bg-primary-${theme}`}>
         <ScrollView
          className="flex-rows h-full space-y-10"
          overScrollMode='never'
@@ -290,7 +290,7 @@ const DeckEditScreen = ({ route, navigation }) => {
             {cardElements}
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </View>
     </View>
   );
 };

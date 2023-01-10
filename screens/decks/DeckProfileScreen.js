@@ -1,5 +1,4 @@
 import { Dimensions, ScrollView, TouchableOpacity, useColorScheme, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 
 // Components
@@ -75,7 +74,7 @@ const DeckProfileScreen = ({ navigation, route }) => {
 
 
   return (
-    <SafeAreaView className={`bg-primary-${theme}`}>
+    <View className={`bg-primary-${theme}`}>
       <ScrollView
         className='-mt-9'
         showsVerticalScrollIndicator={false}
@@ -119,9 +118,9 @@ const DeckProfileScreen = ({ navigation, route }) => {
               <TextButton
                 onPress={() => {
                   navigation.navigate("DeckEditScreen", {
-                    setDeck,
-                    getDecks,
-                    deck,
+                    deck: deck,
+                    updateDeckProfile: updateDeckProfile,
+                    getDecks: getDecks,
                   })
                 }}
                 className={`text-center text-strong-${theme}`}
@@ -169,7 +168,7 @@ const DeckProfileScreen = ({ navigation, route }) => {
         </View>
       </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

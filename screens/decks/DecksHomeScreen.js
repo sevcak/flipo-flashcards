@@ -1,10 +1,12 @@
 import { TouchableOpacity, useColorScheme, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Example decks
 import exampleDecksData from '../../default_data/example-decks';
+
+// Color schemes
+import colorSchemes from '../../assets/colorSchemes';
 
 // Components
 import FlipoText from '../../components/FlipoText';
@@ -17,6 +19,17 @@ import { useCallback, useEffect, useState } from 'react';
 const DecksHomeScreen = () => {
   const navigation = useNavigation();
   let theme = useColorScheme();
+  let colorScheme = colorSchemes[useColorScheme()];
+
+  // header title setup
+  navigation.setOptions({
+    headerStyle: {
+      backgroundColor: colorScheme['main'],
+      borderBottomWidth: 3,
+      borderBottomColor: colorScheme['ui'],
+      height: 80,
+    },
+  });
 
   // Custom deck states
   const [customDecks, setCustomDecks] = useState([]);
@@ -136,9 +149,9 @@ const DecksHomeScreen = () => {
   
 
   return (
-    <SafeAreaView className={`bg-primary-${theme} min-h-screen`}>
+    <View className={`bg-primary-${theme} min-h-screen`}>
       <ScrollView
-        className='space-y-8 -mt-9 pt-8 h-screen'
+        className='space-y-8 -mt-9 pt-16 h-screen'
         showsVerticalScrollIndicator={false}
         overScrollMode='never'
       >
@@ -179,7 +192,7 @@ const DecksHomeScreen = () => {
         </View>
         
         {/* Example decks */}
-        <View className='flex flex-col space-y-6 mb-48'>
+        <View className='flex flex-col space-y-6 pb-60'>
           <View className='px-8'>
             <FlipoText
               weight='extra-bold'
@@ -206,7 +219,7 @@ const DecksHomeScreen = () => {
           </ScrollView>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

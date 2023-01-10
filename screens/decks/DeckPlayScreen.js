@@ -1,5 +1,4 @@
 import { Dimensions, Pressable, useColorScheme, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useState } from 'react';
 
 // Components
@@ -116,7 +115,7 @@ const DeckPlayScreen = ({route, navigation}) => {
     }
 
     return (
-      <SafeAreaView className={`bg-primary-${theme}`}>
+      <View className={`bg-primary-${theme}`}>
           <View className="flex-rows items-center h-full">
             <Pressable className='h-96 w-full px-10 my-10' onPress={() => flipCard()}>
               <Flashcard card={flashcard} flipped={flipped}/>
@@ -141,7 +140,7 @@ const DeckPlayScreen = ({route, navigation}) => {
               </View>
             </View>
           </View>
-      </SafeAreaView>
+      </View>
     );
 }
 

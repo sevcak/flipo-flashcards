@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
+import 'expo-dev-client';
 
 // Color schemes
 import { useColorScheme } from "react-native";
