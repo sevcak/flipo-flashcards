@@ -10,7 +10,6 @@ import FlipoText from '../../components/FlipoText';
 
 const SettingsScreen = () => {
     const navigation = useNavigation();
-    let theme = useColorScheme();
     let colorScheme = colorSchemes[useColorScheme()];
     
     // header title setup
@@ -29,7 +28,7 @@ const SettingsScreen = () => {
       })
     }, [])
     return (
-      <View className={`bg-primary-${theme}`}>
+      <View className='bg-primary dark:bg-primary-dark'>
           <Pressable
             className="flex-rows items-center justify-center h-full"
             onPress={() => navigation.navigate('TestScreen')}>

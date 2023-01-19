@@ -1,9 +1,8 @@
-import { View, Text, useColorScheme } from "react-native";
-import React, { Component } from "react";
+import { View, Text } from "react-native";
+import React from "react";
 
 const FlipoText = (props) => {
   let fontFamily = 'Montserrat'
-  let theme = useColorScheme();
   const italicSuffix = props.italic ? '-Italic' : ''
 
   switch (props.weight) {
@@ -42,7 +41,7 @@ const FlipoText = (props) => {
 
   return (
     <View>
-      <Text className={`text-secondary-${theme}`} style={props.style}>
+      <Text className='text-secondary-light dark:text-secondary-dark' style={props.style}>
         <Text style={{ fontFamily: fontFamily }}>{props.children}</Text>
       </Text>
     </View>

@@ -1,10 +1,8 @@
-import { View, useColorScheme, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import FlipoText from '../FlipoText';
 
 const FlipoFlatButton = ( props ) => {
-  const theme = useColorScheme();
-
   let buttonContent;
 
   if (props.type == undefined || props.type == 'text') {
@@ -31,7 +29,11 @@ const FlipoFlatButton = ( props ) => {
   } else if (props.type == 'action' || props.type == 'action-red') {
     buttonContent = (
       <FlipoText
-        className={`text-lg uppercase text-center text-${props.type == 'action-red' ? 'alert' : 'strong'}-${theme}`}
+        className={`
+          text-lg uppercase text-center 
+          text-${props.type == 'action-red' ? 'alert' : 'strong'}
+          dark:text-${props.type == 'action-red' ? 'alert' : 'strong'}-dark
+        `}
         weight='medium'
       >
           {props.children}
@@ -45,12 +47,16 @@ const FlipoFlatButton = ( props ) => {
 
   return (props.onPress == undefined
     ? (
-        <View className={`border-ui-${theme} border-b-2 p-4 min-h-[10vh] justify-center`}>
+        <View className='border-ui dark:border-ui-dark border-b-2 p-4 min-h-[10vh] justify-center'>
           {buttonContent}
         </View>
       )
     : (
-        <TouchableOpacity onPress={props.onPress} className={`border-ui-${theme} border-b-2 p-4 min-h-[10vh] justify-center`}>
+        <TouchableOpacity
+          onPress={props.onPress}
+          className='border-ui dark:border-ui-dark
+            border-b-2 p-4 min-h-[10vh] justify-center'
+        >
           {buttonContent}
         </TouchableOpacity>
       )
