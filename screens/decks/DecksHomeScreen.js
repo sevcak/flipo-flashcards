@@ -26,7 +26,7 @@ const DecksHomeScreen = () => {
       backgroundColor: colorScheme['main'],
       borderBottomWidth: 3,
       borderBottomColor: colorScheme['ui'],
-      height: 80,
+      height: 100,
     },
   });
 
