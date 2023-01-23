@@ -111,52 +111,52 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
         backfaceVisibility: 'hidden',
         elevation: elevationLevel,
         zIndex: (flipped ? 1 : -99),
-      }}>
-        <View
-          className='grow justify-center p-2 space-y-4 content-between max-h-full overflow-hidden'
-        >
-            <FlipoText className='text-center m-2'>Card {card.id} - Back</FlipoText>
-              <TextInput
-                defaultValue={card['back']['title']}
-                placeholder='Back title'
-                className='text-secondary dark:text-secondary-dark 
-                  text-2xl text-center pb-1'
-                cursorColor={colorScheme['green']}
-                placeholderTextColor={colorScheme['ui']}
-                multiline
-                maxLength={30}
-                autoComplete='off'
-                autoCorrect={false}
-                spellCheck={false}
-                style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
-                onChangeText={(val) => updateCard('back', 'title', val)}
-              />
-            <View>
-              <TextInput
-                defaultValue={card['back']['content']}
-                placeholder='Back content'
-                className='text-secondary dark:text-secondary-dark
-                  text-center pb-1'
-                cursorColor={colorScheme['green']}
-                placeholderTextColor={colorScheme['ui']}
-                multiline
-                maxLength={124}
-                autoComplete='off'
-                autoCorrect={false}
-                spellCheck={false}
-                style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
-                onChangeText={(val) => updateCard('back', 'content', val)}
-              />
-            </View>
-          </View>
-          {/* image, if card has one */}
-          {card.front.image
-          ? (<Image
-              source={card.front.image}
-              className='w-full h-1/3 rounded-b-lg'
-            />)
-          : (<></>)}
-        </Animated.View>
+    }}>
+      <View
+        className='grow justify-center p-2 space-y-4 content-between max-h-full overflow-hidden'
+      >
+        <FlipoText className='text-center m-2'>Card {card.id} - Back</FlipoText>
+        <TextInput
+          defaultValue={card['back']['title']}
+          placeholder='Back title'
+          className='text-secondary dark:text-secondary-dark 
+            text-2xl text-center pb-1'
+          cursorColor={colorScheme['green']}
+          placeholderTextColor={colorScheme['ui']}
+          multiline
+          maxLength={30}
+          autoComplete='off'
+          autoCorrect={false}
+          spellCheck={false}
+          style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
+          onChangeText={(val) => updateCard('back', 'title', val)}
+        />
+        <View>
+          <TextInput
+            defaultValue={card['back']['content']}
+            placeholder='Back content'
+            className='text-secondary dark:text-secondary-dark
+              text-center pb-1'
+            cursorColor={colorScheme['green']}
+            placeholderTextColor={colorScheme['ui']}
+            multiline
+            maxLength={124}
+            autoComplete='off'
+            autoCorrect={false}
+            spellCheck={false}
+            style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
+            onChangeText={(val) => updateCard('back', 'content', val)}
+          />
+        </View>
+      </View>
+      {/* image, if card has one */}
+      {card.front.image
+      ? (<Image
+          source={card.front.image}
+          className='w-full h-1/3 rounded-b-lg'
+        />)
+      : (<></>)}
+    </Animated.View>
   );
   
   return (
