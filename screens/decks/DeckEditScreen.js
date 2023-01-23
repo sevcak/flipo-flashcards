@@ -16,8 +16,7 @@ import { reorderObjectArrayId } from "../../utils/organisationUtils";
 import TextButton from "../../components/pressable/TextButton";
 
 const DeckEditScreen = ({ route, navigation }) => {
-  const theme = useColorScheme();
-  const colorScheme = colorSchemes[theme];
+  const colorScheme = colorSchemes[useColorScheme()];
 
   // functions for updating the deck states in previous screens
   const updateDecks = route.params.getDecks;
@@ -156,7 +155,7 @@ const DeckEditScreen = ({ route, navigation }) => {
          visible={true}
          onButtonPress={() => {setAlert('')}}
         >
-          <FlipoText weight='medium' className={`text-center text-lg text-primary-${theme}`}>
+          <FlipoText weight='medium' className='text-center text-lg text-primary dark:text-primary-dark'>
             To create a deck it has to have at least two cards.
           </FlipoText>
         </FlipoModal>
@@ -231,7 +230,7 @@ const DeckEditScreen = ({ route, navigation }) => {
             visible={true}
             onButtonPress={() => {setAlert('')}}
           >
-            <FlipoText weight='medium' className={`text-center text-lg text-primary-${theme}`}>
+            <FlipoText weight='medium' className='text-center text-lg text-primary dark:text-primary-dark'>
               To create a deck it has to have at least two cards.
             </FlipoText>
           </FlipoModal>
@@ -243,7 +242,7 @@ const DeckEditScreen = ({ route, navigation }) => {
   // resulting component
   return (
     <View>
-      <View className={`bg-primary-${theme}`}>
+      <View className='bg-primary dark:bg-primary-dark'>
         <ScrollView
          className="flex-rows h-full space-y-10"
          overScrollMode='never'
@@ -262,9 +261,9 @@ const DeckEditScreen = ({ route, navigation }) => {
                 cursorColor={colorScheme['green']}
                 maxLength={30}
                 defaultValue={newDeck.title}
-                className={
-                  `text-secondary-${theme} text-2xl text-center border-b border-green-${theme} pb-1`
-                }
+                className='text-secondary dark:text-secondary-dark 
+                  border-b border-green-dark dark:border-green-dark
+                  text-2xl text-center pb-1'
                 autoFocus={route.params.deck == undefined}
                 autoComplete='off'
                 autoCorrect={false}

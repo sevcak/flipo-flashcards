@@ -1,9 +1,8 @@
-import { useColorScheme, View } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import FlipoText from "../FlipoText";
 
 const CardCell = ({ card }) => {
-  const theme = useColorScheme();
   const label = card ? (card['front']['title']) : ('New Card');
   const img = card
     ? (card['front']['image']
@@ -14,7 +13,7 @@ const CardCell = ({ card }) => {
   return (
     <View className='flex-row space-x-4'>
       {/* Card */}
-      <View className={`bg-card-${theme} rounded-lg w-16 h-24 justify-center`}>
+      <View className='bg-card dark:bg-card-dark rounded-lg w-16 h-24 justify-center'>
         {img}
       </View>
       {/* Text*/}

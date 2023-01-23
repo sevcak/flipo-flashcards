@@ -18,7 +18,6 @@ WebBrowser.maybeCompleteAuthSession();
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
-  let theme = useColorScheme();
   let colorScheme = colorSchemes[useColorScheme()];
 
   // header title setup
@@ -27,7 +26,7 @@ const ProfileScreen = () => {
       backgroundColor: colorScheme['main'],
       borderBottomWidth: 3,
       borderBottomColor: colorScheme['ui'],
-      height: 80,
+      height: 100,
     },
   });
 
@@ -161,7 +160,10 @@ const ProfileScreen = () => {
           visible={true}
           noDefaultButton
         >
-          <FlipoText weight='medium' className={`text-center text-lg text-primary-${theme}`}>
+          <FlipoText
+            weight='medium'
+            className='text-center text-lg text-primary dark:text-primary-dark'
+          >
             Importing data from your Google Drive...
           </FlipoText>
         </FlipoModal>
@@ -195,7 +197,10 @@ const ProfileScreen = () => {
           visible={true}
           onButtonPress={() => {setAlert(null)}}
         >
-          <FlipoText weight='medium' className={`text-center text-lg text-primary-${theme}`}>
+          <FlipoText
+            weight='medium'
+            className='text-center text-lg text-primary dark:text-primary-dark'
+          >
             No custom decks were found on your Google Drive.
           </FlipoText>
         </FlipoModal>
@@ -233,7 +238,10 @@ const ProfileScreen = () => {
           visible={true}
           noDefaultButton
         >
-          <FlipoText weight='medium' className={`text-center text-lg text-primary-${theme}`}>
+          <FlipoText
+            weight='medium'
+            className='text-center text-lg text-primary dark:text-primary-dark'
+          >
             Exporting data to your Google Drive...
           </FlipoText>
         </FlipoModal>
@@ -307,13 +315,13 @@ const ProfileScreen = () => {
       <View className='space-y-4'>
         <FlipoText
           weight='medium'
-          className={`text-center text-lg text-primary-${theme}`}
+          className='text-center text-lg text-primary dark:text-primary-dark'
         >
           Importing decks from your Google Drive will overwrite your local decks.
         </FlipoText>
         <FlipoText
           weight='medium'
-          className={`text-center text-lg text-primary-${theme}`}
+          className='text-center text-lg text-primary dark:text-primary-dark'
         >
           Do you want to proceed?
         </FlipoText>
@@ -340,14 +348,14 @@ const ProfileScreen = () => {
       <View className='space-y-4'>
         <FlipoText
           weight='medium'
-          className={`text-center text-lg text-primary-${theme}`}
+          className='text-center text-lg text-primary dark:text-primary-dark'
         >
           Exporting your local decks to your Google Drive 
           will overwrite the decks currently stored there.
         </FlipoText>
         <FlipoText
           weight='medium'
-          className={`text-center text-lg text-primary-${theme}`}
+          className='text-center text-lg text-primary dark:text-primary-dark'
         >
           Do you want to proceed?
         </FlipoText>
@@ -408,7 +416,7 @@ const ProfileScreen = () => {
 
   // Profile Screen Component
   return (
-    <View className={`bg-primary-${theme}`}>
+    <View className='bg-primary dark:bg-primary-dark'>
       {alert}
       <ScrollView
         className='-mt-9 relative'
@@ -423,7 +431,7 @@ const ProfileScreen = () => {
                   source={{uri: `${userPicture}=s${pfpSize}-c`}}
                   className='rounded-full'
                   style={{height: pfpSize, width: pfpSize}}
-                  onLoad={() => setPictureBackground('bg-primary')}
+                  onLoad={() => setPictureBackground('bg-primary dark:bg-primary-dark')}
                 />
               </View>
               <FlipoIcons name='profile' size={pfpSize} color={colorSchemes['dark'].green}/>
@@ -431,7 +439,7 @@ const ProfileScreen = () => {
             <FlipoText weight='bold' className="text-4xl">{userName}</FlipoText>
           </View>
           {/* Buttons */}
-          <View className={`border-t-2 border-ui-${theme}`}>
+          <View className='border-t-2 border-ui dark:border-ui-dark'>
             <FlipoFlatButton type='setting' setting={{title: 'Name', value: userName}} />
             {loggedInOptions}
           </View>

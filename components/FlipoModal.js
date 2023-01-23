@@ -4,8 +4,6 @@ import FlipoText from "./FlipoText";
 import { BlurView } from "expo-blur";
 
 const FlipoModal = (props) => {
-  let theme = useColorScheme();
-
   const [open, setOpen] = useState(props.visible);
   
   return (
@@ -18,20 +16,20 @@ const FlipoModal = (props) => {
       <BlurView 
        className='align-center justify-center h-screen w-screen'
        intensity={120}
-       tint={theme}
+       tint={useColorScheme()}
       >
         {/* Modal container */}
         <KeyboardAvoidingView behavior='padding'>
           <BlurView
-          className={`bg-secondary-${theme}/50 m-8 rounded-xl`}
+          className='bg-secondary/50 dark:bg-secondary-dark/50 m-8 rounded-xl'
           intensity={80}
-          tint={theme == 'light' ? 'dark' : 'light'}
+          tint={useColorScheme() == 'light' ? 'dark' : 'light'}
           >
             {/* Modal header */}
-            <View className={`border-b-2 border-primary-${theme}`}>
+            <View className='border-b-2 border-primary dark:border-primary-dark'>
               <FlipoText 
-              className={`text-primary-${theme} text-center text-xl p-4`}
-              weight='bold'
+                className='text-primary dark:text-primary-dark text-center text-xl p-4'
+                weight='bold'
               >
                 {props.title}
               </FlipoText>
@@ -42,12 +40,13 @@ const FlipoModal = (props) => {
             </View>
             {/* Modal main button */}
             { !props.noDefaultButton && (
-              <TouchableOpacity className={`border-t-2 border-primary-${theme}`}
-              onPress={props.onButtonPress ? props.onButtonPress : () => setOpen(false)}
+              <TouchableOpacity
+                className='border-t-2 border-primary dark:border-primary-dark'
+                onPress={props.onButtonPress ? props.onButtonPress : () => setOpen(false)}
               >
                 <FlipoText 
-                className={`text-green-${theme} text-center text-xl p-4`}
-                weight='semi-bold'
+                  className='text-green text-center text-xl p-4'
+                  weight='semi-bold'
                 >
                   {props.buttonText ? props.buttonText : 'OK'}
                 </FlipoText>
@@ -55,11 +54,12 @@ const FlipoModal = (props) => {
             )}
             {// Cancel button
               props.cancelButton && (
-                <TouchableOpacity className={`border-t-2 border-primary-${theme}`}
+                <TouchableOpacity 
+                  className='border-t-2 border-primary dark:border-primary-dark'
                   onPress={props.onCancelPress ? props.onCancelPress : () => setOpen(false)}
                 >
                   <FlipoText 
-                    className={`text-alert text-center text-xl p-4`}
+                    className='text-alert text-center text-xl p-4'
                     weight='semi-bold'
                   >
                     {props.cancelButtonText ? props.cancelButtonText : 'Cancel'}

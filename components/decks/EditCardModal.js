@@ -5,7 +5,6 @@ import FlipoButton from '../pressable/FlipoButton';
 import EditableFlashcard from './EditableFlashcard';
 
 const EditCardModal = ({ card, editCard }) => {
-  let theme = useColorScheme();
   const [flipped, setFlipped] = useState(false);
   const [newCard, setNewCard] = useState(card);
 
@@ -33,7 +32,7 @@ const EditCardModal = ({ card, editCard }) => {
         <BlurView 
           className='align-center justify-center h-screen w-screen px-10'
           intensity={100}
-          tint={theme}
+          tint={useColorScheme()}
         >
           {/*Card*/}
           <View className='h-96 w-full'>

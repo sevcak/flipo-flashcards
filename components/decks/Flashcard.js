@@ -1,9 +1,8 @@
-import { View, useColorScheme, Animated, Image } from 'react-native'
+import { View, Animated, Image } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import FlipoText from '../FlipoText'
 
 const Flashcard = ({ card, flipped }) => {
-  const theme = useColorScheme();
 
   const [elevationLevel, setElevationLevel] = useState(5);
   
@@ -38,7 +37,7 @@ const Flashcard = ({ card, flipped }) => {
   
   const front = (
       <Animated.View
-        className={`bg-card-${theme} w-full h-full rounded-xl`}
+        className='bg-card dark:bg-card-dark w-full h-full rounded-xl'
         style={{transform: [{rotateY: interpolateBack}], backfaceVisibility: 'hidden', elevation: elevationLevel,}}>
           <View className='grow justify-center p-2'>
             {/* <FlipoText className='text-center m-2'>card {card.id} - front</FlipoText> */}
@@ -57,7 +56,7 @@ const Flashcard = ({ card, flipped }) => {
 
   const back = (
     <Animated.View
-      className={`bg-card-${theme} w-full h-full rounded-xl absolute `}
+      className='bg-card dark:bg-card-dark w-full h-full rounded-xl absolute'
       style={{transform: [{rotateY: interpolateFront}], backfaceVisibility: 'hidden', elevation: elevationLevel,}}>
         <View className='justify-center grow'>
           {/* <FlipoText className='text-center m-2'>card {card.id} - back</FlipoText> */}

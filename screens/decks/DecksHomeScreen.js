@@ -18,7 +18,6 @@ import { useCallback, useEffect, useState } from 'react';
 
 const DecksHomeScreen = () => {
   const navigation = useNavigation();
-  let theme = useColorScheme();
   let colorScheme = colorSchemes[useColorScheme()];
 
   // header title setup
@@ -27,7 +26,7 @@ const DecksHomeScreen = () => {
       backgroundColor: colorScheme['main'],
       borderBottomWidth: 3,
       borderBottomColor: colorScheme['ui'],
-      height: 80,
+      height: 100,
     },
   });
 
@@ -149,7 +148,7 @@ const DecksHomeScreen = () => {
   
 
   return (
-    <View className={`bg-primary-${theme} min-h-screen`}>
+    <View className='bg-primary dark:bg-primary-dark min-h-screen'>
       <ScrollView
         className='space-y-8 -mt-9 pt-16 h-screen'
         showsVerticalScrollIndicator={false}
@@ -158,10 +157,10 @@ const DecksHomeScreen = () => {
         {/* User decks */}
         <View className='flex flex-col space-y-6'>
           <View className='px-8'>
-            <FlipoText weight='extra-bold' className={`text-4xl text-secondary-${theme}`}>Your decks</FlipoText>
+            <FlipoText weight='extra-bold' className='text-4xl text-secondary dark:text-secondary-dark'>Your decks</FlipoText>
             <FlipoText 
               weight='semi-bold'
-              className={`text-base text-${theme == 'light' ? 'ui-dark' : 'primary-light'}`}>
+              className={`text-base text-ui dark:text-strong-dark`}>
                 Play your created decks
             </FlipoText>
           </View>
@@ -172,11 +171,11 @@ const DecksHomeScreen = () => {
             className='w-screen'
           >
             <View className='flex flex-row space-x-10 px-14'>
-            {/*New dec card (always apears at the end)*/}
+            {/*New deck card (always apears at the end)*/}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => navigation.navigate('DeckEditScreen', {
-                getDecks: getCustomDecks,
+                updateDeckProfile: getCustomDecks,
               })}
             >
                 <DeckCard 
@@ -196,13 +195,13 @@ const DecksHomeScreen = () => {
           <View className='px-8'>
             <FlipoText
               weight='extra-bold'
-              className={`text-4xl text-secondary-${theme}`}
+              className='text-4xl text-secondary dark:text-secondary-dark'
             >
               Example decks
             </FlipoText>
             <FlipoText 
               weight='semi-bold'
-              className={`text-base text-${theme == 'light' ? 'ui-dark' : 'primary-light'}`}
+              className='text-base text-ui dark:text-strong-dark'
             >
               Play pre-created decks
             </FlipoText>

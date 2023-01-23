@@ -13,7 +13,6 @@ import { weightedRandom } from '../../utils/deckStatUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DeckPlayScreen = ({route, navigation}) => {
-    let theme = useColorScheme();
     let colorScheme = colorSchemes[useColorScheme()];
 
     // unpacks deck passed from parameters and creates state for it
@@ -115,7 +114,7 @@ const DeckPlayScreen = ({route, navigation}) => {
     }
 
     return (
-      <View className={`bg-primary-${theme}`}>
+      <View className='bg-primary dark:bg-primary-dark'>
           <View className="flex-rows items-center h-full">
             <Pressable className='h-96 w-full px-10 my-10' onPress={() => flipCard()}>
               <Flashcard card={flashcard} flipped={flipped}/>
@@ -124,7 +123,12 @@ const DeckPlayScreen = ({route, navigation}) => {
             <FlipoButton 
               className={`my-10 px-16 ${flipButton ? '' : 'hidden'}`}
               onPress={() => flipCard()}>
-                <FlipoText weight='black' className={`text-2xl text-primary-${theme} tracking-wide`}>Flip</FlipoText>
+                <FlipoText
+                  weight='black'
+                  className='text-2xl text-primary dark:text-primary-dark tracking-wide'
+                >
+                  Flip
+                </FlipoText>
             </FlipoButton>
             {/* Recall rating button bar */}
             <View className={`w-full grow justify-end ${rateButtons ? '' : 'hidden'}`}>

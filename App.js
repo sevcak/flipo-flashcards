@@ -18,6 +18,7 @@ import TestScreen from './screens/TestScreen';
 import DeckProfileScreen from './screens/decks/DeckProfileScreen';
 import DeckPlayScreen from './screens/decks/DeckPlayScreen';
 import DeckEditScreen from './screens/decks/DeckEditScreen';
+import { StatusBar } from 'expo-status-bar';
 
 const Stack = createStackNavigator();
 
@@ -61,13 +62,14 @@ export default function App() {
   
   return (
     <NavigationContainer>
+      <StatusBar/>
       <Stack.Navigator 
       screenOptions={({route}) => ({
         headerStyle: {
           backgroundColor: colorScheme['main'],
           borderBottomWidth: 3,
           borderBottomColor: colorScheme['ui'],
-          height: 80,
+          height: 100,
         },
         headerTitleStyle: {
           fontFamily: 'Montserrat-ExtraBold',

@@ -1,10 +1,8 @@
-import { View, useColorScheme, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import FlipoText from '../FlipoText';
 
 const FlipoFlatButton = ( props ) => {
-  const theme = useColorScheme();
-
   let buttonContent;
 
   if (props.type == undefined || props.type == 'text') {
@@ -12,9 +10,9 @@ const FlipoFlatButton = ( props ) => {
       <FlipoText className='text-lg' weight='semi-bold' >{props.children}</FlipoText>
     );
   } else if (props.type == 'setting') {
-    if (props.setting == undefined || props.setting.title == undefined || props.setting.value == undefined) {
-      console.warn("FlipoFlatButton of type 'setting' requires a 'setting' object as a prop "
-      + "with 'title' and 'value' string properties. "
+    if (props.title == undefined || props.value == undefined) {
+      console.warn("FlipoFlatButton of type 'setting' requires"
+      + "'title' and 'value' string props. "
       + "FlipoFlatButton not rendered.");
       
       return undefined;
@@ -23,15 +21,19 @@ const FlipoFlatButton = ( props ) => {
     buttonContent = (
       <View>
         {/* setting title */}
-        <FlipoText weight='medium' className='uppercase tracking-wider'>{props.setting.title}</FlipoText>
+        <FlipoText weight='medium' className='uppercase tracking-wider'>{props.title}</FlipoText>
         {/* setting value */}
-        <FlipoText weight='bold' className={`text-2xl text-green-dark`}>{props.setting.value}</FlipoText>
+        <FlipoText weight='bold' className={`text-2xl text-green-dark capitalize`}>{props.value}</FlipoText>
       </View>
     )
   } else if (props.type == 'action' || props.type == 'action-red') {
     buttonContent = (
       <FlipoText
-        className={`text-lg uppercase text-center text-${props.type == 'action-red' ? 'alert' : 'strong'}-${theme}`}
+        className={`
+          text-lg uppercase text-center 
+          text-${props.type == 'action-red' ? 'alert' : 'strong'}
+          dark:text-${props.type == 'action-red' ? 'alert' : 'strong'}-dark
+        `}
         weight='medium'
       >
           {props.children}
@@ -45,12 +47,16 @@ const FlipoFlatButton = ( props ) => {
 
   return (props.onPress == undefined
     ? (
-        <View className={`border-ui-${theme} border-b-2 p-4 min-h-[10vh] justify-center`}>
+        <View className='border-ui dark:border-ui-dark border-b-2 p-4 min-h-[10vh] justify-center'>
           {buttonContent}
         </View>
       )
     : (
-        <TouchableOpacity onPress={props.onPress} className={`border-ui-${theme} border-b-2 p-4 min-h-[10vh] justify-center`}>
+        <TouchableOpacity
+          onPress={props.onPress}
+          className='border-ui dark:border-ui-dark
+            border-b-2 p-4 min-h-[10vh] justify-center'
+        >
           {buttonContent}
         </TouchableOpacity>
       )

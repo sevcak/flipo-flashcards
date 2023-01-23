@@ -13,7 +13,6 @@ import { getDeckArs } from "../../utils/deckStatUtils";
 import CardCell from "../../components/decks/CardCell";
 
 const DeckProfileScreen = ({ navigation, route }) => {
-  let theme = useColorScheme();
   let colorScheme = colorSchemes[useColorScheme()];
   
   // unpacks deck passed from parameters
@@ -74,7 +73,7 @@ const DeckProfileScreen = ({ navigation, route }) => {
 
 
   return (
-    <View className={`bg-primary-${theme}`}>
+    <View className='bg-primary dark:bg-primary-dark'>
       <ScrollView
         className='-mt-9'
         showsVerticalScrollIndicator={false}
@@ -105,7 +104,7 @@ const DeckProfileScreen = ({ navigation, route }) => {
             <FlipoButton>
               <FlipoText
                 weight="black"
-                className={`text-2xl text-primary-${theme} tracking-wide`}
+                className={`text-2xl tracking-wide text-primary`}
               >
                 Play Deck
               </FlipoText>
@@ -123,7 +122,7 @@ const DeckProfileScreen = ({ navigation, route }) => {
                     getDecks: getDecks,
                   })
                 }}
-                className={`text-center text-strong-${theme}`}
+                className='text-center text-strong dark:text-strong-dark'
               >
                 Edit deck
               </TextButton>
@@ -141,10 +140,18 @@ const DeckProfileScreen = ({ navigation, route }) => {
                   <FlipoText weight='bold' className={`text-xl grow`}>ARS:</FlipoText>
                 </View>
                 <View className='grow'>
-                  <FlipoText weight='semi-bold' className={`text-ui-${theme} tracking-wider text-center py-2`}>
+                  <FlipoText
+                    weight='semi-bold'
+                    className='tracking-wider text-center py-2
+                    text-ui dark:text-ui-dark'
+                  >
                     Deck Average Recall Score
                   </FlipoText>
-                  <FlipoText weight='bold' className={`text-xl text-center text-strong-${theme} scale-[2]`}>
+                  <FlipoText
+                    weight='bold'
+                    className='text-xl text-center scale-[2]
+                    text-strong dark:text-strong-dark'
+                  >
                     {deckStats.ars}
                   </FlipoText>
                 </View>
@@ -155,11 +162,17 @@ const DeckProfileScreen = ({ navigation, route }) => {
           <View className='space-y-4'>
             <FlipoText weight='bold' className='text-3xl text-left'>Cards</FlipoText>
             <View className='pl-6 flex-row w-full'>
-              <FlipoText weight='bold' className={`text-left text-strong-${theme}`}>
+              <FlipoText 
+                weight='bold'
+                className='text-left text-strong dark:text-strong-dark'
+              >
                 ID
               </FlipoText>
               <View className='grow'></View>
-              <FlipoText weight='bold' className={`text-right text-strong-${theme}`}>
+              <FlipoText
+                weight='bold'
+                className='text-right text-strong dark:text-strong-dark'
+              >
                 ARS
               </FlipoText>
             </View>
