@@ -19,7 +19,7 @@ const DeckEditScreen = ({ route, navigation }) => {
   const colorScheme = colorSchemes[useColorScheme()];
 
   // functions for updating the deck states in previous screens
-  const updateDecks = route.params.getDecks;
+  const updateDecks = route.params.updateDecks;
   const updateDeckProfile = route.params.updateDeckProfile;
 
   const existing = (route.params.deck != undefined);
@@ -260,6 +260,7 @@ const DeckEditScreen = ({ route, navigation }) => {
               <TextInput
                 cursorColor={colorScheme['green']}
                 maxLength={30}
+                multiline
                 defaultValue={newDeck.title}
                 className='text-secondary dark:text-secondary-dark 
                   border-b border-green-dark dark:border-green-dark

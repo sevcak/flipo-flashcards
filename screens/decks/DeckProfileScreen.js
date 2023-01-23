@@ -19,7 +19,7 @@ const DeckProfileScreen = ({ navigation, route }) => {
   const [deck, setDeck] = useState(route.params.deck);
   
   // function for updating the decks state in the homepage
-  const getDecks = route.params.getDecks;
+  const updateDecks = route.params.updateDecks;
 
   // deck stats state
   const [deckStats, setDeckStats] = useState({
@@ -96,7 +96,7 @@ const DeckProfileScreen = ({ navigation, route }) => {
               navigation.navigate("DeckPlayScreen", {
                 deck: deck,
                 updateDeckProfile: updateDeckProfile,
-                getDecks: getDecks,
+                updateDecks: updateDecks,
               })
             }
             activeOpacity={0.5}
@@ -119,7 +119,7 @@ const DeckProfileScreen = ({ navigation, route }) => {
                   navigation.navigate("DeckEditScreen", {
                     deck: deck,
                     updateDeckProfile: updateDeckProfile,
-                    getDecks: getDecks,
+                    updateDecks: updateDecks,
                   })
                 }}
                 className='text-center text-strong dark:text-strong-dark'

@@ -39,7 +39,7 @@ const Flashcard = ({ card, flipped }) => {
       <Animated.View
         className='bg-card dark:bg-card-dark w-full h-full rounded-xl'
         style={{transform: [{rotateY: interpolateBack}], backfaceVisibility: 'hidden', elevation: elevationLevel,}}>
-          <View className='grow justify-center p-2'>
+          <View className='grow justify-center p-2 max-h-full overflow-hidden'>
             {/* <FlipoText className='text-center m-2'>card {card.id} - front</FlipoText> */}
             <FlipoText weight='extra-bold' className='text-center text-2xl mb-2'>{card.front.title}</FlipoText>
             <FlipoText weight='semi-bold' className='text-center'>{card.front.content}</FlipoText>
@@ -58,7 +58,7 @@ const Flashcard = ({ card, flipped }) => {
     <Animated.View
       className='bg-card dark:bg-card-dark w-full h-full rounded-xl absolute'
       style={{transform: [{rotateY: interpolateFront}], backfaceVisibility: 'hidden', elevation: elevationLevel,}}>
-        <View className='justify-center grow'>
+        <View className='justify-center grow max-h-full overflow-hidden'>
           {/* <FlipoText className='text-center m-2'>card {card.id} - back</FlipoText> */}
           <FlipoText weight='extra-bold' className='text-center text-2xl mb-2'>{card.back.title}</FlipoText>
           <FlipoText weight='semi-bold' className='text-center'>{card.back.content}</FlipoText>

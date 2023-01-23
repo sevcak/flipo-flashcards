@@ -112,7 +112,7 @@ const DecksHomeScreen = () => {
       <TouchableOpacity 
         key={deck.id}
         onPress={() => navigation.navigate('DeckProfileScreen', {
-          getDecks: getCustomDecks,
+          updateDecks: getCustomDecks,
           deck: deck,
         })}
       >
@@ -133,7 +133,7 @@ const DecksHomeScreen = () => {
         key={deck['id']}
         activeOpacity={0.8}
         onPress={() => navigation.navigate('DeckProfileScreen', {
-          getDecks: getExampleDecks,
+          updateDecks: getExampleDecks,
           deck: deck,
         })}
         >
@@ -176,6 +176,7 @@ const DecksHomeScreen = () => {
               activeOpacity={0.8}
               onPress={() => navigation.navigate('DeckEditScreen', {
                 updateDeckProfile: getCustomDecks,
+                updateDecks: getCustomDecks,
               })}
             >
                 <DeckCard 

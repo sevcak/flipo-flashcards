@@ -18,7 +18,7 @@ const DeckPlayScreen = ({route, navigation}) => {
     // unpacks deck passed from parameters and creates state for it
     const [deck, setDeck] = useState(route.params.deck);
     const updateDeckProfile = route.params.updateDeckProfile;
-    const getDecks = route.params.getDecks;
+    const updateDecks = route.params.updateDecks;
 
     // stores custom deck data
     const storeDeck = async (deck) => {
@@ -91,7 +91,7 @@ const DeckPlayScreen = ({route, navigation}) => {
       setDeck(newDeck);
       storeDeck(deck);
       updateDeckProfile(deck);
-      getDecks();
+      updateDecks();
       
       nextCard(deck.cards, card);
     }

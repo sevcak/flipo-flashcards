@@ -54,7 +54,9 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
       }}
       collapsable={false}
     >
-      <View className='grow justify-center p-2 space-y-4 content-between'>
+      <View 
+        className='grow justify-center p-2 space-y-4 content-between max-h-full overflow-hidden'
+      >
         <FlipoText className='text-center m-2'>Card {card.id} - Front</FlipoText>
           <TextInput
             defaultValue={card['front']['title']}
@@ -66,9 +68,10 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
             autoFocus
             maxLength={30}
             autoComplete='off'
+            multiline
             autoCorrect={false}
             spellCheck={false}
-            style={{fontFamily: 'Montserrat-SemiBold',}}
+            style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
             onChangeText={(val) => updateCard('front', 'title', val)}
           />
         <View>
@@ -79,11 +82,13 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
               text-center pb-1'
             cursorColor={colorScheme['green']}
             placeholderTextColor={colorScheme['ui']}
+            multiline
             maxLength={124}
+            numberOfLines={8}
             autoComplete='off'
             autoCorrect={false}
             spellCheck={false}
-            style={{fontFamily: 'Montserrat-SemiBold'}}
+            style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
             onChangeText={(val) => updateCard('front', 'content', val)}
           />
         </View>
@@ -107,7 +112,9 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
         elevation: elevationLevel,
         zIndex: (flipped ? 1 : -99),
       }}>
-        <View className='grow justify-center p-2 space-y-4 content-between'>
+        <View
+          className='grow justify-center p-2 space-y-4 content-between max-h-full overflow-hidden'
+        >
             <FlipoText className='text-center m-2'>Card {card.id} - Back</FlipoText>
               <TextInput
                 defaultValue={card['back']['title']}
@@ -116,11 +123,12 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
                   text-2xl text-center pb-1'
                 cursorColor={colorScheme['green']}
                 placeholderTextColor={colorScheme['ui']}
+                multiline
                 maxLength={30}
                 autoComplete='off'
                 autoCorrect={false}
                 spellCheck={false}
-                style={{fontFamily: 'Montserrat-SemiBold'}}
+                style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
                 onChangeText={(val) => updateCard('back', 'title', val)}
               />
             <View>
@@ -131,11 +139,12 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
                   text-center pb-1'
                 cursorColor={colorScheme['green']}
                 placeholderTextColor={colorScheme['ui']}
+                multiline
                 maxLength={124}
                 autoComplete='off'
                 autoCorrect={false}
                 spellCheck={false}
-                style={{fontFamily: 'Montserrat-SemiBold'}}
+                style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
                 onChangeText={(val) => updateCard('back', 'content', val)}
               />
             </View>
