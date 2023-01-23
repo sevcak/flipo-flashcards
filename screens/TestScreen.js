@@ -10,7 +10,7 @@ const TestScreen = () => {
     const navigation = useNavigation();
 
     return (
-      <SafeAreaView 
+      <View 
         className='bg-primary dark:bg-primary-dark'
         style={{backgoundColor: 'red'}}
       >
@@ -18,7 +18,7 @@ const TestScreen = () => {
             <FlipoText className="text-4xl">Hello, flipo!</FlipoText>
             <FlipoText className="text-xl">This is a test screen.</FlipoText>
           </View>
-      </SafeAreaView>
+      </View>
     );
 }
 

@@ -10,9 +10,9 @@ const FlipoFlatButton = ( props ) => {
       <FlipoText className='text-lg' weight='semi-bold' >{props.children}</FlipoText>
     );
   } else if (props.type == 'setting') {
-    if (props.setting == undefined || props.setting.title == undefined || props.setting.value == undefined) {
-      console.warn("FlipoFlatButton of type 'setting' requires a 'setting' object as a prop "
-      + "with 'title' and 'value' string properties. "
+    if (props.title == undefined || props.value == undefined) {
+      console.warn("FlipoFlatButton of type 'setting' requires"
+      + "'title' and 'value' string props. "
       + "FlipoFlatButton not rendered.");
       
       return undefined;
@@ -21,9 +21,9 @@ const FlipoFlatButton = ( props ) => {
     buttonContent = (
       <View>
         {/* setting title */}
-        <FlipoText weight='medium' className='uppercase tracking-wider'>{props.setting.title}</FlipoText>
+        <FlipoText weight='medium' className='uppercase tracking-wider'>{props.title}</FlipoText>
         {/* setting value */}
-        <FlipoText weight='bold' className={`text-2xl text-green-dark`}>{props.setting.value}</FlipoText>
+        <FlipoText weight='bold' className={`text-2xl text-green-dark capitalize`}>{props.value}</FlipoText>
       </View>
     )
   } else if (props.type == 'action' || props.type == 'action-red') {
