@@ -157,7 +157,12 @@ const DecksHomeScreen = () => {
         {/* User decks */}
         <View className='flex flex-col space-y-6'>
           <View className='px-8'>
-            <FlipoText weight='extra-bold' className='text-4xl text-secondary dark:text-secondary-dark'>Your decks</FlipoText>
+            <FlipoText
+              weight='extra-bold'
+              className='text-4xl text-secondary dark:text-secondary-dark'
+            >
+              Your decks 
+            </FlipoText>
             <FlipoText 
               weight='semi-bold'
               className={`text-base text-ui dark:text-strong-dark`}>
