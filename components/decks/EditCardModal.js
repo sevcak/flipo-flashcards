@@ -1,4 +1,4 @@
-import { View, Modal, useColorScheme, SafeAreaView, Pressable, TouchableOpacity } from 'react-native'
+import { View, Modal, useColorScheme, SafeAreaView, Pressable, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { BlurView } from 'expo-blur';
 import FlipoButton from '../pressable/FlipoButton';
@@ -28,14 +28,13 @@ const EditCardModal = ({ card, editCard }) => {
       visible={card ? true : false}
       animationType='fade'
     >
-      <SafeAreaView>
         <BlurView 
           className='align-center justify-center h-screen w-screen px-10'
           intensity={100}
           tint={useColorScheme()}
         >
           {/*Card*/}
-          <View className='h-96 w-full'>
+          <View className='h-96 w-full -mt-40'>
             <EditableFlashcard card={card} flipped={flipped} setCard={setNewCard}/>
           </View>
           <TouchableOpacity onPress={() => setFlipped(prevFlipped => (!prevFlipped))} activeOpacity={0.8} className='mt-4 mb-8 items-center'>
@@ -46,8 +45,6 @@ const EditCardModal = ({ card, editCard }) => {
             <FlipoButton>Confirm</FlipoButton>
           </TouchableOpacity>
         </BlurView>
-      </SafeAreaView>
-      
     </Modal>
   )
 }

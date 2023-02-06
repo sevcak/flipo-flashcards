@@ -58,40 +58,37 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
         className='grow justify-center p-2 space-y-4 content-between max-h-full overflow-hidden'
       >
         <FlipoText className='text-center m-2'>Card {card.id} - Front</FlipoText>
-          <TextInput
-            defaultValue={card['front']['title']}
-            placeholder='Front title'
-            className='text-secondary dark:text-secondary-dark 
-              text-2xl text-center pb-1'
-            cursorColor={colorScheme['green']}
-            placeholderTextColor={colorScheme['ui']}
-            autoFocus
-            maxLength={30}
-            autoComplete='off'
-            multiline
-            autoCorrect={false}
-            spellCheck={false}
-            style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
-            onChangeText={(val) => updateCard('front', 'title', val)}
-          />
-        <View>
-          <TextInput
-            defaultValue={card['front']['content']}
-            placeholder='Front content'
-            className='text-secondary dark:text-secondary-dark
-              text-center pb-1'
-            cursorColor={colorScheme['green']}
-            placeholderTextColor={colorScheme['ui']}
-            multiline
-            maxLength={124}
-            numberOfLines={8}
-            autoComplete='off'
-            autoCorrect={false}
-            spellCheck={false}
-            style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
-            onChangeText={(val) => updateCard('front', 'content', val)}
-          />
-        </View>
+        <TextInput
+          defaultValue={card['front']['title']}
+          placeholder='Front title'
+          className='text-secondary dark:text-secondary-dark 
+            text-2xl text-center pb-1'
+          cursorColor={colorScheme['green']}
+          placeholderTextColor={colorScheme['ui']}
+          autoFocus
+          maxLength={30}
+          autoComplete='off'
+          multiline
+          autoCorrect={false}
+          spellCheck={false}
+          style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
+          onChangeText={(val) => updateCard('front', 'title', val)}
+        />
+        <TextInput
+          defaultValue={card['front']['content']}
+          placeholder='Front content'
+          className='text-secondary dark:text-secondary-dark
+            text-center pb-1'
+          cursorColor={colorScheme['green']}
+          placeholderTextColor={colorScheme['ui']}
+          multiline
+          maxLength={124}
+          autoComplete='off'
+          autoCorrect={false}
+          spellCheck={false}
+          style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
+          onChangeText={(val) => updateCard('front', 'content', val)}
+        />
       </View>
       {/* image, if card has one */}
       {card.front.image
@@ -131,23 +128,21 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
           style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
           onChangeText={(val) => updateCard('back', 'title', val)}
         />
-        <View>
-          <TextInput
-            defaultValue={card['back']['content']}
-            placeholder='Back content'
-            className='text-secondary dark:text-secondary-dark
-              text-center pb-1'
-            cursorColor={colorScheme['green']}
-            placeholderTextColor={colorScheme['ui']}
-            multiline
-            maxLength={124}
-            autoComplete='off'
-            autoCorrect={false}
-            spellCheck={false}
-            style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
-            onChangeText={(val) => updateCard('back', 'content', val)}
-          />
-        </View>
+        <TextInput
+          defaultValue={card['back']['content']}
+          placeholder='Back content'
+          className='text-secondary dark:text-secondary-dark
+            text-center pb-1'
+          cursorColor={colorScheme['green']}
+          placeholderTextColor={colorScheme['ui']}
+          multiline
+          maxLength={124}
+          autoComplete='off'
+          autoCorrect={false}
+          spellCheck={false}
+          style={{fontFamily: 'Montserrat-SemiBold', textAlignVertical: 'top'}}
+          onChangeText={(val) => updateCard('back', 'content', val)}
+        />
       </View>
       {/* image, if card has one */}
       {card.front.image
