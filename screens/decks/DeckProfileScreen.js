@@ -75,7 +75,6 @@ const DeckProfileScreen = ({ navigation, route }) => {
   return (
     <View className='bg-primary dark:bg-primary-dark'>
       <ScrollView
-        className='-mt-9'
         showsVerticalScrollIndicator={false}
         overScrollMode='never'
       >
