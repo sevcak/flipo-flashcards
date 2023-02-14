@@ -125,7 +125,7 @@ const DeckPlayScreen = ({route, navigation}) => {
               onPress={() => flipCard()}>
                 <FlipoText
                   weight='black'
-                  className='text-2xl text-primary dark:text-primary-dark tracking-wide'
+                  className='text-2xl text-primary tracking-wide'
                 >
                   Flip
                 </FlipoText>

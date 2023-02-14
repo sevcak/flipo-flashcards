@@ -47,6 +47,48 @@ export default [
           image: require("../assets/example-decks/capitals-of-countries/cards/vienna.jpg"),
         },
       },
+      {
+        id: 3,
+        ars: 1,
+        front: {
+          title: "Slovakia",
+          content: "What is the capital of Slovakia?",
+          image: undefined,
+        },
+        back: {
+          title: "Bratislava",
+          content: undefined,
+          image: undefined,
+        },
+      },
+      {
+        id: 4,
+        ars: 1,
+        front: {
+          title: "France",
+          content: "What is the capital of France?",
+          image: undefined,
+        },
+        back: {
+          title: "Paris",
+          content: undefined,
+          image: undefined,
+        },
+      },
+      {
+        id: 5,
+        ars: 1,
+        front: {
+          title: "Spain",
+          content: "What is the capital of Spain?",
+          image: undefined,
+        },
+        back: {
+          title: "Madrid",
+          content: undefined,
+          image: undefined,
+        },
+      },
     ],
   },
   {
