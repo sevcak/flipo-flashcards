@@ -40,5 +40,3 @@ Help would be most welcome in the area of simplifying and documenting the alread
 
 The source code of flipo flashcards is available under the [MIT](https://choosealicense.com/licenses/mit/) license.
 However, some dependencies may be licensed differently.
-# flipo flashcards
-A mobile application supposed to serve as a studying tool.
