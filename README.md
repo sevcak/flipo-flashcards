@@ -16,6 +16,8 @@ _or_
 
 Run it in [Expo Go](https://expo.dev/expo-go) yourself!
 
+** You need to first configure ``app.json``, more specifically to change the ``"owner"`` to your Expo Go account username.
+
 ## ✨ Features
 
 ### 1. 🆕 Create your custom decks of flashcards
