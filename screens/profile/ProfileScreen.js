@@ -13,7 +13,10 @@ import FlipoText from '../../components/FlipoText';
 import FlipoIcons from '../../components/FlipoIcons';
 import FlipoFlatButton from '../../components/pressable/FlipoFlatButton';
 import FlipoModal from '../../components/FlipoModal';
+import { revokeAsync } from 'expo-auth-session';
 
+// has to be here so the auth finishes in Expo Go
+// (in native this does nothing)
 WebBrowser.maybeCompleteAuthSession();
 
 const ProfileScreen = () => {
@@ -37,6 +40,20 @@ const ProfileScreen = () => {
   const [googleAuth, setGoogleAuth] = useState(false);
   const [userName, setUserName] = useState('Guest');
   const [userPicture, setUserPicture] = useState(null);
+
+  // state containing the Google API access token
+  const [accessToken, setAccessToken] = useState(null);
+  
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: '1065386564540-6ubve5q36b79drp6fraa1ml3hs17p27p.apps.googleusercontent.com',
+    iosClientId: '1065386564540-05fn7if915ch5ii7esldqp8i57t3k8u7.apps.googleusercontent.co',
+    androidClientId: '1065386564540-t13e878c3bcaish2o7e0cjk5aanhb9u0.apps.googleusercontent.com',
+    scopes: [
+      'openid',
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/drive.appdata',
+    ]
+  });
   
   // stores user data to the local storage
   const storeUserData = async (data) => {
@@ -54,7 +71,7 @@ const ProfileScreen = () => {
       data = JSON.parse(data);
 
       if (data != null) {
-        setUserName(data.name);
+        data.name ? setUserName(data.name) : setUserName('Guest');
         setUserPicture(data.picture)
       }
     } catch (e) {
@@ -87,18 +104,6 @@ const ProfileScreen = () => {
       console.error('ProfileScreen: There was an error with saving the decks.');
     }
   };
-
-  const [accessToken, setAccessToken] = useState(null);
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: '1065386564540-6ubve5q36b79drp6fraa1ml3hs17p27p.apps.googleusercontent.com',
-    iosClientId: '1065386564540-05fn7if915ch5ii7esldqp8i57t3k8u7.apps.googleusercontent.co',
-    androidClientId: '1065386564540-t13e878c3bcaish2o7e0cjk5aanhb9u0.apps.googleusercontent.com',
-    scopes: [
-      'openid',
-      'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/drive.appdata',
-    ]
-  });
   
   const generateMultipartBody = (data) => {
     let boundary = 'request_body_boundary';
@@ -284,7 +289,9 @@ const ProfileScreen = () => {
     
     const userInfo = await response.json();
 
-    setUserName(userInfo.given_name);
+    if (userName == 'Guest') {
+      setUserName(userInfo.given_name);
+    }
     
     let picture = userInfo.picture;
     picture = picture.slice(0, picture.lastIndexOf('='))
@@ -294,6 +301,21 @@ const ProfileScreen = () => {
       name: userInfo.given_name,
       picture: picture,
     });
+  }
+
+  // gets rid of the Google API access token
+  const googleSignOut = async () => {
+    if (!googleAuth) {
+      console.error("googleSignOut: Not logged into Google. Therefore it is not possible to log out.");
+    } else {
+      await revokeAsync({
+        token: accessToken
+      }, {
+        revocationEndpoint: 'https://oauth2.googleapis.com/revoke'
+      });
+      setAccessToken(null);
+      setGoogleAuth(null);
+    }
   }
 
   // Modal to double-check the user's decision
@@ -370,7 +392,7 @@ const ProfileScreen = () => {
   // the picture can't be loaded, the profile icon isn't blank.
   const [pictureBackground, setPictureBackground] = useState('');
 
-  // Google login determinant buttons
+  // Buttons that appear if user is logged in with Google
   const loggedInOptions = ( googleAuth
     ? (
       <View>
@@ -379,6 +401,9 @@ const ProfileScreen = () => {
         </FlipoFlatButton>
         <FlipoFlatButton type='action' onPress={() => setAlert(importGDriveModal)}>
           Import decks from Google Drive
+        </FlipoFlatButton>
+        <FlipoFlatButton type='action-red' onPress={() => googleSignOut()}>
+          Sign out of Google
         </FlipoFlatButton>
       </View>
     )
@@ -407,6 +432,7 @@ const ProfileScreen = () => {
       if (accessToken) {
         console.log('ProfileScreen: Checking if access key is valid');
         if (!isGoogleTokenValid()) {
+          setAccessToken(null);
           setGoogleAuth(false);
         }
       }
