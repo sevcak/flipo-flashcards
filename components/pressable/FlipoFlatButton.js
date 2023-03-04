@@ -1,6 +1,7 @@
 import { View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import FlipoText from '../FlipoText';
+import FlipoIcons from '../FlipoIcons';
 
 const FlipoFlatButton = ( props ) => {
   let buttonContent;
@@ -43,6 +44,23 @@ const FlipoFlatButton = ( props ) => {
     buttonContent = (
       <View>{buttonContent}</View>
     ); 
+  } else if (props.type == 'googleLogin') {
+    buttonContent = (
+      <View className='flex-row justify-center'>
+        <View
+          // className='flex-row items-center space-x-2 p-0.25 rounded-sm dark:bg-[#4285f4]'
+          className='flex-row items-center space-x-2 p-0.25 rounded-sm bg-[#4285f4]'
+        >
+          <FlipoIcons name='google-button' size={46}/>
+          <FlipoText 
+            weight='bold'
+            className='text-base text-[#fff] tracking-tight pr-3'
+          >
+            Sign in with Google
+          </FlipoText>
+        </View>
+      </View>
+    )
   }
 
   return (props.onPress == undefined

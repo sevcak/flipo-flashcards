@@ -382,7 +382,7 @@ const ProfileScreen = () => {
         </FlipoFlatButton>
       </View>
     )
-    : (<FlipoFlatButton type='action' onPress={() => promptAsync({/*useProxy: true, */showInRecents: true})}>Sign in with Google</FlipoFlatButton>)
+    : (<FlipoFlatButton type='googleLogin' onPress={() => promptAsync({/*useProxy: true, */showInRecents: true})}/>)
   );
   
   // Size of the profile picture/icon
@@ -440,7 +440,7 @@ const ProfileScreen = () => {
           </View>
           {/* Buttons */}
           <View className='border-t-2 border-ui dark:border-ui-dark'>
-            <FlipoFlatButton type='setting' setting={{title: 'Name', value: userName}} />
+            <FlipoFlatButton type='setting' title='Name' value={userName}/>
             {loggedInOptions}
           </View>
         </View>
