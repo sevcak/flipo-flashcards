@@ -68,7 +68,8 @@ const FlipoFlatButton = ( props ) => {
           >
             <FlipoIcons name='google-button' size='45'/>
             <FlipoText
-              className='text-xl'
+              className={`text-xl ${props.textClassName}`}
+              style = {props.textStyle}
             >
               {props.children}
             </FlipoText>
