@@ -60,7 +60,20 @@ const FlipoFlatButton = ( props ) => {
           </FlipoText>
         </View>
       </View>
-    )
+    );
+  } else if (props.type == 'google-action') {
+    buttonContent = (
+      <View
+            className='flex-row items-center space-x-2'
+          >
+            <FlipoIcons name='google-button' size='45'/>
+            <FlipoText
+              className='text-xl'
+            >
+              {props.children}
+            </FlipoText>
+      </View>
+    );
   }
 
   return (props.onPress == undefined
