@@ -24,7 +24,7 @@ const FlipoFlatButton = ( props ) => {
         {/* setting title */}
         <FlipoText weight='medium' className='uppercase tracking-wider'>{props.title}</FlipoText>
         {/* setting value */}
-        <FlipoText weight='bold' className={`text-2xl text-green-dark capitalize`}>{props.value}</FlipoText>
+        <FlipoText weight='bold' className={`text-2xl text-green-dark`} style={props.style}>{props.value}</FlipoText>
       </View>
     )
   } else if (props.type == 'action' || props.type == 'action-red') {

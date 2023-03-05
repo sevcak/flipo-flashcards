@@ -39,6 +39,7 @@ const ProfileScreen = () => {
   // user data states
   const [googleAuth, setGoogleAuth] = useState(false);
   const [userName, setUserName] = useState('Guest');
+  const [googleEmail, setGoogleEmail] = useState(null);
   const [userPicture, setUserPicture] = useState(null);
 
   // state containing the Google API access token
@@ -72,7 +73,7 @@ const ProfileScreen = () => {
 
       if (data != null) {
         data.name ? setUserName(data.name) : setUserName('Guest');
-        setUserPicture(data.picture)
+        setUserPicture(data.picture);
       }
     } catch (e) {
       console.error('There was an error with loading the user data.')
@@ -289,9 +290,11 @@ const ProfileScreen = () => {
     
     const userInfo = await response.json();
 
+    // doesn't change the user's if it was manually set
     if (userName == 'Guest') {
       setUserName(userInfo.given_name);
     }
+    setGoogleEmail(userInfo.email);
     
     let picture = userInfo.picture;
     picture = picture.slice(0, picture.lastIndexOf('='))
@@ -396,6 +399,7 @@ const ProfileScreen = () => {
   const loggedInOptions = ( googleAuth
     ? (
       <View>
+        <FlipoFlatButton type='setting' title='Google account' value={googleEmail}/>
         <FlipoFlatButton type='action' onPress={() => setAlert(exportGDriveModal)}>
           Export decks to Google Drive
         </FlipoFlatButton>
