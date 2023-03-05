@@ -42,7 +42,7 @@ const FlipoFlatButton = ( props ) => {
     );
   } else if (props.type == 'custom') {
     buttonContent = (
-      <View>{buttonContent}</View>
+      <View>{props.children}</View>
     ); 
   } else if (props.type == 'googleLogin') {
     buttonContent = (
