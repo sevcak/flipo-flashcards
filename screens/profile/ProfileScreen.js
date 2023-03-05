@@ -406,12 +406,21 @@ const ProfileScreen = () => {
         <FlipoFlatButton type='google-action' onPress={() => setAlert(importGDriveModal)}>
           Import decks from Drive
         </FlipoFlatButton>
-        <FlipoFlatButton type='action-red' onPress={() => googleSignOut()}>
+        <FlipoFlatButton
+          type='google-action'
+          onPress={() => googleSignOut()}
+          textClassName='text-alert'
+        >
           Sign out of Google
         </FlipoFlatButton>
       </View>
     )
-    : (<FlipoFlatButton type='googleLogin' onPress={() => promptAsync({/*useProxy: true, */showInRecents: true})}/>)
+    : (
+      <FlipoFlatButton
+        type='googleLogin' 
+        onPress={() => promptAsync({/*useProxy: true, */showInRecents: true})}
+      />
+    )
   );
   
   // Size of the profile picture/icon
