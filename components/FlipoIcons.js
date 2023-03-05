@@ -1,4 +1,4 @@
-import { useColorScheme } from "react-native";
+import { useColorScheme, View } from "react-native";
 import React from "react";
 import Svg, { Path, Mask, Ellipse, G, Defs, ClipPath, Rect, Use } from "react-native-svg";
 import colorSchemes from "../assets/colorSchemes";
@@ -7,6 +7,7 @@ const FlipoIcons = (props) => {
   let type = props.type == 'outline' ? 'outline' : 'solid'
   let color = props.color != undefined ? props.color : colorSchemes[useColorScheme()].secondary;
   let size = props.size != undefined ? props.size : 50;
+  let icon = null;
   
   if (props.name == undefined) {
     console.error('No icon name set in FlipoIcons element.');
@@ -14,27 +15,35 @@ const FlipoIcons = (props) => {
   } else {
     switch (props.name) {
       case 'card':
-        return (
+        icon = (
           <CardIcon type={type} size={size} color={color}/>
         );
+        break;
       case 'profile':
-        return (
+        icon = (
           <ProfileIcon type={type} size={size} color={color}/>
         );
+        break;
       case 'gear':
-        return (
+        icon = (
           <GearIcon type={type} size={size} color={color}/>
         );
+        break;
       case 'back-arrow':
-        return (
+        icon = (
           <BackArrowIcon type={type} size={size} color={color}/>
         );
+        break;
       case 'google-button':
-        return (<GoogleButton size={size}/>);
+        icon = (<GoogleButton size={size}/>);
+        break;
       default:
         console.error(`An icon with the name ${props.name} doesn't exist in FlipoIcons.`);
         return null;
     }
+    return (props.style)
+      ? (<View style={props.style}>{icon}</View>)
+      : icon;
   }
 }
 
