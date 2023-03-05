@@ -400,11 +400,11 @@ const ProfileScreen = () => {
     ? (
       <View>
         <FlipoFlatButton type='setting' title='Google account' value={googleEmail}/>
-        <FlipoFlatButton type='custom' onPress={() => setAlert(exportGDriveModal)}>
-          <FlipoText>Export decks to Google Drive</FlipoText>
+        <FlipoFlatButton type='google-action' onPress={() => setAlert(exportGDriveModal)}>
+          Export decks to Drive
         </FlipoFlatButton>
-        <FlipoFlatButton type='action' onPress={() => setAlert(importGDriveModal)}>
-          Import decks from Google Drive
+        <FlipoFlatButton type='google-action' onPress={() => setAlert(importGDriveModal)}>
+          Import decks from Drive
         </FlipoFlatButton>
         <FlipoFlatButton type='action-red' onPress={() => googleSignOut()}>
           Sign out of Google
