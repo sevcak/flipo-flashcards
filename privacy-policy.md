@@ -2,9 +2,9 @@
 
 Flipo flashcards is an Open Source app provided at no cost and is intended for use as-is.
 
-To better protect your privacy we provide this privacy policy notice explaining the way your personal information is collected and used.
+To better protect your privacy we provide this policy notice explaining the way your personal information is collected and used.
 
-If you choose to use flipo flashcards, then you agree to the collection and use of information as described in this policy. The Personal Information collected is used for providing and improving the Service. Flipo flascards will not use or share your information with anyone except as described in this Privacy Policy.
+If you choose to use flipo flashcards, then you agree to the collection and use of information as described in this policy. The Personal Information collected is used for providing and improving the app. Flipo flascards will not use or share your information with anyone except as described in this Privacy Policy.
 
 ## When information is collected
 
@@ -20,14 +20,14 @@ For a better experience, while using flipo flashcards, it may require you to pro
 
 Flipo flashcards uses third-party services that may collect information used to identify you.
 
-Links to the privacy policy of third-party service providers used by the app:
+Links to the Privacy Policy of third-party service providers used by the app:
 
 - [Google API Services](https://developers.google.com/terms)
 -   [Google Play Services](https://www.google.com/policies/privacy/)
 
 ## Links to Third Party Websites
 
-We have included links in this policy for your use and reference. We are not responsible for the privacy policies on these websites. You should be aware that the privacy policies of these websites may differ from our own.
+We have included links in this policy for your use and reference. We are not responsible for the Privacy Policies on these websites. You should be aware that the Privacy Policies of these websites may differ from our own.
 
 ## What information may be accessed
 
