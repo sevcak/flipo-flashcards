@@ -1,6 +1,7 @@
 import { View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import FlipoText from '../FlipoText';
+import FlipoIcons from '../FlipoIcons';
 
 const FlipoFlatButton = ( props ) => {
   let buttonContent;
@@ -23,7 +24,7 @@ const FlipoFlatButton = ( props ) => {
         {/* setting title */}
         <FlipoText weight='medium' className='uppercase tracking-wider'>{props.title}</FlipoText>
         {/* setting value */}
-        <FlipoText weight='bold' className={`text-2xl text-green-dark capitalize`}>{props.value}</FlipoText>
+        <FlipoText weight='bold' className={`text-2xl text-green-dark`} style={props.style}>{props.value}</FlipoText>
       </View>
     )
   } else if (props.type == 'action' || props.type == 'action-red') {
@@ -41,8 +42,39 @@ const FlipoFlatButton = ( props ) => {
     );
   } else if (props.type == 'custom') {
     buttonContent = (
-      <View>{buttonContent}</View>
+      <View>{props.children}</View>
     ); 
+  } else if (props.type == 'googleLogin') {
+    buttonContent = (
+      <View className='flex-row justify-center'>
+        <View
+          // className='flex-row items-center space-x-2 p-0.25 rounded-sm dark:bg-[#4285f4]'
+          className='flex-row items-center space-x-2 p-0.25 rounded-sm bg-[#4285f4]'
+        >
+          <FlipoIcons name='google-button' size={46}/>
+          <FlipoText 
+            weight='bold'
+            className='text-base text-[#fff] tracking-tight pr-3'
+          >
+            Sign in with Google
+          </FlipoText>
+        </View>
+      </View>
+    );
+  } else if (props.type == 'google-action') {
+    buttonContent = (
+      <View
+            className='flex-row items-center space-x-2'
+          >
+            <FlipoIcons name='google-button' size='45'/>
+            <FlipoText
+              className={`text-xl ${props.textClassName}`}
+              style = {props.textStyle}
+            >
+              {props.children}
+            </FlipoText>
+      </View>
+    );
   }
 
   return (props.onPress == undefined

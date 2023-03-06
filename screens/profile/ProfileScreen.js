@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
+import { A } from '@expo/html-elements';
 
 // Color schemes
 import colorSchemes from '../../assets/colorSchemes';
@@ -13,12 +14,17 @@ import FlipoText from '../../components/FlipoText';
 import FlipoIcons from '../../components/FlipoIcons';
 import FlipoFlatButton from '../../components/pressable/FlipoFlatButton';
 import FlipoModal from '../../components/FlipoModal';
+import { revokeAsync } from 'expo-auth-session';
 
+// has to be here so the auth finishes in Expo Go
+// (in native this does nothing)
 WebBrowser.maybeCompleteAuthSession();
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
   let colorScheme = colorSchemes[useColorScheme()];
+  
+  const privacyPolicyUrl = 'https://github.com/sevcak/flipo-flashcards/blob/master/privacy-policy.md';
 
   // header title setup
   navigation.setOptions({
@@ -36,7 +42,22 @@ const ProfileScreen = () => {
   // user data states
   const [googleAuth, setGoogleAuth] = useState(false);
   const [userName, setUserName] = useState('Guest');
+  const [googleEmail, setGoogleEmail] = useState(null);
   const [userPicture, setUserPicture] = useState(null);
+
+  // state containing the Google API access token
+  const [accessToken, setAccessToken] = useState(null);
+  
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: '1065386564540-6ubve5q36b79drp6fraa1ml3hs17p27p.apps.googleusercontent.com',
+    iosClientId: '1065386564540-05fn7if915ch5ii7esldqp8i57t3k8u7.apps.googleusercontent.co',
+    androidClientId: '1065386564540-t13e878c3bcaish2o7e0cjk5aanhb9u0.apps.googleusercontent.com',
+    scopes: [
+      'openid',
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/drive.appdata',
+    ]
+  });
   
   // stores user data to the local storage
   const storeUserData = async (data) => {
@@ -54,8 +75,8 @@ const ProfileScreen = () => {
       data = JSON.parse(data);
 
       if (data != null) {
-        setUserName(data.name);
-        setUserPicture(data.picture)
+        data.name ? setUserName(data.name) : setUserName('Guest');
+        setUserPicture(data.picture);
       }
     } catch (e) {
       console.error('There was an error with loading the user data.')
@@ -87,18 +108,6 @@ const ProfileScreen = () => {
       console.error('ProfileScreen: There was an error with saving the decks.');
     }
   };
-
-  const [accessToken, setAccessToken] = useState(null);
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: '1065386564540-6ubve5q36b79drp6fraa1ml3hs17p27p.apps.googleusercontent.com',
-    iosClientId: '1065386564540-05fn7if915ch5ii7esldqp8i57t3k8u7.apps.googleusercontent.co',
-    androidClientId: '1065386564540-t13e878c3bcaish2o7e0cjk5aanhb9u0.apps.googleusercontent.com',
-    scopes: [
-      'openid',
-      'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/drive.appdata',
-    ]
-  });
   
   const generateMultipartBody = (data) => {
     let boundary = 'request_body_boundary';
@@ -284,7 +293,11 @@ const ProfileScreen = () => {
     
     const userInfo = await response.json();
 
-    setUserName(userInfo.given_name);
+    // doesn't change the user's if it was manually set
+    if (userName == 'Guest') {
+      setUserName(userInfo.given_name);
+    }
+    setGoogleEmail(userInfo.email);
     
     let picture = userInfo.picture;
     picture = picture.slice(0, picture.lastIndexOf('='))
@@ -294,6 +307,27 @@ const ProfileScreen = () => {
       name: userInfo.given_name,
       picture: picture,
     });
+  }
+
+  // handles clicking on the 'Sign in using Google' button
+  const googleSignIn = () => {
+    // displays the privacy policy warning modal before allowing the user to sign in
+    setAlert(privacyPolicyModal);
+  }
+
+  // gets rid of the Google API access token
+  const googleSignOut = async () => {
+    if (!googleAuth) {
+      console.error("googleSignOut: Not logged into Google. Therefore it is not possible to log out.");
+    } else {
+      await revokeAsync({
+        token: accessToken
+      }, {
+        revocationEndpoint: 'https://oauth2.googleapis.com/revoke'
+      });
+      setAccessToken(null);
+      setGoogleAuth(null);
+    }
   }
 
   // Modal to double-check the user's decision
@@ -362,6 +396,39 @@ const ProfileScreen = () => {
       </View>
     </FlipoModal>
   );
+
+   // Modal to inform the user about the Privacy Policy
+  const privacyPolicyModal = (
+    <FlipoModal
+      title="Warning"
+      visible={true}
+      onButtonPress={() => {
+        setAlert(null);
+        promptAsync({/*useProxy: true, */showInRecents: true});
+      }}
+      buttonText='OK'
+      cancelButton
+      onCancelPress={() => {
+        setAlert(null);
+      }}
+    >
+      <View className='space-y-4'>
+        <FlipoText
+          weight='medium'
+          className='text-center text-lg text-primary dark:text-primary-dark'
+        >
+          By signing in using Google you agree to our 
+          <A href={privacyPolicyUrl}>
+            <FlipoText
+              className='text-green text-lg underline'
+            >
+              Privacy Policy
+            </FlipoText>
+          </A>
+        </FlipoText>
+      </View>
+    </FlipoModal>
+  );
   
   // If a profile picture is loaded, it has to get a background,
   // so the default profile icon doesn't clip from underneath.
@@ -370,19 +437,32 @@ const ProfileScreen = () => {
   // the picture can't be loaded, the profile icon isn't blank.
   const [pictureBackground, setPictureBackground] = useState('');
 
-  // Google login determinant buttons
+  // Buttons that appear if user is logged in with Google
   const loggedInOptions = ( googleAuth
     ? (
       <View>
-        <FlipoFlatButton type='action' onPress={() => setAlert(exportGDriveModal)}>
-          Export decks to Google Drive
+        <FlipoFlatButton type='setting' title='Google account' value={googleEmail}/>
+        <FlipoFlatButton type='google-action' onPress={() => setAlert(exportGDriveModal)}>
+          Export decks to Drive
         </FlipoFlatButton>
-        <FlipoFlatButton type='action' onPress={() => setAlert(importGDriveModal)}>
-          Import decks from Google Drive
+        <FlipoFlatButton type='google-action' onPress={() => setAlert(importGDriveModal)}>
+          Import decks from Drive
+        </FlipoFlatButton>
+        <FlipoFlatButton
+          type='google-action'
+          onPress={() => googleSignOut()}
+          textClassName='text-alert'
+        >
+          Sign out of Google
         </FlipoFlatButton>
       </View>
     )
-    : (<FlipoFlatButton type='action' onPress={() => promptAsync({/*useProxy: true, */showInRecents: true})}>Sign in with Google</FlipoFlatButton>)
+    : (
+      <FlipoFlatButton
+        type='googleLogin' 
+        onPress={() => googleSignIn()}
+      />
+    )
   );
   
   // Size of the profile picture/icon
@@ -407,6 +487,7 @@ const ProfileScreen = () => {
       if (accessToken) {
         console.log('ProfileScreen: Checking if access key is valid');
         if (!isGoogleTokenValid()) {
+          setAccessToken(null);
           setGoogleAuth(false);
         }
       }
@@ -440,7 +521,7 @@ const ProfileScreen = () => {
           </View>
           {/* Buttons */}
           <View className='border-t-2 border-ui dark:border-ui-dark'>
-            <FlipoFlatButton type='setting' setting={{title: 'Name', value: userName}} />
+            <FlipoFlatButton type='setting' title='Name' value={userName}/>
             {loggedInOptions}
           </View>
         </View>
