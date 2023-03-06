@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
+import { A } from '@expo/html-elements';
 
 // Color schemes
 import colorSchemes from '../../assets/colorSchemes';
@@ -22,6 +23,8 @@ WebBrowser.maybeCompleteAuthSession();
 const ProfileScreen = () => {
   const navigation = useNavigation();
   let colorScheme = colorSchemes[useColorScheme()];
+  
+  const privacyPolicyUrl = 'https://github.com/sevcak/flipo-flashcards/blob/master/privacy-policy.md';
 
   // header title setup
   navigation.setOptions({
@@ -306,6 +309,12 @@ const ProfileScreen = () => {
     });
   }
 
+  // handles clicking on the 'Sign in using Google' button
+  const googleSignIn = () => {
+    // displays the privacy policy warning modal before allowing the user to sign in
+    setAlert(privacyPolicyModal);
+  }
+
   // gets rid of the Google API access token
   const googleSignOut = async () => {
     if (!googleAuth) {
@@ -387,6 +396,39 @@ const ProfileScreen = () => {
       </View>
     </FlipoModal>
   );
+
+   // Modal to inform the user about the Privacy Policy
+  const privacyPolicyModal = (
+    <FlipoModal
+      title="Warning"
+      visible={true}
+      onButtonPress={() => {
+        setAlert(null);
+        promptAsync({/*useProxy: true, */showInRecents: true});
+      }}
+      buttonText='OK'
+      cancelButton
+      onCancelPress={() => {
+        setAlert(null);
+      }}
+    >
+      <View className='space-y-4'>
+        <FlipoText
+          weight='medium'
+          className='text-center text-lg text-primary dark:text-primary-dark'
+        >
+          By signing in using Google you agree to our 
+          <A href={privacyPolicyUrl}>
+            <FlipoText
+              className='text-green text-lg underline'
+            >
+              Privacy Policy
+            </FlipoText>
+          </A>
+        </FlipoText>
+      </View>
+    </FlipoModal>
+  );
   
   // If a profile picture is loaded, it has to get a background,
   // so the default profile icon doesn't clip from underneath.
@@ -418,7 +460,7 @@ const ProfileScreen = () => {
     : (
       <FlipoFlatButton
         type='googleLogin' 
-        onPress={() => promptAsync({/*useProxy: true, */showInRecents: true})}
+        onPress={() => googleSignIn()}
       />
     )
   );
