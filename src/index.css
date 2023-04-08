@@ -9,6 +9,10 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html body .logo-text {
+  font-weight: bold;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
