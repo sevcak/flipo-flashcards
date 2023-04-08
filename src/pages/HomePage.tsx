@@ -1,10 +1,11 @@
 import React from 'react';
-import Header from '../components/Header';
 
 function HomePage() {
   return (
     <div>
-        <Header />
+      <nav>
+        <a href="/" className='font-name'>flipo flashcards</a>
+      </nav>  
     </div>
   );
 }
