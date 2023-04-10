@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import Icon from './Icon';
+import PrivacyPolicyPage from '../pages/privacy-policy/PrivacyPolicyPage';
 
 const Header = () => {
   return (
@@ -30,7 +31,7 @@ const Header = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" />
-            <Route path="/privacy-policy" />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />}/>
             <Route path="/contribute" />
             <Route path="/download" />
           </Routes>
