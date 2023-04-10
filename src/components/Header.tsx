@@ -15,16 +15,16 @@ const Header = () => {
           text-ui
         '
       >
-        <a href="/" className='flex flex-row space-x-2 items-center'>
+        <a href="./" className='flex flex-row space-x-2 items-center'>
           <Icon name='flipo' color='light' size={30}/>
           <div className='text-secondary font-semibold'>
             flipo flashcards
           </div>
         </a>
         <div className='space-x-8 font-semibold'>
-          <a href="/download">Download</a>
-          <a href="/contribute">Contribute</a>
-          <a href="/privacy-policy">Privacy policy</a>
+          <a href="./download">Download</a>
+          <a href="./contribute">Contribute</a>
+          <a href="./privacy-policy">Privacy policy</a>
         </div>
       </nav>
       <div>
