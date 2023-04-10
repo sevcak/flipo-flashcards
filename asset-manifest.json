@@ -1,15 +1,13 @@
 {
   "files": {
-    "main.css": "/flipo-flashcards/static/css/main.c8957f86.css",
-    "main.js": "/flipo-flashcards/static/js/main.7a2f0e9f.js",
-    "static/js/787.db5ee1e0.chunk.js": "/flipo-flashcards/static/js/787.db5ee1e0.chunk.js",
+    "main.css": "/flipo-flashcards/static/css/main.82d1f334.css",
+    "main.js": "/flipo-flashcards/static/js/main.5e2f53d5.js",
     "index.html": "/flipo-flashcards/index.html",
-    "main.c8957f86.css.map": "/flipo-flashcards/static/css/main.c8957f86.css.map",
-    "main.7a2f0e9f.js.map": "/flipo-flashcards/static/js/main.7a2f0e9f.js.map",
-    "787.db5ee1e0.chunk.js.map": "/flipo-flashcards/static/js/787.db5ee1e0.chunk.js.map"
+    "main.82d1f334.css.map": "/flipo-flashcards/static/css/main.82d1f334.css.map",
+    "main.5e2f53d5.js.map": "/flipo-flashcards/static/js/main.5e2f53d5.js.map"
   },
   "entrypoints": [
-    "static/css/main.c8957f86.css",
-    "static/js/main.7a2f0e9f.js"
+    "static/css/main.82d1f334.css",
+    "static/js/main.5e2f53d5.js"
   ]
 }
