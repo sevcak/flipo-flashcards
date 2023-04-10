@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/flipo-flashcards/static/css/main.e3f0dd29.css",
-    "main.js": "/flipo-flashcards/static/js/main.4fde57e2.js",
+    "main.js": "/flipo-flashcards/static/js/main.b6780dd2.js",
     "static/media/flipo-privacy-policy.md": "/flipo-flashcards/static/media/flipo-privacy-policy.0d91cef662ebe8d2ed34.md",
     "index.html": "/flipo-flashcards/index.html",
     "main.e3f0dd29.css.map": "/flipo-flashcards/static/css/main.e3f0dd29.css.map",
-    "main.4fde57e2.js.map": "/flipo-flashcards/static/js/main.4fde57e2.js.map"
+    "main.b6780dd2.js.map": "/flipo-flashcards/static/js/main.b6780dd2.js.map"
   },
   "entrypoints": [
     "static/css/main.e3f0dd29.css",
-    "static/js/main.4fde57e2.js"
+    "static/js/main.b6780dd2.js"
   ]
 }
