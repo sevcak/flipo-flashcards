@@ -32,6 +32,10 @@ body .markdown h3 {
   font-size: 1.2em;
 }
 
+body .markdown a {
+  color: #28b8af;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

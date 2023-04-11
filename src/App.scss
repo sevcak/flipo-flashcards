@@ -1,3 +1,5 @@
+$color-green-dark: #28b8af;
+
 html {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
@@ -23,6 +25,10 @@ body {
     }
     h3 {
       font-size: 1.2em;
+    }
+
+    a {
+      color: $color-green-dark;
     }
   }
 }
