@@ -23,12 +23,6 @@ const Header = () => {
             flipo flashcards
           </div>
         </a>
-        {/* <NavLink to='/'>
-          <Icon name='flipo' color='light' size={30}/>
-          <div className='text-secondary font-semibold'>
-            flipo flashcards
-          </div>
-        </NavLink> */}
         <div className='space-x-8 font-semibold'>
           <NavLink to="/download">Download</NavLink>
           <NavLink to="/contribute">Contribute</NavLink>
