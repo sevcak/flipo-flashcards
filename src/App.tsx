@@ -7,7 +7,6 @@ function App(): JSX.Element {
   return (
     <div>
       <Header />
-      <HomePage />
     </div>
   );
 }
