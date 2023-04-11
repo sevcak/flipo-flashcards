@@ -21,9 +21,30 @@ const Header = () => {
             </div>
           </NavLink>
           <div className='space-x-8 font-semibold'>
-            <NavLink to="/download">Download</NavLink>
-            <NavLink to="/contribute">Contribute</NavLink>
-            <NavLink to='/privacy-policy'>Privacy policy</NavLink>
+            <NavLink 
+              to='/download'
+              className={({ isActive }) =>
+                isActive ? 'text-green-dark' : ''
+              }
+            >
+              Download
+            </NavLink>
+            <NavLink
+              to='/contribute'
+              className={({ isActive }) =>
+                isActive ? 'text-green-dark' : ''
+              }
+            >
+              Contribute
+            </NavLink>
+            <NavLink
+              to='/privacy-policy'
+              className={({ isActive }) =>
+                isActive ? 'text-green-dark' : ''
+              }  
+            >
+              Privacy policy
+            </NavLink>
           </div>
         </nav>
       </div>
