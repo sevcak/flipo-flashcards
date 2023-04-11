@@ -4,8 +4,9 @@ import { Route } from 'react-router-dom';
 import Icon from './Icon';
 import PrivacyPolicyPage from '../pages/privacy-policy/PrivacyPolicyPage';
 import { NavLink } from 'react-router-dom';
-import HomePage from '../pages/HomePage';
+import HomePage from '../pages/home/HomePage';
 import DownloadPage from '../pages/download/DownloadPage';
+import ContributePage from '../pages/contribute/ContributePage';
 
 const Header = () => {
   return (
@@ -18,12 +19,12 @@ const Header = () => {
           text-ui
         '
       >
-        <a href="/" className='flex flex-row space-x-2 items-center'>
+        <NavLink to="/" className='flex flex-row space-x-2 items-center'>
           <Icon name='flipo' color='light' size={30}/>
           <div className='text-secondary font-semibold'>
             flipo flashcards
           </div>
-        </a>
+        </NavLink>
         <div className='space-x-8 font-semibold'>
           <NavLink to="/download">Download</NavLink>
           <NavLink to="/contribute">Contribute</NavLink>
@@ -34,7 +35,7 @@ const Header = () => {
           <Routes>
             <Route path="/" element={<HomePage/>} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-            <Route path="/contribute" />
+            <Route path="/contribute" element={<ContributePage />} />
             <Route path="/download" element={<DownloadPage />}/>
           </Routes>
       </div>
