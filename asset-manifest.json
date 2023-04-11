@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/flipo-flashcards/static/css/main.5c7e4964.css",
-    "main.js": "/flipo-flashcards/static/js/main.3fab524f.js",
+    "main.js": "/flipo-flashcards/static/js/main.a975f4dd.js",
     "static/media/flipo-privacy-policy.md": "/flipo-flashcards/static/media/flipo-privacy-policy.0d91cef662ebe8d2ed34.md",
     "index.html": "/flipo-flashcards/index.html",
     "static/media/features.md": "/flipo-flashcards/static/media/features.28588e010d371aba2891.md",
@@ -9,10 +9,10 @@
     "static/media/contribute.md": "/flipo-flashcards/static/media/contribute.a065fe67792de82024fd.md",
     "static/media/download.md": "/flipo-flashcards/static/media/download.a6b17897fb328a748461.md",
     "main.5c7e4964.css.map": "/flipo-flashcards/static/css/main.5c7e4964.css.map",
-    "main.3fab524f.js.map": "/flipo-flashcards/static/js/main.3fab524f.js.map"
+    "main.a975f4dd.js.map": "/flipo-flashcards/static/js/main.a975f4dd.js.map"
   },
   "entrypoints": [
     "static/css/main.5c7e4964.css",
-    "static/js/main.3fab524f.js"
+    "static/js/main.a975f4dd.js"
   ]
 }
