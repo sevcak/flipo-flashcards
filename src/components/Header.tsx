@@ -5,6 +5,7 @@ import Icon from './Icon';
 import PrivacyPolicyPage from '../pages/privacy-policy/PrivacyPolicyPage';
 import { NavLink } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
+import DownloadPage from '../pages/download/DownloadPage';
 
 const Header = () => {
   return (
@@ -34,7 +35,7 @@ const Header = () => {
             <Route path="/" element={<HomePage/>} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/contribute" />
-            <Route path="/download" />
+            <Route path="/download" element={<DownloadPage />}/>
           </Routes>
       </div>
     </div>
