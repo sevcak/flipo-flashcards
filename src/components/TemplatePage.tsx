@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import Line from './Line';
 
-const TemplatePage = ({ title, markdownFiles }) => {
+interface PageProps {
+  title?: string;
+  markdownFiles?: Array<string>;
+}
+
+const TemplatePage = ({ title, markdownFiles = [] }: PageProps) => {
     const [fetchedMarkdowns, setFetchedMarkdowns] = useState<any>([]);
     const [displayedMarkdown, setDisplayedMarkdown] = useState<any>();
   
@@ -20,7 +25,7 @@ const TemplatePage = ({ title, markdownFiles }) => {
             }
         });
       });
-    }, [markdownFiles]);
+    }, [markdownFiles, fetchedMarkdowns]);
 
     useEffect(() => {
         console.log(fetchedMarkdowns);
