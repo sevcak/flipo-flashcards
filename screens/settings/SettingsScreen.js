@@ -10,6 +10,11 @@ import FlipoModal from '../../components/FlipoModal';
 import FlipoText from '../../components/FlipoText';
 import FlipoFlatButton from '../../components/pressable/FlipoFlatButton';
 
+// Localization
+import * as Localization from 'expo-localization';
+import * as locales from "../../localizations/settings/localizationSettingsScreen";
+import { I18n } from 'i18n-js';
+
 const SettingsScreen = () => {
     const navigation = useNavigation();
     
@@ -17,6 +22,14 @@ const SettingsScreen = () => {
     let colorScheme = colorSchemes[theme];
 
     const [modal, setModal] = useState(<></>);
+
+    // localization setup
+    const [locale, setLocale] = useState(Localization.locale);
+    const i18n = new I18n(locales)
+    i18n.enableFallback = true;
+    i18n.translations = {...locales};
+    i18n.defaultLocale = "en";
+    i18n.locale = locale;
 
     // header title setup
     navigation.setOptions({
@@ -30,7 +43,7 @@ const SettingsScreen = () => {
 
     const themeSettingModal = (
       <FlipoModal
-        title='Color Theme'
+        title={i18n.t('themeTitle')}
         visible={true}
         onButtonPress={() => setModal(<></>)}
       >
@@ -40,15 +53,39 @@ const SettingsScreen = () => {
             className='text-center
             text-primary dark:text-primary-dark'
           >
-            flipo automatically follows your system appearance settings.
+            {i18n.t('themeModalContent01')}
           </FlipoText>
           <FlipoText
             weight='medium'
             className='text-center
             text-primary dark:text-primary-dark'
           >
-            To change the color theme of the app,
-            change the color theme of your device.
+            {i18n.t('themeModalContent02')}
+          </FlipoText>
+        </View>
+      </FlipoModal>
+    )
+
+    const langSettingModal = (
+      <FlipoModal
+        title={i18n.t('languageTitle')}
+        visible={true}
+        onButtonPress={() => setModal(<></>)}
+      >
+        <View className='space-y-4'>
+          <FlipoText
+            weight='medium'
+            className='text-center
+            text-primary dark:text-primary-dark'
+          >
+            {i18n.t('langModalContent01')}
+          </FlipoText>
+          <FlipoText
+            weight='medium'
+            className='text-center
+            text-primary dark:text-primary-dark'
+          >
+            {i18n.t('langModalContent02')}
           </FlipoText>
         </View>
       </FlipoModal>
@@ -64,7 +101,18 @@ const SettingsScreen = () => {
       <View className='bg-primary dark:bg-primary-dark min-h-screen'>
         {modal}
         <TouchableOpacity onPress={() => setModal(themeSettingModal)}>
-          <FlipoFlatButton type='setting' title='Theme' value={theme}/>
+          <FlipoFlatButton
+            type='setting'
+            title={i18n.t('themeTitle')}
+            value={i18n.t(`${theme}Theme`)}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setModal(langSettingModal)}>
+          <FlipoFlatButton
+            type='setting'
+            title={i18n.t('languageTitle')}
+            value={i18n.t('language')}
+          />
         </TouchableOpacity>
       </View>
     );
