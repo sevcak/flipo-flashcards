@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from 'react';
 import { TouchableOpacity, useColorScheme, View } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,12 +14,22 @@ import FlipoText from '../../components/FlipoText';
 import DeckCard from '../../components/decks/DeckCard';
 import { ScrollView } from 'react-native-gesture-handler';
 
-// Functions
-import { useCallback, useEffect, useState } from 'react';
+// Localization
+import * as Localization from 'expo-localization';
+import * as locales from "../../localizations/decks/localizationDeckHomeScreen";
+import { I18n } from 'i18n-js';
 
 const DecksHomeScreen = () => {
   const navigation = useNavigation();
   let colorScheme = colorSchemes[useColorScheme()];
+
+  // localization setup
+  const [locale, setLocale] = useState(Localization.locale);
+  const i18n = new I18n(locales)
+  i18n.enableFallback = true;
+  i18n.translations = {...locales};
+  i18n.defaultLocale = "en";
+  i18n.locale = locale;
 
   // header title setup
   navigation.setOptions({
@@ -144,8 +155,7 @@ const DecksHomeScreen = () => {
             className='w-52'/>
       </TouchableOpacity>
     )));
-  }
-  
+  } 
 
   return (
     <View className='bg-primary dark:bg-primary-dark min-h-screen'>
@@ -161,12 +171,12 @@ const DecksHomeScreen = () => {
               weight='extra-bold'
               className='text-4xl text-secondary dark:text-secondary-dark'
             >
-              Your decks 
+              {i18n.t('yourDecks')} 
             </FlipoText>
             <FlipoText 
               weight='semi-bold'
               className={`text-base text-ui dark:text-strong-dark`}>
-                Play your created decks
+                {i18n.t('yourDecksComment')}
             </FlipoText>
           </View>
           <ScrollView 
@@ -185,7 +195,8 @@ const DecksHomeScreen = () => {
               })}
             >
                 <DeckCard 
-                  labelUnder title='Create new deck'
+                  labelUnder
+                  title={i18n.t('createNewDeck')}
                   className='w-52'
                   coverUrl={require('../../assets/decks/new-deck.png')}
                 />
@@ -203,13 +214,13 @@ const DecksHomeScreen = () => {
               weight='extra-bold'
               className='text-4xl text-secondary dark:text-secondary-dark'
             >
-              Example decks
+              {i18n.t('exampleDecks')}
             </FlipoText>
             <FlipoText 
               weight='semi-bold'
               className='text-base text-ui dark:text-strong-dark'
             >
-              Play pre-created decks
+              {i18n.t('exampleDecksComment')}
             </FlipoText>
           </View>
           <ScrollView
