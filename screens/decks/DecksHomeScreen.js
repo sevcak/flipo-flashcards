@@ -18,6 +18,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as Localization from 'expo-localization';
 import * as locales from "../../localizations/decks/localizationDeckHomeScreen";
 import { I18n } from 'i18n-js';
+import WalkthroughModal from '../../components/walkthrough/WalkthroughModal';
 
 const DecksHomeScreen = () => {
   const navigation = useNavigation();
@@ -49,6 +50,37 @@ const DecksHomeScreen = () => {
   const [exampleDecks, setExampleDecks] = useState([]);
   const [exampleDeckElements, setExampleDeckElements] = useState([]);
 
+  // state to decide if the walkthrough should be played
+  const [showWalkthrough, setShowWalkthrough] = useState(false); 
+
+  // check whether the walkthrough should be shown
+  const getShowWalkthrough = async () => {
+    try {
+      let doNotShowWalkthrough = await AsyncStorage.getItem('doNotShowWalkthrough');
+      doNotShowWalkthrough = JSON.parse(doNotShowWalkthrough);
+      
+      setShowWalkthrough(false);
+
+      if (doNotShowWalkthrough === true) {
+        console.log('Not showing the walkthrough.');
+      } else {
+        console.log('Showing the walkthrough.');
+        setShowWalkthrough(true);
+      }
+    } catch (e) {
+      console.error('There was an error with loading the decks.')
+    }
+  }
+
+  // store whether the walkthrough should be shown
+  const storeShowWalkthrough = async (showWalkthrough) => {
+    try {
+      await AsyncStorage.setItem('doNotShowWalkthrough', (showWalkthrough ? 'false' : 'true'));
+    } catch (e) {
+      console.error('storeShowWalkthrough: There was an error with storing data.');
+    }
+  };
+  
   // loads custom deck data
   const getCustomDecks = async () => {
     try {
@@ -107,6 +139,8 @@ const DecksHomeScreen = () => {
       console.log('DecksHomeScreen: Updating deck data.');
       getCustomDecks();
       getExampleDecks();
+      
+      getShowWalkthrough();
     }, [])
   );
 
@@ -159,6 +193,7 @@ const DecksHomeScreen = () => {
 
   return (
     <View className='bg-primary dark:bg-primary-dark min-h-screen'>
+      <WalkthroughModal i18n={i18n} visible={showWalkthrough} storeShowWalkthrough={storeShowWalkthrough}/>
       <ScrollView
         className='space-y-8 -mt-9 pt-16 h-screen'
         showsVerticalScrollIndicator={false}
