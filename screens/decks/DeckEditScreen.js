@@ -15,8 +15,21 @@ import EditCardModal from "../../components/decks/EditCardModal";
 import { reorderObjectArrayId } from "../../utils/organisationUtils";
 import TextButton from "../../components/pressable/TextButton";
 
+// Localization
+import * as Localization from 'expo-localization';
+import * as locales from "../../localizations/decks/localizationDeckEditScreen";
+import { I18n } from 'i18n-js';
+
 const DeckEditScreen = ({ route, navigation }) => {
   const colorScheme = colorSchemes[useColorScheme()];
+
+  // localization setup
+  const [locale, setLocale] = useState(Localization.locale);
+  const i18n = new I18n(locales)
+  i18n.enableFallback = true;
+  i18n.translations = {...locales};
+  i18n.defaultLocale = "en";
+  i18n.locale = locale;
 
   // functions for updating the deck states in previous screens
   const updateDecks = route.params.updateDecks;
@@ -28,7 +41,7 @@ const DeckEditScreen = ({ route, navigation }) => {
 
   // header title setup
   navigation.setOptions({
-    title: existing ? 'Edit deck' : 'New deck',
+    title: existing ? i18n.t('screenTitleEdit') : i18n.t('screenTitleNew'),
     headerTitleStyle: {
       fontFamily: "Montserrat-ExtraBold",
       color: colorScheme["ui"],
@@ -62,7 +75,7 @@ const DeckEditScreen = ({ route, navigation }) => {
 
   const [title, setTitle] = useState( existing
     ? route.params.deck['title']
-    : 'New deck'
+    : i18n.t('screenTitleNew')
   );
   const [cards, setCards] = useState( existing
     ? route.params.deck['cards']
@@ -151,12 +164,12 @@ const DeckEditScreen = ({ route, navigation }) => {
       // throws an alert informing the user about deck creation conditions
       setAlert(
         <FlipoModal
-         title="Can't create deck"
+         title={i18n.t('cantCreate')}
          visible={true}
          onButtonPress={() => {setAlert('')}}
         >
           <FlipoText weight='medium' className='text-center text-lg text-primary dark:text-primary-dark'>
-            To create a deck it has to have at least two cards.
+            {i18n.t('toCreate')}
           </FlipoText>
         </FlipoModal>
       );
@@ -226,12 +239,12 @@ const DeckEditScreen = ({ route, navigation }) => {
         e.preventDefault();
         setAlert(
           <FlipoModal
-            title="Can't create deck"
+            title={i18n.t('cantCreate')}
             visible={true}
             onButtonPress={() => {setAlert('')}}
           >
             <FlipoText weight='medium' className='text-center text-lg text-primary dark:text-primary-dark'>
-              To create a deck it has to have at least two cards.
+              {i18n.t('toCreate')}
             </FlipoText>
           </FlipoModal>
         );
@@ -252,11 +265,11 @@ const DeckEditScreen = ({ route, navigation }) => {
           <View className='items-center space-y-10 px-12'>
             {alert}
             {/*Edit card menu modal*/}
-            <EditCardModal card={newCard} editCard={updateCard}></EditCardModal>
+            <EditCardModal card={newCard} editCard={updateCard} i18n={i18n}></EditCardModal>
             <DeckCard title={newDeck.title} className='w-60'/>
             {/* Editable deck title label */}
             <View className='space-y-2'>
-              <FlipoText className='text-lg text-center'>Deck Name:</FlipoText>
+              <FlipoText className='text-lg text-center'>{i18n.t('deckName')}</FlipoText>
               <TextInput
                 cursorColor={colorScheme['green']}
                 maxLength={30}
@@ -273,19 +286,19 @@ const DeckEditScreen = ({ route, navigation }) => {
                 onChangeText={(val) => setTitle(val)}
               />
             </View>
-            <View className='flex-row mx-10 space-x-4'>
-              {existing && <TextButton onPress={() => deleteDeck()} className='text-alert'>Delete deck</TextButton>}
+            <View className='flex-row mx-8 space-x-4'>
+              {existing && <TextButton onPress={() => deleteDeck()} className='text-alert'>{i18n.t('deleteDeck')}</TextButton>}
               <TouchableOpacity onPress={() => createDeck()}>
-                <FlipoButton>{existing ? 'Done' : 'Create'}</FlipoButton>
+                <FlipoButton>{existing ? i18n.t('done') : i18n.t('create')}</FlipoButton>
               </TouchableOpacity>
             </View>
           </View>
           {/* Section for adding cards  */}
           <View className='px-12 space-y-4 pb-10'>
-            <FlipoText weight='extra-bold' className='text-3xl'>Add cards</FlipoText>
+            <FlipoText weight='extra-bold' className='text-3xl'>{i18n.t('addCards')}</FlipoText>
             {/* New card touchable */}
             <TouchableOpacity onPress={() => createCard()}>
-              <CardCell></CardCell>
+              <CardCell title={i18n.t('newCard')}></CardCell>
             </TouchableOpacity>
             {cardElements}
           </View>

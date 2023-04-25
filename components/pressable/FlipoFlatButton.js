@@ -56,7 +56,7 @@ const FlipoFlatButton = ( props ) => {
             weight='bold'
             className='text-base text-[#fff] tracking-tight pr-3'
           >
-            Sign in with Google
+            {props.text ? props.text : "Sign in with Google"}
           </FlipoText>
         </View>
       </View>

@@ -16,6 +16,11 @@ import FlipoFlatButton from '../../components/pressable/FlipoFlatButton';
 import FlipoModal from '../../components/FlipoModal';
 import { revokeAsync } from 'expo-auth-session';
 
+// Localization
+import * as Localization from 'expo-localization';
+import * as locales from "../../localizations/profile/localizationProfileScreen";
+import { I18n } from 'i18n-js';
+
 // has to be here so the auth finishes in Expo Go
 // (in native this does nothing)
 WebBrowser.maybeCompleteAuthSession();
@@ -23,6 +28,14 @@ WebBrowser.maybeCompleteAuthSession();
 const ProfileScreen = () => {
   const navigation = useNavigation();
   let colorScheme = colorSchemes[useColorScheme()];
+
+  // localization setup
+  const [locale, setLocale] = useState(Localization.locale);
+  const i18n = new I18n(locales)
+  i18n.enableFallback = true;
+  i18n.translations = {...locales};
+  i18n.defaultLocale = "en";
+  i18n.locale = locale;
   
   const privacyPolicyUrl = 'https://github.com/sevcak/flipo-flashcards/blob/master/privacy-policy.md';
 
@@ -41,7 +54,7 @@ const ProfileScreen = () => {
   
   // user data states
   const [googleAuth, setGoogleAuth] = useState(false);
-  const [userName, setUserName] = useState('Guest');
+  const [userName, setUserName] = useState(i18n.t('guest'));
   const [googleEmail, setGoogleEmail] = useState(null);
   const [userPicture, setUserPicture] = useState(null);
 
@@ -165,7 +178,7 @@ const ProfileScreen = () => {
     // displays a modal so the user has to wait until done
     setAlert(
       <FlipoModal 
-          title="Please wait"
+          title={i18n.t('pleaseWait')}
           visible={true}
           noDefaultButton
         >
@@ -173,7 +186,7 @@ const ProfileScreen = () => {
             weight='medium'
             className='text-center text-lg text-primary dark:text-primary-dark'
           >
-            Importing data from your Google Drive...
+            {i18n.t('importingGDrive')}
           </FlipoText>
         </FlipoModal>
     );
@@ -202,7 +215,7 @@ const ProfileScreen = () => {
     } else {
       setAlert(
         <FlipoModal 
-          title="Can't import decks"
+          title={i18n.t('cantImport')}
           visible={true}
           onButtonPress={() => {setAlert(null)}}
         >
@@ -210,7 +223,7 @@ const ProfileScreen = () => {
             weight='medium'
             className='text-center text-lg text-primary dark:text-primary-dark'
           >
-            No custom decks were found on your Google Drive.
+            {i18n.t('noDecksGDrive')}
           </FlipoText>
         </FlipoModal>
       );
@@ -243,7 +256,7 @@ const ProfileScreen = () => {
     // displays a modal so the user has to wait until done
     setAlert(
       <FlipoModal 
-          title="Please wait"
+          title={i18n.t('pleaseWait')}
           visible={true}
           noDefaultButton
         >
@@ -251,7 +264,7 @@ const ProfileScreen = () => {
             weight='medium'
             className='text-center text-lg text-primary dark:text-primary-dark'
           >
-            Exporting data to your Google Drive...
+            {i18n.t('exportingGDrive')}
           </FlipoText>
         </FlipoModal>
     );
@@ -294,7 +307,7 @@ const ProfileScreen = () => {
     const userInfo = await response.json();
 
     // doesn't change the user's if it was manually set
-    if (userName == 'Guest') {
+    if (userName == 'Guest' || userName == i18n.t('guest')) {
       setUserName(userInfo.given_name);
     }
     setGoogleEmail(userInfo.email);
@@ -334,14 +347,15 @@ const ProfileScreen = () => {
   // to import decks from Google Drive 
   const importGDriveModal = (
     <FlipoModal
-      title="Warning"
+      title={i18n.t('warning')}
       visible={true}
       onButtonPress={() => {
         setAlert(null);
         importDecksGDrive();
       }}
-      buttonText='Proceed'
+      buttonText={i18n.t('proceed')}
       cancelButton
+      cancelButtonText={i18n.t('cancel')}
       onCancelPress={() => {
         setAlert(null);
       }}
@@ -351,13 +365,13 @@ const ProfileScreen = () => {
           weight='medium'
           className='text-center text-lg text-primary dark:text-primary-dark'
         >
-          Importing decks from your Google Drive will overwrite your local decks.
+          {i18n.t('importGDriveWarning01')}
         </FlipoText>
         <FlipoText
           weight='medium'
           className='text-center text-lg text-primary dark:text-primary-dark'
         >
-          Do you want to proceed?
+          {i18n.t('wantToProceed')}
         </FlipoText>
       </View>
     </FlipoModal>
@@ -367,14 +381,15 @@ const ProfileScreen = () => {
   // to export decks to Google Drive
   const exportGDriveModal = (
     <FlipoModal
-      title="Warning"
+      title={i18n.t('warning')}
       visible={true}
       onButtonPress={() => {
         setAlert(null);
         exportDecksGDrive();
       }}
-      buttonText='Proceed'
+      buttonText={i18n.t('proceed')}
       cancelButton
+      cancelButtonText={i18n.t('cancel')}
       onCancelPress={() => {
         setAlert('');
       }}
@@ -384,14 +399,13 @@ const ProfileScreen = () => {
           weight='medium'
           className='text-center text-lg text-primary dark:text-primary-dark'
         >
-          Exporting your local decks to your Google Drive 
-          will overwrite the decks currently stored there.
+          {i18n.t('exportGDriveWarning01')}
         </FlipoText>
         <FlipoText
           weight='medium'
           className='text-center text-lg text-primary dark:text-primary-dark'
         >
-          Do you want to proceed?
+          {i18n.t('wantToProceed')}
         </FlipoText>
       </View>
     </FlipoModal>
@@ -400,7 +414,7 @@ const ProfileScreen = () => {
    // Modal to inform the user about the Privacy Policy
   const privacyPolicyModal = (
     <FlipoModal
-      title="Warning"
+      title={i18n.t('warning')}
       visible={true}
       onButtonPress={() => {
         setAlert(null);
@@ -408,6 +422,7 @@ const ProfileScreen = () => {
       }}
       buttonText='OK'
       cancelButton
+      cancelButtonText={i18n.t('cancel')}
       onCancelPress={() => {
         setAlert(null);
       }}
@@ -417,14 +432,15 @@ const ProfileScreen = () => {
           weight='medium'
           className='text-center text-lg text-primary dark:text-primary-dark'
         >
-          By signing in using Google you agree to our 
+          {i18n.t('privacyPolicyWarning01')}
           <A href={privacyPolicyUrl}>
             <FlipoText
               className='text-green text-lg underline'
             >
-              Privacy Policy
+              {i18n.t('privacyPolicy')}
             </FlipoText>
           </A>
+          {i18n.t('privacyPolicyWarning02')}
         </FlipoText>
       </View>
     </FlipoModal>
@@ -443,23 +459,24 @@ const ProfileScreen = () => {
       <View>
         <FlipoFlatButton type='setting' title='Google account' value={googleEmail}/>
         <FlipoFlatButton type='google-action' onPress={() => setAlert(exportGDriveModal)}>
-          Export decks to Drive
+          {i18n.t('exportGDrive')}
         </FlipoFlatButton>
         <FlipoFlatButton type='google-action' onPress={() => setAlert(importGDriveModal)}>
-          Import decks from Drive
+          {i18n.t('importGDrive')}
         </FlipoFlatButton>
         <FlipoFlatButton
           type='google-action'
           onPress={() => googleSignOut()}
           textClassName='text-alert'
         >
-          Sign out of Google
+          {i18n.t('googleSignOut')}
         </FlipoFlatButton>
       </View>
     )
     : (
       <FlipoFlatButton
-        type='googleLogin' 
+        type='googleLogin'
+        text={i18n.t('googleLogin')}
         onPress={() => googleSignIn()}
       />
     )

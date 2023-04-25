@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import FlipoText from '../FlipoText'
 import colorSchemes from '../../assets/colorSchemes';
 
-const EditableFlashcard = ({ card, flipped, setCard}) => {
+const EditableFlashcard = ({ card, flipped, setCard, i18n}) => {
   const colorScheme = colorSchemes[useColorScheme()];
 
   const updateCard = (side, prop, value) => {
@@ -57,10 +57,10 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
       <View 
         className='grow justify-center p-2 space-y-4 content-between max-h-full overflow-hidden'
       >
-        <FlipoText className='text-center m-2'>Card {card.id} - Front</FlipoText>
+        <FlipoText className='text-center m-2'>{i18n.t('card')} {card.id} - {i18n.t('front')}</FlipoText>
         <TextInput
           defaultValue={card['front']['title']}
-          placeholder='Front title'
+          placeholder={i18n.t('frontTitle')}
           className='text-secondary dark:text-secondary-dark 
             text-2xl text-center pb-1'
           cursorColor={colorScheme['green']}
@@ -76,7 +76,7 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
         />
         <TextInput
           defaultValue={card['front']['content']}
-          placeholder='Front content'
+          placeholder={i18n.t('frontContent')}
           className='text-secondary dark:text-secondary-dark
             text-center pb-1'
           cursorColor={colorScheme['green']}
@@ -112,10 +112,10 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
       <View
         className='grow justify-center p-2 space-y-4 content-between max-h-full overflow-hidden'
       >
-        <FlipoText className='text-center m-2'>Card {card.id} - Back</FlipoText>
+        <FlipoText className='text-center m-2'>{i18n.t('card')} {card.id} - {i18n.t('back')}</FlipoText>
         <TextInput
           defaultValue={card['back']['title']}
-          placeholder='Back title'
+          placeholder={i18n.t('backTitle')}
           className='text-secondary dark:text-secondary-dark 
             text-2xl text-center pb-1'
           cursorColor={colorScheme['green']}
@@ -130,7 +130,7 @@ const EditableFlashcard = ({ card, flipped, setCard}) => {
         />
         <TextInput
           defaultValue={card['back']['content']}
-          placeholder='Back content'
+          placeholder={i18n.t('backContent')}
           className='text-secondary dark:text-secondary-dark
             text-center pb-1'
           cursorColor={colorScheme['green']}
