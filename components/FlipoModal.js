@@ -1,10 +1,14 @@
 import { View, Modal, useColorScheme, TouchableOpacity, KeyboardAvoidingView } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FlipoText from "./FlipoText";
 import { BlurView } from "expo-blur";
 
 const FlipoModal = (props) => {
   const [open, setOpen] = useState(props.visible);
+
+  useEffect(() => {
+    setOpen(props.visible);
+  }, [props.visible]);
   
   return (
     <Modal 
