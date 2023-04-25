@@ -4,7 +4,7 @@ import { BlurView } from 'expo-blur';
 import FlipoButton from '../pressable/FlipoButton';
 import EditableFlashcard from './EditableFlashcard';
 
-const EditCardModal = ({ card, editCard }) => {
+const EditCardModal = ({ card, editCard, i18n }) => {
   const [flipped, setFlipped] = useState(false);
   const [newCard, setNewCard] = useState(card);
 
@@ -35,7 +35,7 @@ const EditCardModal = ({ card, editCard }) => {
         >
           {/*Card*/}
           <View className='h-96 w-full -mt-40'>
-            <EditableFlashcard card={card} flipped={flipped} setCard={setNewCard}/>
+            <EditableFlashcard card={card} flipped={flipped} setCard={setNewCard} i18n={i18n}/>
           </View>
           <TouchableOpacity onPress={() => setFlipped(prevFlipped => (!prevFlipped))} activeOpacity={0.8} className='mt-4 mb-8 items-center'>
             <FlipoButton className='w-20 px-4 align-center' textSize='text-lg'>Flip</FlipoButton>

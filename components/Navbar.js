@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useColorScheme } from "react-native";
 
@@ -13,15 +13,27 @@ import DecksHomeScreen from '../screens/decks/DecksHomeScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import SettingsScreen from '../screens/settings/SettingsScreen';
 
-// Screen names
-const decksHomeName = 'Decks';
-const profileName = 'Profile';
-const settingsName = 'Settings';
+// Localization
+import * as Localization from 'expo-localization';
+import * as locales from "../localizations/localizationScreenNames";
+import { I18n } from 'i18n-js';
 
 const Tab = createBottomTabNavigator();
 
 const Navbar = () => {
   let colorScheme = colorSchemes[useColorScheme()];
+
+  // localization setup
+  const [locale, setLocale] = useState(Localization.locale);
+  const i18n = new I18n(locales)
+  i18n.enableFallback = true;
+  i18n.translations = {...locales};
+  i18n.defaultLocale = "en";
+  i18n.locale = locale;
+
+  const decksHomeName = i18n.t('decksTitle');
+  const profileName = i18n.t('profileTitle');
+  const settingsName = i18n.t('settingsTitle');
 
   return (
       <Tab.Navigator
